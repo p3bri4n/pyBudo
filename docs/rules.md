@@ -101,24 +101,24 @@ En cas de désaccord technique important, la décision doit être documentée da
 
 # 4. Nommage des commits
 
-Les commits doivent être **courts, explicites et orientés action**.
+Les commits doivent être **courts, explicites, orientés action** et **réferencer l'issue**.
 
 Nous utilisons une convention inspirée de **Conventional Commits** :
 
 ```text
-<type>(<scope>): <description>
+<Refs #issue-number><type>(<scope>): <description>
 ```
 
 Exemples :
 
 ```text
-feat(exercises): add exercise creation endpoint
-fix(execution): handle infinite loops
-test(exercises): add validation tests
-refactor(execution): isolate python runner
-docs(architecture): add execution flow
-chore(deps): update fastapi
-ci(github): add test workflow
+Refs #1 feat(exercises): add exercise creation endpoint
+Refs #2 fix(execution): handle infinite loops
+Refs #3 test(exercises): add validation tests
+Refs #4 refactor(execution): isolate python runner
+Refs #5 docs(architecture): add execution flow
+Refs #6 chore(deps): update fastapi
+Refs #7 ci(github): add test workflow
 ```
 
 ### Types autorisés
