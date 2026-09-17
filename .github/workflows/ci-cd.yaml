@@ -18,6 +18,19 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  enforce-main-from-dev:
+    name: Enforce PR to main comes from dev
+    if: github.event_name == 'pull_request' && github.base_ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check source branch
+        run: |
+          if [ "${{ github.head_ref }}" != "dev" ]; then
+            echo "::error::Les PR vers main doivent venir de dev (branche source détectée : ${{ github.head_ref }})."
+            exit 1
+          fi
+          echo "OK : PR vers main depuis dev."
+
   changes:
     name: Detect changed paths
     runs-on: ubuntu-latest
