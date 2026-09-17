@@ -254,8 +254,51 @@ Avant de créer une PR, chaque développeur doit vérifier :
 Ces vérifications doivent également être automatisées autant que possible dans la CI.
 
 ---
+# 9. Langue du code
 
-# 9. Principe général
+Tout le code du projet doit être écrit en **anglais** afin de conserver une base de code cohérente et compréhensible par l'ensemble des développeurs.
+
+Cela concerne notamment :
+
+* les noms de variables ;
+* les noms de fonctions ;
+* les noms de classes ;
+* les noms de méthodes ;
+* les noms de modules ;
+* les noms de fichiers de code ;
+* les messages d'erreur ;
+* les constantes ;
+* les types et interfaces.
+
+Exemple :
+
+```python
+def validate_exercise_submission(submission: str) -> bool:
+    ...
+```
+
+et non :
+
+```python
+def valider_reponse_exercice(reponse: str) -> bool:
+    ...
+```
+
+La **documentation** et les **docstrings** peuvent être rédigées en français.
+
+Exemple :
+
+```python
+def validate_exercise_submission(submission: str) -> bool:
+    """Vérifie que la réponse de l'utilisateur est valide."""
+    ...
+```
+
+L'objectif est de maintenir une distinction claire entre le langage technique du code, qui reste en anglais, et la documentation destinée aux développeurs ou aux utilisateurs du projet.
+
+---
+
+# 10. Principe général
 
 Les règles doivent permettre à n'importe quel développeur arrivant sur pyBudo de comprendre rapidement :
 
