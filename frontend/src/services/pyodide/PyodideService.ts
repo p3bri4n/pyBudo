@@ -19,10 +19,10 @@ export async function executePython(code: string): Promise<ExecutionResult> {
     let stderr = "";
 
     runtime.setStdout({
-        batched: (text) => {stdout += text},
+        batched: (text: string): void => {stdout += text},
     });
     runtime.setStderr({
-        batched: (text) => {stderr += text;},
+        batched: (text: string): void => {stderr += text;},
     });
 
     try {
