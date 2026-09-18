@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { executePython } from "../services/pyodide/PyodideService";
-import type {ExecutionResult} from "../../interfaces/interfaces.ts";
+import type {ExecutionResult} from "../interfaces/interfaces.ts";
 
 export function PythonRunner() {
     const [code, setCode] = useState("print('Hello pyBudo!')");

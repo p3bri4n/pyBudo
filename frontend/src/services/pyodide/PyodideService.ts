@@ -1,5 +1,5 @@
 import { loadPyodide, type PyodideInterface } from "pyodide";
-import type {ExecutionResult} from "../../../interfaces/interfaces.ts";
+import type {ExecutionResult} from "../../interfaces/interfaces.ts";
 
 let pyodide: PyodideInterface | null = null;
 
