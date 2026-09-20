@@ -1,0 +1,50 @@
+from os import getenv
+from typing import Annotated
+
+from fastapi import Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer
+import jwt
+from sqlmodel import Session, select
+from app.db import engine
+
+from app.model import User
+
+SECRET_KEY = getenv("SECRET_KEY")
+if not SECRET_KEY:
+    raise RuntimeError("SECRET_KEY manquant")
+
+ALGORITHM = "HS256"
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
+
+def get_session():
+    with Session(engine) as session:
+        yield session
+
+def get_current_user(
+        token: Annotated[str, Depends(oauth2_scheme)], 
+        session: Session = Depends(get_session)):
+    try:
+        jwt_payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        email = jwt_payload.get("sub")
+        if not email:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid token",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+    except jwt.PyJWTError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid token",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
+    user = session.exec(select(User).where(User.email == email)).first()
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found",
+        )
+    
+    return user
