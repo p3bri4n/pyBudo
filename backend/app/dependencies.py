@@ -2,7 +2,7 @@ from os import getenv
 from typing import Annotated
 
 from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 import jwt
 from sqlmodel import Session, select
 from app.db import engine
@@ -15,17 +15,17 @@ if not SECRET_KEY:
 
 ALGORITHM = "HS256"
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
+bearer_scheme = HTTPBearer()
 
 def get_session():
     with Session(engine) as session:
         yield session
 
 def get_current_user(
-        token: Annotated[str, Depends(oauth2_scheme)], 
+        credentials: Annotated[HTTPAuthorizationCredentials, Depends(bearer_scheme)],
         session: Session = Depends(get_session)):
     try:
-        jwt_payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        jwt_payload = jwt.decode(credentials.credentials, SECRET_KEY, algorithms=[ALGORITHM])
         email = jwt_payload.get("sub")
         if not email:
             raise HTTPException(
