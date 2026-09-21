@@ -101,24 +101,24 @@ En cas de désaccord technique important, la décision doit être documentée da
 
 # 4. Nommage des commits
 
-Les commits doivent être **courts, explicites et orientés action**.
+Les commits doivent être **courts, explicites, orientés action** et **réferencer l'issue**.
 
 Nous utilisons une convention inspirée de **Conventional Commits** :
 
 ```text
-<type>(<scope>): <description>
+<Refs #issue-number><type>(<scope>): <description>
 ```
 
 Exemples :
 
 ```text
-feat(exercises): add exercise creation endpoint
-fix(execution): handle infinite loops
-test(exercises): add validation tests
-refactor(execution): isolate python runner
-docs(architecture): add execution flow
-chore(deps): update fastapi
-ci(github): add test workflow
+Refs #1 feat(exercises): add exercise creation endpoint
+Refs #2 fix(execution): handle infinite loops
+Refs #3 test(exercises): add validation tests
+Refs #4 refactor(execution): isolate python runner
+Refs #5 docs(architecture): add execution flow
+Refs #6 chore(deps): update fastapi
+Refs #7 ci(github): add test workflow
 ```
 
 ### Types autorisés
@@ -254,8 +254,51 @@ Avant de créer une PR, chaque développeur doit vérifier :
 Ces vérifications doivent également être automatisées autant que possible dans la CI.
 
 ---
+# 9. Langue du code
 
-# 9. Principe général
+Tout le code du projet doit être écrit en **anglais** afin de conserver une base de code cohérente et compréhensible par l'ensemble des développeurs.
+
+Cela concerne notamment :
+
+* les noms de variables ;
+* les noms de fonctions ;
+* les noms de classes ;
+* les noms de méthodes ;
+* les noms de modules ;
+* les noms de fichiers de code ;
+* les messages d'erreur ;
+* les constantes ;
+* les types et interfaces.
+
+Exemple :
+
+```python
+def validate_exercise_submission(submission: str) -> bool:
+    ...
+```
+
+et non :
+
+```python
+def valider_reponse_exercice(reponse: str) -> bool:
+    ...
+```
+
+La **documentation** et les **docstrings** peuvent être rédigées en français.
+
+Exemple :
+
+```python
+def validate_exercise_submission(submission: str) -> bool:
+    """Vérifie que la réponse de l'utilisateur est valide."""
+    ...
+```
+
+L'objectif est de maintenir une distinction claire entre le langage technique du code, qui reste en anglais, et la documentation destinée aux développeurs ou aux utilisateurs du projet.
+
+---
+
+# 10. Principe général
 
 Les règles doivent permettre à n'importe quel développeur arrivant sur pyBudo de comprendre rapidement :
 
