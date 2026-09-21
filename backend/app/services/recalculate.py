@@ -17,27 +17,34 @@ def recalculate_progression(user_id: int, session: Session):
         )
     ).all()
 
+    # Retire les complétions dont on ne trouve plus le kata dans le catalogue
+    completions = [c for c in completions if get_kata(c.kata_id)]
+
+    # Récupère tous les ranks de la discipline "core" (le tronc commun)
+    core_ranks = [
+        get_kata(c.kata_id)["rank"] for c in completions if c.discipline == "core"
+    ]
+    # Récupère le rank le plus elevé
+    core_dan = highest_rank(core_ranks)
+
     # Regroupe les ranks de tous les katas complétés, par discipline
-    # Groups aura un tableau de rank pour chaque discipline
+    # Groups aura un tableau de rank pour chaque discipline sauf "core"
     groups = {}
-    for completion in completions:
-        # Trouve le kata depuis le fichier json pour cette itération
-        kata = get_kata(completion.kata_id)
-        # Recupère son rank et le range dans le group de sa discipline
-        groups.setdefault(completion.discipline, []).append(kata["rank"])
-
-
-    # Prends le rank le plus elevé de la discipline "core" (le tronc commun) 
-    # et retire le group "core" de groups.
-    # Pour ne garder que les ranks des disciplines spécialisés.
-    core_dan = highest_rank(groups.pop("core", []))
 
     # Au cas où l'utilisateur n'a pas de kata "core" complété.
-    # Auquel cas il n'y a plus rien à calculer
-    # Puisqu'il plafonne toutes les autres disciplines
-    if not core_dan:
-        return
-
+    # Auquel cas groups restera vide
+    # On ne calcule les disciplines que s'il y'a un tronc commun
+    # puisque c'est lui qui les plafonne
+    if core_dan:
+        for completion in completions:
+            if completion.discipline == "core":
+                continue
+            # Trouve le kata, recupère son rank 
+            # et le range dans le group de sa discipline
+            groups.setdefault(completion.discipline, []).append(
+                get_kata(completion.kata_id)["rank"]
+            )
+    
     # Récupère la progression de l'utilisateur
     progression: Progression = session.exec(select(Progression).where(
         Progression.user_id == user_id
@@ -55,6 +62,13 @@ def recalculate_progression(user_id: int, session: Session):
     # Un utilisateur a qu'une progression par discipline
     # Ici on indexe chaque progression par sa discipline
     existing = {dp.discipline: dp for dp in dps }
+
+    # Pour les suppression d'un kata complété
+    # Vérifier qu'une discipline ne se retrouve sans kata complété
+    # Si tel est le cas il faut le supprimer
+    for discipline, dp in existing.items():
+        if discipline not in groups:
+            session.delete(dp)
 
     # Pour chaque ranks par discipline dans groups
     # Met à jour le rank de chaque discipline, plafonné au core_dan
