@@ -12,6 +12,14 @@ def load_katas():
     with KATAS_PATH.open(encoding="utf-8") as file:
         return json.load(file)
 
+def get_kata(kata_id: str) -> dict | None:
+    katas = load_katas()
+    kata = next(
+        (kata for kata in katas if kata["id"] == kata_id),
+        None
+    )
+    return kata
+
 @router.get("/katas")
 def get_katas():
     return load_katas()

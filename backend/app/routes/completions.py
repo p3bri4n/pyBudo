@@ -1,8 +1,9 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlmodel import Session
 
 from app.dependencies import get_current_user, get_session
 from app.model import KataCompletion, User
+from app.routes.katas import get_kata
 from app.services.recalculate import recalculate_progression
 from app.schemas import KataCompletionCreate, ProgressionPublic
 
@@ -23,14 +24,19 @@ def add_completions(
     user: User = Depends(get_current_user), 
     session: Session = Depends(get_session)
 ):
-    kata = KataCompletion(
-        kata_id=completion.kata_id, 
-        user_id=user.id, 
-        discipline=completion.discipline
-    )
-    session.add(kata)
+    kata = get_kata(completion.kata_id)
+    if kata is None:
+        raise HTTPException(status_code=404, detail="kata not found")
 
-    recalculate_progression(user.id, session, kata.discipline)
+    kata_completion = KataCompletion(
+        kata_id=completion.kata_id,
+        user_id=user.id,
+        discipline=kata["discipline"]
+    )   
+    
+    session.add(kata_completion)
+
+    recalculate_progression(user.id, session)
 
     session.commit()
-    return kata
+    return kata_completion

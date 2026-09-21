@@ -24,8 +24,7 @@ class TokenData(BaseModel):
 
 class KataCompletionCreate(BaseModel):
     kata_id: str
-    discipline: str = "core"
-
+    
 class DisciplineProgressionPublic(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
