@@ -1,6 +1,6 @@
-from app.rank import Rank, RANK_ORDER
 from typing import get_args
 
+from app.rank import RANK_ORDER, Rank
 
 def test_all_ranks_are_defined():
     ranks = get_args(Rank)
