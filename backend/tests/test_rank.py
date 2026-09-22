@@ -2,6 +2,7 @@ from typing import get_args
 
 from app.rank import RANK_ORDER, Rank
 
+
 def test_all_ranks_are_defined():
     ranks = get_args(Rank)
     assert len(ranks) == 15
@@ -22,4 +23,4 @@ def test_rank_order_is_increasing():
     for i in range(len(ranks) - 1):
         current_rank = ranks[i]
         next_rank = ranks[i + 1]
-        assert RANK_ORDER.get[current_rank] < RANK_ORDER[next_rank]
+        assert RANK_ORDER[current_rank] < RANK_ORDER[next_rank]
