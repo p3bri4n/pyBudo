@@ -3,7 +3,7 @@ from sqlmodel import Session
 
 from app.dependencies import get_current_user, get_session
 from app.model import KataCompletion, User
-from app.routes.katas import get_kata
+from app.services.katas import get_kata
 from app.services.recalculate import recalculate_progression
 from app.schemas import KataCompletionCreate, ProgressionPublic
 
