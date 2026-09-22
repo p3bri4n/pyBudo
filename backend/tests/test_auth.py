@@ -86,3 +86,46 @@ def test_register_creates_progress(client, session):
 
     progression = session.exec(select(Progression).where(Progression.user_id == user.id)).first()
     assert progression is not None
+
+
+def test_login_user_success(client):
+    register = client.post("/auth/register",
+                           json={"username": "john",
+                                 "email": "john@example.com",
+                                 "password": "password123"}
+                           )
+    assert register.status_code == status.HTTP_200_OK
+    response = client.post("/auth/login",
+                           json={"email": "john@example.com",
+                                 "password": "password123"})
+    assert response.status_code == status.HTTP_200_OK
+    data = response.json()
+    assert data["message"] == "User logged in successfully"
+    assert data["access_token"] is not None
+    assert isinstance(data["access_token"], str)
+
+
+def test_login_user_no_db_user(client):
+    response = client.post("/auth/login",
+                           json={"email": "john@example.com",
+                                 "password": "password123"})
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+    data = response.json()
+    assert data["detail"] == "Incorrect email or password"
+    assert data.get("access_token") is None
+
+
+def test_login_user_wrong_password(client):
+    register = client.post("/auth/register",
+                           json={"username": "john",
+                                 "email": "john@example.com",
+                                 "password": "password123"}
+                           )
+    assert register.status_code == status.HTTP_200_OK
+    response = client.post("/auth/login",
+                           json={"email": "john@example.com",
+                                 "password": "password456"})
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+    data = response.json()
+    assert data["detail"] == "Incorrect email or password"
+    assert data.get("access_token") is None
