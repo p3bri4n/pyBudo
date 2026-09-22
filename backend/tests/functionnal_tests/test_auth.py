@@ -30,7 +30,7 @@ class TestsRegister:
         second_response = client.post("/auth/register",
                                       json={"username": "jane",
                                             "email": "jack@example.com",
-                                            "password": "password456"}
+                                            "password": "password123"}
                                       )
         assert second_response.status_code == status.HTTP_409_CONFLICT
         data = second_response.json()
