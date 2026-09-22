@@ -11,7 +11,7 @@ from app.main import app
 from app.dependencies import get_session
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def session():
     engine = create_engine(os.getenv("DATABASE_URL"),
                            connect_args={"check_same_thread": False},
@@ -21,7 +21,7 @@ def session():
         yield session
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def client(session):
     def override_get_session():
         yield session

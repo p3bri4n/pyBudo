@@ -12,8 +12,7 @@ class TestsKatas:
             title="core 1",
             statement="Écrivez une fonction qui reçoit deux entiers et renvoie leur somme.",
             signature="def additionner(a: int, b: int) -> int:",
-            solution_reference="def additionner(a, b):\n    return a + b",
-
+            solution_reference="def additionner(a, b):\n    return a + b"
         )
 
         kata2 = Kata(
@@ -27,8 +26,7 @@ class TestsKatas:
                                "if n % 2 == 0:\n"
                                "return True\n"
                                "else:\n"
-                               "return False",
-
+                               "return False"
         )
         session.add_all([kata1, kata2])
         session.commit()
