@@ -1,6 +1,6 @@
 from sqlmodel import Session, select
 
-from app.model import DisciplineProgression, KataCompletion, Progression
+from app.model import DisciplineProgression, Kata, KataCompletion, Progression
 from app.rank import RANK_ORDER
 from app.routes.katas import get_kata
 
@@ -17,12 +17,13 @@ def recalculate_progression(user_id: int, session: Session):
         )
     ).all()
 
-    # Retire les complétions dont on ne trouve plus le kata dans le catalogue
-    completions = [c for c in completions if get_kata(c.kata_id)]
+    # Prends tous les katas depuis la liste des completions en utilisant kata_id
+    # Juste avant, retire les completions dont on ne trouve pas le kata
+    katas: list[Kata] = [k for c in completions if (k := get_kata(c.kata_id, session))]
 
     # Récupère tous les ranks de la discipline "core" (le tronc commun)
     core_ranks = [
-        get_kata(c.kata_id)["rank"] for c in completions if c.discipline == "core"
+        k.rank for k in katas if k.discipline == "core"
     ]
     # Récupère le rank le plus elevé
     core_dan = highest_rank(core_ranks)
@@ -36,13 +37,13 @@ def recalculate_progression(user_id: int, session: Session):
     # On ne calcule les disciplines que s'il y'a un tronc commun
     # puisque c'est lui qui les plafonne
     if core_dan:
-        for completion in completions:
-            if completion.discipline == "core":
+        for kata in katas:
+            if kata.discipline == "core":
                 continue
             # Trouve le kata, recupère son rank 
             # et le range dans le group de sa discipline
-            groups.setdefault(completion.discipline, []).append(
-                get_kata(completion.kata_id)["rank"]
+            groups.setdefault(kata.discipline, []).append(
+                kata.rank
             )
     
     # Récupère la progression de l'utilisateur

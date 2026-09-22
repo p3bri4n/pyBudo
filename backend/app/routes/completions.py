@@ -24,14 +24,13 @@ def add_completions(
     user: User = Depends(get_current_user), 
     session: Session = Depends(get_session)
 ):
-    kata = get_kata(completion.kata_id)
+    kata = get_kata(completion.kata_id, session)
     if kata is None:
         raise HTTPException(status_code=404, detail="kata not found")
 
     kata_completion = KataCompletion(
         kata_id=completion.kata_id,
         user_id=user.id,
-        discipline=kata["discipline"]
     )   
     
     session.add(kata_completion)
