@@ -226,3 +226,6 @@ node_modules/
 # Spec
 backend/app/data/spec/
 
+# Tests
+*.db 
+
