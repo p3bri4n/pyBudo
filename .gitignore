@@ -219,3 +219,10 @@ __marimo__/
 
 # Node Modules
 node_modules/
+
+# IDE
+.vscode/
+
+# Spec
+backend/app/data/spec/
+
