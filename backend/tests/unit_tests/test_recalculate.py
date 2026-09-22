@@ -24,7 +24,6 @@ class TestRecalculateProgression:
             statement="Écrivez une fonction qui reçoit deux entiers et renvoie leur somme.",
             signature="def additionner(a: int, b: int) -> int:",
             solution_reference="def additionner(a, b):\n    return a + b",
-
         )
 
         kata2 = Kata(
@@ -35,11 +34,10 @@ class TestRecalculateProgression:
             statement="Écrivez une fonction qui reçoit un entier et renvoie True s'il est pair, False sinon",
             signature="def est_pair(n: int) -> bool:",
             solution_reference="def est_pair(n):\n"
-                               "if n % 2 == 0:\n"
-                               "return True\n"
-                               "else:\n"
-                               "return False",
-
+            "if n % 2 == 0:\n"
+            "return True\n"
+            "else:\n"
+            "return False",
         )
         progression = Progression(
             user_id=user_id,
@@ -54,13 +52,15 @@ class TestRecalculateProgression:
             user_id=user_id,
             kata_id="2",
         )
-        session.add_all([
-            kata1,
-            kata2,
-            progression,
-            completion1,
-            completion2,
-        ])
+        session.add_all(
+            [
+                kata1,
+                kata2,
+                progression,
+                completion1,
+                completion2,
+            ]
+        )
         session.commit()
 
         # act

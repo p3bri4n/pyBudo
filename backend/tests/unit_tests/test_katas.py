@@ -11,7 +11,7 @@ class TestKata(TestBase):
             title="Premier Kata",
             statement="Écrivez une fonction qui reçoit deux entiers et renvoie leur somme.",
             signature="def additionner(a: int, b: int) -> int:",
-            solution_reference="def additionner(a, b):\n    return a + b"
+            solution_reference="def additionner(a, b):\n    return a + b",
         )
         session.add(kata)
         session.commit()

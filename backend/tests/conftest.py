@@ -14,9 +14,11 @@ from app.main import app
 
 @pytest.fixture(scope="function")
 def session():
-    engine = create_engine(os.getenv("DATABASE_URL"),
-                           connect_args={"check_same_thread": False},
-                           poolclass=StaticPool)
+    engine = create_engine(
+        os.getenv("DATABASE_URL"),
+        connect_args={"check_same_thread": False},
+        poolclass=StaticPool,
+    )
     SQLModel.metadata.create_all(engine)
     with Session(engine) as session:
         yield session
@@ -26,6 +28,7 @@ def session():
 def client(session):
     def override_get_session():
         yield session
+
     app.dependency_overrides[get_session] = override_get_session
     with TestClient(app) as client:
         yield client
