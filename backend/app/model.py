@@ -1,6 +1,16 @@
 from datetime import datetime, timezone
 from typing import Optional
-from sqlmodel import JSON, Column, DateTime, SQLModel, UniqueConstraint, Field, Relationship
+
+from sqlmodel import (
+    JSON,
+    Column,
+    DateTime,
+    Field,
+    Relationship,
+    SQLModel,
+    UniqueConstraint,
+)
+
 
 class User(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
@@ -9,8 +19,13 @@ class User(SQLModel, table=True):
     hashed_password: str
     is_active: bool = Field(default=True)
 
-    progression: Optional["Progression"] = Relationship(back_populates="user", sa_relationship_kwargs={"uselist": False})
-    discipline_progressions : list["DisciplineProgression"] = Relationship(back_populates="user")
+    progression: Optional["Progression"] = Relationship(
+        back_populates="user", sa_relationship_kwargs={"uselist": False}
+    )
+    discipline_progressions: list["DisciplineProgression"] = Relationship(
+        back_populates="user"
+    )
+
 
 class Kata(SQLModel, table=True):
     id: str = Field(default=None, primary_key=True)
@@ -24,6 +39,7 @@ class Kata(SQLModel, table=True):
     tests: list[dict] = Field(default_factory=list, sa_column=Column(JSON))
     concepts_used: list[str] = Field(default_factory=list, sa_column=Column(JSON))
 
+
 class KataCompletion(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     kata_id: str = Field(nullable=False)
@@ -34,19 +50,21 @@ class KataCompletion(SQLModel, table=True):
     )
     verified: bool = Field(default=False)
 
+
 class Progression(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True)
     user_id: int = Field(foreign_key="user.id", unique=True, nullable=False)
     core_dan: str | None = None
-    user: Optional[User] = Relationship(back_populates="progression")
+    user: User | None = Relationship(back_populates="progression")
+
 
 class DisciplineProgression(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True)
     user_id: int = Field(foreign_key="user.id", nullable=False)
     discipline: str = Field()
     highest_dan_practiced: str = Field()
 
-    user: Optional[User] = Relationship(back_populates="discipline_progressions")
+    user: User | None = Relationship(back_populates="discipline_progressions")
 
     __table_args__ = (
         UniqueConstraint("user_id", "discipline", name="unique_user_discipline"),

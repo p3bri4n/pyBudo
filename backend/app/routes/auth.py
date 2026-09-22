@@ -1,5 +1,7 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from typing import Annotated
+
 import jwt
+from fastapi import APIRouter, Depends, HTTPException, status
 from pwdlib import PasswordHash
 from sqlmodel import Session, select
 
@@ -11,12 +13,13 @@ router = APIRouter()
 
 password_hash = PasswordHash.recommended()
 
+
 @router.post("/auth/register")
-def register_user(user: UserRegister, session: Session = Depends(get_session)):
+def register_user(
+    user: UserRegister, session: Annotated[Session, Depends(get_session)]
+):
     # Verifie que l'email est unique
-    existing_email = session.exec(
-        select(User).where(User.email == user.email)
-    ).first()
+    existing_email = session.exec(select(User).where(User.email == user.email)).first()
     if existing_email:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
@@ -38,14 +41,12 @@ def register_user(user: UserRegister, session: Session = Depends(get_session)):
 
     # Crée l'utilisateur
     user = User(
-        username=user.username, 
-        email=user.email, 
-        hashed_password=hashed_password
+        username=user.username, email=user.email, hashed_password=hashed_password
     )
 
     # Stocke l'utilisateur dans la base de données
     session.add(user)
-    session.flush() # Flush permet d'avoir un user.id
+    session.flush()  # Flush permet d'avoir un user.id
 
     # Il faut maintenant créer un objet Progression pour l'utilisateur
     progress = Progression(user_id=user.id)
@@ -62,21 +63,20 @@ def register_user(user: UserRegister, session: Session = Depends(get_session)):
 
     return Token(message="User registered successfully", access_token=encoded_jwt)
 
+
 @router.post("/auth/login")
-def login_user(user: UserLogin, session: Session = Depends(get_session)):
+def login_user(user: UserLogin, session: Annotated[Session, Depends(get_session)]):
     # Vérifie que l'utilisateur existe
     db_user = session.exec(select(User).where(User.email == user.email)).first()
 
     # Retourne l'erreur si l'email ou le mot de passe est incorrect
-    if not db_user or not password_hash.verify(
-        user.password, db_user.hashed_password
-    ):
+    if not db_user or not password_hash.verify(user.password, db_user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect email or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    
+
     # Génère le token JWT
     encoded_jwt = jwt.encode({"sub": db_user.email}, SECRET_KEY, algorithm=ALGORITHM)
 

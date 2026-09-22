@@ -9,12 +9,12 @@ from app.services.katas import get_kata
 def highest_rank(ranks: list[str]) -> str | None:
     return max(ranks, key=lambda rank: RANK_ORDER[rank]) if ranks else None
 
+
 # Fonction de recalcul de la progression de l'utilisateur lorsque sa liste de Katas complétés change
 def recalculate_progression(user_id: int, session: Session):
     # Prends la liste de tous les katas complété de l'utilisateur
-    completions: list[KataCompletion] = session.exec(select(KataCompletion).where(
-            KataCompletion.user_id == user_id
-        )
+    completions: list[KataCompletion] = session.exec(
+        select(KataCompletion).where(KataCompletion.user_id == user_id)
     ).all()
 
     # Prends tous les katas depuis la liste des completions en utilisant kata_id
@@ -22,9 +22,7 @@ def recalculate_progression(user_id: int, session: Session):
     katas: list[Kata] = [k for c in completions if (k := get_kata(c.kata_id, session))]
 
     # Récupère tous les ranks de la discipline "core" (le tronc commun)
-    core_ranks = [
-        k.rank for k in katas if k.discipline == "core"
-    ]
+    core_ranks = [k.rank for k in katas if k.discipline == "core"]
     # Récupère le rank le plus elevé
     core_dan = highest_rank(core_ranks)
 
@@ -40,29 +38,25 @@ def recalculate_progression(user_id: int, session: Session):
         for kata in katas:
             if kata.discipline == "core":
                 continue
-            # Trouve le kata, recupère son rank 
+            # Trouve le kata, recupère son rank
             # et le range dans le group de sa discipline
-            groups.setdefault(kata.discipline, []).append(
-                kata.rank
-            )
-    
+            groups.setdefault(kata.discipline, []).append(kata.rank)
+
     # Récupère la progression de l'utilisateur
-    progression: Progression = session.exec(select(Progression).where(
-        Progression.user_id == user_id
-    )).one()
+    progression: Progression = session.exec(
+        select(Progression).where(Progression.user_id == user_id)
+    ).one()
     # Actualise son core_dan (rank sur le tronc commun)
     progression.core_dan = core_dan
 
     # Récupère la progression de l'utilisateur sur toutes ses disciplines
     dps: list[DisciplineProgression] = session.exec(
-        select(DisciplineProgression).where(
-            DisciplineProgression.user_id == user_id
-        )
+        select(DisciplineProgression).where(DisciplineProgression.user_id == user_id)
     ).all()
 
     # Un utilisateur a qu'une progression par discipline
     # Ici on indexe chaque progression par sa discipline
-    existing = {dp.discipline: dp for dp in dps }
+    existing = {dp.discipline: dp for dp in dps}
 
     # Pour les suppression d'un kata complété
     # Vérifier qu'une discipline ne se retrouve sans kata complété
@@ -84,14 +78,12 @@ def recalculate_progression(user_id: int, session: Session):
             dp.highest_dan_practiced = capped
         # Sinon crée une nouvelle progression dans cette discipline
         else:
-            session.add(DisciplineProgression(
-                user_id=user_id,
-                discipline=discipline,
-                highest_dan_practiced=capped,
-            ))
+            session.add(
+                DisciplineProgression(
+                    user_id=user_id,
+                    discipline=discipline,
+                    highest_dan_practiced=capped,
+                )
+            )
     # Les routes et fonctions appelant celle ci se chargeront du commit
     # Pour tout valider en une seule transaction
-
-
-    
-
