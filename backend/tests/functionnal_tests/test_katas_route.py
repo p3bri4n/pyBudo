@@ -1,11 +1,11 @@
 from fastapi import status
 
-from app.model import Kata
+from tests.data.test_base import TestBase
 
 
-class TestsKatas:
+class TestsKatas(TestBase):
     def test_get_katas_success(self, client, session):
-        kata1 = Kata(
+        kata1 = self.add_kata(
             id="1",
             rank="kyu_10",
             discipline="core",
@@ -15,7 +15,7 @@ class TestsKatas:
             solution_reference="def additionner(a, b):\n    return a + b"
         )
 
-        kata2 = Kata(
+        kata2 = self.add_kata(
             id="2",
             rank="kyu_2",
             discipline="django",

@@ -3,8 +3,10 @@ from sqlmodel import select
 from app.model import User, Progression
 from pwdlib import PasswordHash
 
+from tests.data.test_base import TestBase
 
-class TestsRegister:
+
+class TestsRegister(TestBase):
     def test_register_user_success(self, client):
         response = client.post("/auth/register",
                                json={"username": "john",
@@ -85,7 +87,7 @@ class TestsRegister:
         assert progression is not None
 
 
-class TestsLogin:
+class TestsLogin(TestBase):
     def test_login_user_success(self, client):
         register = client.post("/auth/register",
                                json={"username": "john",

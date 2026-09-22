@@ -3,9 +3,10 @@ from datetime import datetime, timezone
 from fastapi import status
 from pwdlib import PasswordHash
 from app.model import User, Progression, DisciplineProgression, Kata, KataCompletion
+from tests.data.test_base import TestBase
 
 
-class TestProgressions:
+class TestProgressions(TestBase):
     def test_get_user_progress(self, client, session):
         password_hash = PasswordHash.recommended()
         hashed_password = password_hash.hash("password123")
