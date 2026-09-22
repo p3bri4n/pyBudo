@@ -1,8 +1,7 @@
-from datetime import datetime, timezone
-
 from fastapi import status
 from pwdlib import PasswordHash
-from app.model import User, Progression, DisciplineProgression, Kata, KataCompletion
+
+from app.model import DisciplineProgression, Kata, Progression, User
 from tests.data.test_base import TestBase
 
 

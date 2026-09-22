@@ -1,8 +1,8 @@
 from fastapi import status
-from sqlmodel import select
-from app.model import User, Progression
 from pwdlib import PasswordHash
+from sqlmodel import select
 
+from app.model import Progression, User
 from tests.data.test_base import TestBase
 
 

@@ -1,14 +1,15 @@
 import os
+
 import pytest
 from fastapi.testclient import TestClient
-from sqlmodel import SQLModel, Session, create_engine
 from sqlalchemy.pool import StaticPool
+from sqlmodel import Session, SQLModel, create_engine
 
 os.environ.setdefault("DATABASE_URL", "sqlite:///")
 os.environ.setdefault("SECRET_KEY", "cle-de-test")
 
-from app.main import app
 from app.dependencies import get_session
+from app.main import app
 
 
 @pytest.fixture(scope="function")

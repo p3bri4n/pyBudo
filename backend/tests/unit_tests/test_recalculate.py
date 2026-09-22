@@ -1,5 +1,6 @@
 from sqlmodel import select
-from app.model import Kata, Progression, KataCompletion, DisciplineProgression
+
+from app.model import DisciplineProgression, Kata, KataCompletion, Progression
 from app.services.recalculate import highest_rank, recalculate_progression
 from tests.data.test_base import TestBase
 
