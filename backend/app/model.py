@@ -38,6 +38,7 @@ class Kata(SQLModel, table=True):
     solution_reference: str
     tests: list[dict] = Field(default_factory=list, sa_column=Column(JSON))
     concepts_used: list[str] = Field(default_factory=list, sa_column=Column(JSON))
+    meta: dict = Field(sa_column=Column("metadata", JSON))
 
 
 class KataCompletion(SQLModel, table=True):

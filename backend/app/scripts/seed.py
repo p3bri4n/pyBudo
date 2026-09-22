@@ -18,7 +18,7 @@ def load_katas():
 def seed_katas():
     with Session(engine) as session:
         for kata in load_katas():
-            session.merge(Kata(**kata))
+            session.merge(Kata(**kata, meta=kata["metadata"]))
         session.commit()
 
 
