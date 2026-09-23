@@ -6,7 +6,7 @@ from tests.data.base_entity_helper import BaseEntityHelper
 class TestsKatas(BaseEntityHelper):
     def test_get_katas_success(self, client, session):
         self._add_kata(
-            id="1",
+            id="kyu_10_addition",
             rank="kyu_10",
             discipline="core",
             title="core 1",
@@ -17,7 +17,7 @@ class TestsKatas(BaseEntityHelper):
         )
 
         self._add_kata(
-            id="2",
+            id="kyu_2_check_pair",
             rank="kyu_2",
             discipline="django",
             title="django 2",

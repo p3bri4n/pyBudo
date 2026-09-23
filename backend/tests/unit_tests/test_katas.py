@@ -6,12 +6,12 @@ class TestsKata(BaseEntityHelper):
     def test_get_kata(self, session):
         self._add_kata(session=session)
 
-        result = get_kata("1", session)
+        result = get_kata("kyu_10_addition", session)
 
         assert result is not None
-        assert result.id == "1"
+        assert result.id == "kyu_10_addition"
         assert result.title == "Premier Kata"
 
     def test_get_kata_non_existent(self, session):
-        result = get_kata("1", session)
+        result = get_kata("kyu_10_addition", session)
         assert result is None

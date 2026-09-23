@@ -17,7 +17,7 @@ class TestRecalculateProgression:
         # prepare
         user_id = 1
         kata1 = Kata(
-            id="1",
+            id="kyu_10_addition",
             rank="kyu_10",
             discipline="core",
             title="core 1",
@@ -27,7 +27,7 @@ class TestRecalculateProgression:
         )
 
         kata2 = Kata(
-            id="2",
+            id="kyu_2_check_pair",
             rank="kyu_2",
             discipline="django",
             title="django 2",
@@ -45,12 +45,12 @@ class TestRecalculateProgression:
         )
         completion1 = KataCompletion(
             user_id=user_id,
-            kata_id="1",
+            kata_id="kyu_10_addition",
         )
 
         completion2 = KataCompletion(
             user_id=user_id,
-            kata_id="2",
+            kata_id="kyu_2_check_pair",
         )
         session.add_all(
             [

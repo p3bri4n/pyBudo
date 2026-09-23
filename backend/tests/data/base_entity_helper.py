@@ -32,7 +32,7 @@ class BaseEntityHelper:
     def _add_kata(
         self,
         session,
-        id="1",
+        id="kyu_10_addition",
         rank="kyu_10",
         discipline="core",
         title="Premier Kata",
