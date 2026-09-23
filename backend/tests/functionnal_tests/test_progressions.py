@@ -43,7 +43,7 @@ class TestProgressions(TestBase):
 
     def test_add_completions(self, client, session):
         kata = Kata(
-            id="1",
+            id="kyu_10_addition",
             rank="kyu_10",
             discipline="core",
             title="core 1",
@@ -78,11 +78,11 @@ class TestProgressions(TestBase):
 
         response = client.post(
             "/completions",
-            json={"kata_id": "1"},
+            json={"kata_id": "kyu_10_addition"},
             headers={"Authorization": f"Bearer {token}"},
         )
         assert response.status_code == status.HTTP_200_OK
 
         data = response.json()
-        assert data["kata_id"] == "1"
-        assert data["user_id"] == 1
+        assert data["kata_id"] == "kyu_10_addition"
+        assert data["user_id"] == user.id
