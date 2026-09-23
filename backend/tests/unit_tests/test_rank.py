@@ -1,10 +1,10 @@
 from typing import get_args
 
 from app.rank import RANK_ORDER, Rank
-from tests.data.test_base import TestBase
+from tests.data.base_entity_helper import BaseEntityHelper
 
 
-class TestRanks(TestBase):
+class TestsRanks(BaseEntityHelper):
     def test_all_ranks_are_defined(self):
         ranks = get_args(Rank)
         assert len(ranks) == 15

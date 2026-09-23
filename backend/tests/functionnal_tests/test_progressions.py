@@ -1,11 +1,11 @@
 from fastapi import status
 from pwdlib import PasswordHash
 
-from app.model import DisciplineProgression, Kata, Progression, User
-from tests.data.test_base import TestBase
+from app.model import DisciplineProgression, Progression, User
+from tests.data.base_entity_helper import BaseEntityHelper
 
 
-class TestProgressions(TestBase):
+class TestsProgressions(BaseEntityHelper):
     def test_get_user_progress(self, client, session):
         password_hash = PasswordHash.recommended()
         hashed_password = password_hash.hash("password123")
@@ -42,17 +42,13 @@ class TestProgressions(TestBase):
         assert data["disciplines"][0]["highest_dan_practiced"] == "kyu_8"
 
     def test_add_completions(self, client, session):
-        kata = Kata(
+        kata = self._add_kata(
+            session=session,
             id="kyu_10_addition",
             rank="kyu_10",
             discipline="core",
             title="core 1",
-            statement="Écrivez une fonction qui reçoit deux entiers et renvoie leur somme.",
-            signature="def additionner(a: int, b: int) -> int:",
-            solution_reference="def additionner(a, b):\n    return a + b",
         )
-        session.add(kata)
-        session.commit()
 
         password_hash = PasswordHash.recommended()
         hashed_password = password_hash.hash("password123")
@@ -78,7 +74,7 @@ class TestProgressions(TestBase):
 
         response = client.post(
             "/completions",
-            json={"kata_id": "kyu_10_addition"},
+            json={"kata_id": kata.id},
             headers={"Authorization": f"Bearer {token}"},
         )
         assert response.status_code == status.HTTP_200_OK

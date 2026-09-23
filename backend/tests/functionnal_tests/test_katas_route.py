@@ -1,11 +1,11 @@
 from fastapi import status
 
-from tests.data.test_base import TestBase
+from tests.data.base_entity_helper import BaseEntityHelper
 
 
-class TestsKatas(TestBase):
+class TestsKatas(BaseEntityHelper):
     def test_get_katas_success(self, client, session):
-        kata1 = self.add_kata(
+        self._add_kata(
             id="1",
             rank="kyu_10",
             discipline="core",
@@ -13,9 +13,10 @@ class TestsKatas(TestBase):
             statement="Écrivez une fonction qui reçoit deux entiers et renvoie leur somme.",
             signature="def additionner(a: int, b: int) -> int:",
             solution_reference="def additionner(a, b):\n    return a + b",
+            session=session,
         )
 
-        kata2 = self.add_kata(
+        self._add_kata(
             id="2",
             rank="kyu_2",
             discipline="django",
@@ -27,9 +28,8 @@ class TestsKatas(TestBase):
             "return True\n"
             "else:\n"
             "return False",
+            session=session,
         )
-        session.add_all([kata1, kata2])
-        session.commit()
 
         response = client.get("/katas")
         assert response.status_code == status.HTTP_200_OK
