@@ -43,6 +43,7 @@ class TestsKatas(BaseEntityHelper):
             data[1]["statement"] == "Écrivez une fonction qui reçoit un entier "
             "et renvoie True s'il est pair, False sinon"
         )
+        assert "solution_reference" not in data[0]
 
     def test_get_katas_no_katas(self, client):
         response = client.get("/katas")
