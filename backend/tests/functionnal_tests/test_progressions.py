@@ -1,7 +1,7 @@
 from fastapi import status
 from pwdlib import PasswordHash
 
-from app.model import DisciplineProgression, Kata, Progression, User
+from app.model import DisciplineProgression, Progression, User
 from tests.data.base_entity_helper import BaseEntityHelper
 
 

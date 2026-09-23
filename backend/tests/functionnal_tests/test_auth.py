@@ -98,7 +98,12 @@ class TestsRegister(BaseEntityHelper):
 
 class TestsLogin(BaseEntityHelper):
     def test_login_user_success(self, client, session):
-        self._add_user(session=session, username="john", email="john@example.com", password="password123")
+        self._add_user(
+            session=session,
+            username="john",
+            email="john@example.com",
+            password="password123",
+        )
 
         response = client.post(
             "/auth/login", json={"email": "john@example.com", "password": "password123"}
@@ -119,7 +124,12 @@ class TestsLogin(BaseEntityHelper):
         assert data.get("access_token") is None
 
     def test_login_user_wrong_password(self, client, session):
-        self._add_user(session=session, username="john", email="john@example.com", password="password123")
+        self._add_user(
+            session=session,
+            username="john",
+            email="john@example.com",
+            password="password123",
+        )
         response = client.post(
             "/auth/login", json={"email": "john@example.com", "password": "password456"}
         )

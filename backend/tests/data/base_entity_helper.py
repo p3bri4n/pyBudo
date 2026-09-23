@@ -17,7 +17,7 @@ class BaseEntityHelper:
         username="john",
         email="john@example.com",
         password="password123",
-        is_active=True
+        is_active=True,
     ):
         hashed_password = self._hash_password(password)
         user = User(
@@ -25,7 +25,7 @@ class BaseEntityHelper:
             username=username,
             email=email,
             hashed_password=hashed_password,
-            is_active=is_active
+            is_active=is_active,
         )
         session.add(user)
         session.commit()
@@ -44,7 +44,7 @@ class BaseEntityHelper:
         variant_of=None,
         tests=None,
         concepts_used=None,
-        meta=None
+        meta=None,
     ):
 
         kata = Kata(
