@@ -13,7 +13,6 @@ class BaseEntityHelper:
     def _add_user(
         self,
         session,
-        id=1,
         username="john",
         email="john@example.com",
         password="password123",
@@ -21,7 +20,6 @@ class BaseEntityHelper:
     ):
         hashed_password = self._hash_password(password)
         user = User(
-            id=id,
             username=username,
             email=email,
             hashed_password=hashed_password,
