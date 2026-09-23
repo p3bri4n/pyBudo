@@ -5,7 +5,7 @@ from app.model import DisciplineProgression, Kata, Progression, User
 from tests.data.base_entity_helper import BaseEntityHelper
 
 
-class ProgressionsEntityHelper(BaseEntityHelper):
+class TestsProgressions(BaseEntityHelper):
     def test_get_user_progress(self, client, session):
         password_hash = PasswordHash.recommended()
         hashed_password = password_hash.hash("password123")

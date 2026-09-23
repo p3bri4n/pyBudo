@@ -2,18 +2,9 @@ from app.services.katas import get_kata
 from tests.data.base_entity_helper import BaseEntityHelper
 
 
-class KataEntityHelper(BaseEntityHelper):
+class TestsKata(BaseEntityHelper):
     def test_get_kata(self, session):
-        self.add_kata(
-            id="1",
-            rank="kyu_10",
-            discipline="core",
-            title="Premier Kata",
-            statement="Écrivez une fonction qui reçoit deux entiers et renvoie leur somme.",
-            signature="def additionner(a: int, b: int) -> int:",
-            solution_reference="def additionner(a, b):\n    return a + b",
-            session=session,
-        )
+        self.add_kata(session=session)
 
         result = get_kata("1", session)
 
