@@ -4,7 +4,7 @@ from tests.data.base_entity_helper import BaseEntityHelper
 
 class TestsKata(BaseEntityHelper):
     def test_get_kata(self, session):
-        self.add_kata(session=session)
+        self._add_kata(session=session)
 
         result = get_kata("1", session)
 

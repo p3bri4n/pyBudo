@@ -22,37 +22,25 @@ class TestsRegister(BaseEntityHelper):
         assert "access_token" in data
         assert data["access_token"]
 
-    def test_register_user_existing_email(self, client):
-        existing_user = {
-            "username": "jack",
-            "email": "jack@example.com",
-            "password": "password123",
-        }
+    def test_register_user_existing_email(self, client, session):
+        self._add_user(session=session, email="jack@example.com")
 
-        first_response = client.post("/auth/register", json=existing_user)
-        assert first_response.status_code == status.HTTP_200_OK
-
-        second_response = client.post(
+        response = client.post(
             "/auth/register",
             json={
                 "username": "jane",
                 "email": "jack@example.com",
-                "password": "password123",
+                "password": "password456",
             },
         )
-        assert second_response.status_code == status.HTTP_409_CONFLICT
-        data = second_response.json()
+        assert response.status_code == status.HTTP_409_CONFLICT
+        data = response.json()
         assert data["detail"] == "Email already registered"
 
-    def test_register_user_existing_username(self, client):
-        existing_user = {
-            "username": "jack",
-            "email": "jack@example.com",
-            "password": "password123",
-        }
-        first_response = client.post("/auth/register", json=existing_user)
-        assert first_response.status_code == status.HTTP_200_OK
-        second_response = client.post(
+    def test_register_user_existing_username(self, client, session):
+        self._add_user(session=session, username="jack")
+
+        response = client.post(
             "/auth/register",
             json={
                 "username": "jack",
@@ -60,8 +48,8 @@ class TestsRegister(BaseEntityHelper):
                 "password": "password456",
             },
         )
-        assert second_response.status_code == status.HTTP_409_CONFLICT
-        data = second_response.json()
+        assert response.status_code == status.HTTP_409_CONFLICT
+        data = response.json()
         assert data["detail"] == "Username already exists"
 
     def test_register_password_is_hashed(self, client, session):
@@ -109,16 +97,10 @@ class TestsRegister(BaseEntityHelper):
 
 
 class TestsLogin(BaseEntityHelper):
-    def test_login_user_success(self, client):
-        register = client.post(
-            "/auth/register",
-            json={
-                "username": "john",
-                "email": "john@example.com",
-                "password": "password123",
-            },
-        )
-        assert register.status_code == status.HTTP_200_OK
+    def test_login_user_success(self, client, session):
+        hashed_password = PasswordHash.recommended().hash("password123")
+        self._add_user(session=session, username="john", email="john@example.com", hashed_password=hashed_password)
+
         response = client.post(
             "/auth/login", json={"email": "john@example.com", "password": "password123"}
         )
@@ -137,16 +119,9 @@ class TestsLogin(BaseEntityHelper):
         assert data["detail"] == "Incorrect email or password"
         assert data.get("access_token") is None
 
-    def test_login_user_wrong_password(self, client):
-        register = client.post(
-            "/auth/register",
-            json={
-                "username": "john",
-                "email": "john@example.com",
-                "password": "password123",
-            },
-        )
-        assert register.status_code == status.HTTP_200_OK
+    def test_login_user_wrong_password(self, client, session):
+        hashed_password = PasswordHash.recommended().hash("password123")
+        self._add_user(session=session, username="john", email="john@example.com", hashed_password=hashed_password)
         response = client.post(
             "/auth/login", json={"email": "john@example.com", "password": "password456"}
         )

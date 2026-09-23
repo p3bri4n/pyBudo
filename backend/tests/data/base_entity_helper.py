@@ -1,10 +1,31 @@
-from app.model import Kata
+from pwdlib import PasswordHash
+from app.model import Kata, User
 
 
 class BaseEntityHelper:
     """Base de test pour tous les tests"""
+    def _add_user(
+        self,
+        session,
+        id=1,
+        username="john",
+        email="john@example.com",
+        hashed_password=PasswordHash.recommended().hash("password123"),
+        is_active=True
+    ):
 
-    def add_kata(
+        user = User(
+            id=id,
+            username=username,
+            email=email,
+            hashed_password=hashed_password,
+            is_active=is_active
+        )
+        session.add(user)
+        session.commit()
+        return user
+
+    def _add_kata(
         self,
         session,
         id="1",
