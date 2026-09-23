@@ -2,10 +2,10 @@ from sqlmodel import select
 
 from app.model import DisciplineProgression, Kata, KataCompletion, Progression
 from app.services.recalculate import highest_rank, recalculate_progression
-from tests.data.test_base import TestBase
+from tests.data.base_entity_helper import BaseEntityHelper
 
 
-class TestHighestRank(TestBase):
+class HighestRankEntityHelper(BaseEntityHelper):
     def test_highest_rank_returns_highest_rank(self):
         ranks = ["kyu_10", "kyu_3", "kyu_7"]
         result = highest_rank(ranks)

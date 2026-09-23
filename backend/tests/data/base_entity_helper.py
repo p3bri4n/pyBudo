@@ -1,13 +1,22 @@
 from app.model import Kata
 
 
-class TestBase:
+class BaseEntityHelper:
     """Base de test pour tous les tests"""
 
     def add_kata(
-        self, id, rank, discipline, title, statement, signature, solution_reference
+        self,
+        id,
+        rank,
+        discipline,
+        title,
+        statement,
+        signature,
+        solution_reference,
+        session,
     ):
-        return Kata(
+
+        kata = Kata(
             id=id,
             rank=rank,
             discipline=discipline,
@@ -16,3 +25,7 @@ class TestBase:
             signature=signature,
             solution_reference=solution_reference,
         )
+
+        session.add(kata)
+        session.commit()
+        return kata

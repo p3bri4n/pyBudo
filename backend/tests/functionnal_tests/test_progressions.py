@@ -2,10 +2,10 @@ from fastapi import status
 from pwdlib import PasswordHash
 
 from app.model import DisciplineProgression, Kata, Progression, User
-from tests.data.test_base import TestBase
+from tests.data.base_entity_helper import BaseEntityHelper
 
 
-class TestProgressions(TestBase):
+class ProgressionsEntityHelper(BaseEntityHelper):
     def test_get_user_progress(self, client, session):
         password_hash = PasswordHash.recommended()
         hashed_password = password_hash.hash("password123")

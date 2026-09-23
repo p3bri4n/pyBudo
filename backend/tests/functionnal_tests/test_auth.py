@@ -3,10 +3,10 @@ from pwdlib import PasswordHash
 from sqlmodel import select
 
 from app.model import Progression, User
-from tests.data.test_base import TestBase
+from tests.data.base_entity_helper import BaseEntityHelper
 
 
-class TestsRegister(TestBase):
+class TestsRegister(BaseEntityHelper):
     def test_register_user_success(self, client):
         response = client.post(
             "/auth/register",
@@ -108,7 +108,7 @@ class TestsRegister(TestBase):
         assert progression is not None
 
 
-class TestsLogin(TestBase):
+class TestsLogin(BaseEntityHelper):
     def test_login_user_success(self, client):
         register = client.post(
             "/auth/register",
