@@ -1,6 +1,6 @@
 from sqlmodel import select
 
-from app.model import DisciplineProgression, Kata, KataCompletion, Progression
+from app.model import DisciplineProgression, KataCompletion, Progression
 from app.services.recalculate import highest_rank, recalculate_progression
 from tests.data.base_entity_helper import BaseEntityHelper
 
@@ -12,50 +12,39 @@ class TestsHighestRank(BaseEntityHelper):
         assert result == "kyu_3"
 
 
-class TestRecalculateProgression:
+class TestRecalculateProgression(BaseEntityHelper):
     def test_recalculate_progression(self, session):
         # prepare
         user_id = 1
-        kata1 = Kata(
+        kata1 = self._add_kata(
+            session=session,
             id="kyu_10_addition",
             rank="kyu_10",
             discipline="core",
-            title="core 1",
-            statement="Écrivez une fonction qui reçoit deux entiers et renvoie leur somme.",
-            signature="def additionner(a: int, b: int) -> int:",
-            solution_reference="def additionner(a, b):\n    return a + b",
         )
 
-        kata2 = Kata(
+        kata2 = self._add_kata(
+            session=session,
             id="kyu_2_check_pair",
             rank="kyu_2",
             discipline="django",
-            title="django 2",
-            statement="Écrivez une fonction qui reçoit un entier et renvoie True s'il est pair, False sinon",
-            signature="def est_pair(n: int) -> bool:",
-            solution_reference="def est_pair(n):\n"
-            "if n % 2 == 0:\n"
-            "return True\n"
-            "else:\n"
-            "return False",
         )
+
         progression = Progression(
             user_id=user_id,
             core_dan=None,
         )
         completion1 = KataCompletion(
             user_id=user_id,
-            kata_id="kyu_10_addition",
+            kata_id=kata1.id,
         )
 
         completion2 = KataCompletion(
             user_id=user_id,
-            kata_id="kyu_2_check_pair",
+            kata_id=kata2.id,
         )
         session.add_all(
             [
-                kata1,
-                kata2,
                 progression,
                 completion1,
                 completion2,
