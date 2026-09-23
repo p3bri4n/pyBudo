@@ -42,7 +42,7 @@ class TestsProgressions(BaseEntityHelper):
         assert data["disciplines"][0]["highest_dan_practiced"] == "kyu_8"
 
     def test_add_completions(self, client, session):
-        self._add_kata(
+        kata = self._add_kata(
             session=session,
             id="kyu_10_addition",
             rank="kyu_10",
@@ -74,7 +74,7 @@ class TestsProgressions(BaseEntityHelper):
 
         response = client.post(
             "/completions",
-            json={"kata_id": "kyu_10_addition"},
+            json={"kata_id": kata.id},
             headers={"Authorization": f"Bearer {token}"},
         )
         assert response.status_code == status.HTTP_200_OK
