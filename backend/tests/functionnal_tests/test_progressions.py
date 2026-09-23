@@ -42,17 +42,13 @@ class TestsProgressions(BaseEntityHelper):
         assert data["disciplines"][0]["highest_dan_practiced"] == "kyu_8"
 
     def test_add_completions(self, client, session):
-        kata = Kata(
+        self._add_kata(
+            session=session,
             id="kyu_10_addition",
             rank="kyu_10",
             discipline="core",
             title="core 1",
-            statement="Écrivez une fonction qui reçoit deux entiers et renvoie leur somme.",
-            signature="def additionner(a: int, b: int) -> int:",
-            solution_reference="def additionner(a, b):\n    return a + b",
         )
-        session.add(kata)
-        session.commit()
 
         password_hash = PasswordHash.recommended()
         hashed_password = password_hash.hash("password123")
