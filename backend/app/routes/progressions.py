@@ -40,4 +40,6 @@ def add_completions(
     recalculate_progression(user.id, session)
 
     session.commit()
+    session.refresh(kata_completion)
+
     return kata_completion
