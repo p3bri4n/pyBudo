@@ -1,21 +1,18 @@
 
 import './App.css'
-import {PythonRunner} from "./components/PythonEditor.tsx";
-import logoPybudo from "../../assets/logo_pybudo.jpeg"
+import AppRouter from "./pages/Router/AppRouter.tsx";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 
 function App() {
 
   return (
-    <>
-      <section>
-
-        <div>
-          <img src={logoPybudo}/>
-          <PythonRunner/>
-        </div>
-
-      </section>
-    </>
+      <div className={"App"}>
+          <BrowserRouter>
+              <Routes>
+                  <Route path="/*" element={<AppRouter/>}/>
+              </Routes>
+          </BrowserRouter>
+      </div>
   )
 }
 
