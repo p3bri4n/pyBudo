@@ -1,7 +1,7 @@
 from pwdlib import PasswordHash
 from sqlmodel import Session
 
-from app.model import Kata, KataCompletion, Progression, User
+from app.model import DisciplineProgression, Kata, KataCompletion, Progression, User
 
 
 class BaseEntityHelper:
@@ -89,3 +89,21 @@ class BaseEntityHelper:
         session.commit()
 
         return completion
+
+    def _add_discipline_progression(
+        self,
+        session: Session,
+        user_id: int,
+        discipline="django",
+        highest_dan_practiced="kyu_8",
+    ):
+        dp = DisciplineProgression(
+            user_id=user_id,
+            discipline=discipline,
+            highest_dan_practiced=highest_dan_practiced,
+        )
+
+        session.add(dp)
+        session.commit()
+
+        return dp

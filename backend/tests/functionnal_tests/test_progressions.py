@@ -2,7 +2,6 @@ from fastapi import status
 from httpx import Client
 from sqlmodel import Session
 
-from app.model import DisciplineProgression
 from tests.data.base_entity_helper import BaseEntityHelper
 
 
@@ -11,13 +10,10 @@ class TestsProgressions(BaseEntityHelper):
         user = self._add_user(
             session, username="john", email="john@example.com", password="password123"
         )
-
         self._add_progression(session, user_id=user.id, core_dan="kyu_9")
-        django_progression = DisciplineProgression(
-            user_id=user.id, discipline="django", highest_dan_practiced="kyu_8"
+        self._add_discipline_progression(
+            session, user_id=user.id, discipline="django", highest_dan_practiced="kyu_8"
         )
-        session.add(django_progression)
-        session.commit()
         login = client.post(
             "/auth/login", json={"email": "john@example.com", "password": "password123"}
         )
