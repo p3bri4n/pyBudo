@@ -181,14 +181,17 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Lowercase repository
+        run: echo "REPO=${GITHUB_REPOSITORY,,}" >> "$GITHUB_ENV"
+
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
           context: ./backend
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}/backend:${{ github.sha }}
-            ghcr.io/${{ github.repository }}/backend:${{ github.ref_name }}
+            ghcr.io/${{ env.REPO }}/backend:${{ github.sha }}
+            ghcr.io/${{ env.REPO }}/backend:${{ github.ref_name }}
 
   build-frontend-image:
     name: Build & push frontend image
@@ -214,14 +217,17 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Lowercase repository
+        run: echo "REPO=${GITHUB_REPOSITORY,,}" >> "$GITHUB_ENV"
+
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
           context: ./frontend
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}/frontend:${{ github.sha }}
-            ghcr.io/${{ github.repository }}/frontend:${{ github.ref_name }}
+            ghcr.io/${{ env.REPO }}/frontend:${{ github.sha }}
+            ghcr.io/${{ env.REPO }}/frontend:${{ github.ref_name }}
 
   deploy-staging:
     name: CD - Deploy staging
@@ -243,7 +249,7 @@ jobs:
         run: |
           echo "CI/build passed on dev."
           echo "TODO: brancher la commande de déploiement staging (SSH+docker compose pull, Kubernetes, PaaS, etc.)."
-          echo "Images disponibles : ghcr.io/${{ github.repository }}/backend:${{ github.sha }} et .../frontend:${{ github.sha }}"
+          echo "Images disponibles : ghcr.io/${{ env.REPO }}/backend:${{ github.sha }} et .../frontend:${{ github.sha }}"
 
   deploy-production:
     name: CD - Deploy production
@@ -266,4 +272,4 @@ jobs:
           echo "CI/build passed on main."
           echo "TODO: brancher la commande de déploiement production."
           echo "Utiliser la protection d'environnement GitHub pour exiger une approbation manuelle si besoin."
-          echo "Images disponibles : ghcr.io/${{ github.repository }}/backend:${{ github.sha }} et .../frontend:${{ github.sha }}"
+          echo "Images disponibles : ghcr.io/${{ env.REPO }}/backend:${{ github.sha }} et .../frontend:${{ github.sha }}"

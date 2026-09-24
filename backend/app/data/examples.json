@@ -1,0 +1,102 @@
+[
+  {
+    "id": "kyu_10_addition",
+    "rank": "kyu_10",
+    "discipline": "core",
+    "variant_of": null,
+    "title": "Addition simple",
+    "statement": "Écrivez une fonction qui reçoit deux entiers et renvoie leur somme.",
+    "signature": "def additionner(a: int, b: int) -> int:",
+    "solution_reference": "def additionner(a, b):\n    return a + b",
+    "tests": [
+      { "input": [2, 3], "output": 5 },
+      { "input": [0, 0], "output": 0 },
+      { "input": [-5, 5], "output": 0 },
+      { "input": [10, -3], "output": 7 },
+      { "input": [100, 200], "output": 300 }
+    ],
+    "concepts_used": ["operateurs arithmetiques"],
+    "metadata": {
+      "model": "manuel",
+      "level_spec_version": "kyu_manuel-v1",
+      "attempts": 1,
+      "status": "publie",
+      "violations_detected": []
+    }
+  },
+  {
+    "id": "kyu_9_parite",
+    "rank": "kyu_9",
+    "discipline": "core",
+    "variant_of": null,
+    "title": "Nombre pair",
+    "statement": "Écrivez une fonction qui reçoit un entier et renvoie True s'il est pair, False sinon.",
+    "signature": "def est_pair(n: int) -> bool:",
+    "solution_reference": "def est_pair(n):\n    if n % 2 == 0:\n        return True\n    else:\n        return False",
+    "tests": [
+      { "input": [4], "output": true },
+      { "input": [7], "output": false },
+      { "input": [0], "output": true },
+      { "input": [-2], "output": true },
+      { "input": [-3], "output": false }
+    ],
+    "concepts_used": ["if/else", "modulo"],
+    "metadata": {
+      "model": "manuel",
+      "level_spec_version": "kyu_manuel-v1",
+      "attempts": 1,
+      "status": "publie",
+      "violations_detected": []
+    }
+  },
+  {
+    "id": "kyu_8_voyelles",
+    "rank": "kyu_8",
+    "discipline": "core",
+    "variant_of": null,
+    "title": "Compter les voyelles",
+    "statement": "Écrivez une fonction qui reçoit une chaîne de caractères et renvoie le nombre de voyelles (a, e, i, o, u, majuscules ou minuscules) qu'elle contient.",
+    "signature": "def compter_voyelles(texte: str) -> int:",
+    "solution_reference": "def compter_voyelles(texte):\n    voyelles = \"aeiouAEIOU\"\n    compteur = 0\n    for lettre in texte:\n        if lettre in voyelles:\n            compteur += 1\n    return compteur",
+    "tests": [
+      { "input": ["bonjour"], "output": 3 },
+      { "input": [""], "output": 0 },
+      { "input": ["BCDFG"], "output": 0 },
+      { "input": ["AEIOU"], "output": 5 },
+      { "input": ["Hello World"], "output": 3 }
+    ],
+    "concepts_used": ["boucle for", "if", "operateur in"],
+    "metadata": {
+      "model": "manuel",
+      "level_spec_version": "kyu_manuel-v1",
+      "attempts": 1,
+      "status": "publie",
+      "violations_detected": []
+    }
+  },
+  {
+    "id": "kyu_7_inversion",
+    "rank": "kyu_7",
+    "discipline": "core",
+    "variant_of": null,
+    "title": "Inverser une chaîne",
+    "statement": "Écrivez une fonction qui reçoit une chaîne de caractères et renvoie cette chaîne inversée.",
+    "signature": "def inverser(texte: str) -> str:",
+    "solution_reference": "def inverser(texte):\n    return texte[::-1]",
+    "tests": [
+      { "input": ["bonjour"], "output": "ruojnob" },
+      { "input": [""], "output": "" },
+      { "input": ["a"], "output": "a" },
+      { "input": ["Python"], "output": "nohtyP" },
+      { "input": ["12345"], "output": "54321" }
+    ],
+    "concepts_used": ["slicing"],
+    "metadata": {
+      "model": "manuel",
+      "level_spec_version": "kyu_manuel-v1",
+      "attempts": 1,
+      "status": "publie",
+      "violations_detected": []
+    }
+  }
+]

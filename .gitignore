@@ -216,3 +216,16 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Node Modules
+node_modules/
+
+# IDE
+.vscode/
+
+# Spec
+backend/app/data/spec/
+
+# Tests
+*.db 
+
