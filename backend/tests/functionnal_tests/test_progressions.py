@@ -1,28 +1,22 @@
 from fastapi import status
-from pwdlib import PasswordHash
+from httpx import Client
+from sqlmodel import Session
 
-from app.model import DisciplineProgression, Progression, User
+from app.model import DisciplineProgression
 from tests.data.base_entity_helper import BaseEntityHelper
 
 
 class TestsProgressions(BaseEntityHelper):
-    def test_get_user_progress(self, client, session):
-        password_hash = PasswordHash.recommended()
-        hashed_password = password_hash.hash("password123")
-        user = User(
-            username="john",
-            email="john@example.com",
-            hashed_password=hashed_password,
+    def test_get_user_progress(self, client: Client, session: Session):
+        user = self._add_user(
+            session, username="john", email="john@example.com", password="password123"
         )
-        session.add(user)
-        session.commit()
-        session.refresh(user)
 
-        progression = Progression(user_id=user.id, core_dan="kyu_9")
+        self._add_progression(session, user_id=user.id, core_dan="kyu_9")
         django_progression = DisciplineProgression(
             user_id=user.id, discipline="django", highest_dan_practiced="kyu_8"
         )
-        session.add_all([progression, django_progression])
+        session.add(django_progression)
         session.commit()
         login = client.post(
             "/auth/login", json={"email": "john@example.com", "password": "password123"}
@@ -41,7 +35,7 @@ class TestsProgressions(BaseEntityHelper):
         assert data["disciplines"][0]["discipline"] == "django"
         assert data["disciplines"][0]["highest_dan_practiced"] == "kyu_8"
 
-    def test_add_completions(self, client, session):
+    def test_add_completions(self, client: Client, session: Session):
         kata = self._add_kata(
             session=session,
             id="kyu_10_addition",
@@ -49,22 +43,11 @@ class TestsProgressions(BaseEntityHelper):
             discipline="core",
             title="core 1",
         )
-
-        password_hash = PasswordHash.recommended()
-        hashed_password = password_hash.hash("password123")
-        user = User(
-            username="john",
-            email="john@example.com",
-            hashed_password=hashed_password,
+        user = self._add_user(
+            session, username="john", email="john@example.com", password="password123"
         )
-        session.add(user)
-        session.commit()
-        session.refresh(user)
 
-        user_progression = Progression(user_id=user.id)
-        session.add(user_progression)
-        session.commit()
-        session.refresh(user_progression)
+        self._add_progression(session, user_id=user.id)
 
         login = client.post(
             "/auth/login", json={"email": "john@example.com", "password": "password123"}
@@ -82,3 +65,33 @@ class TestsProgressions(BaseEntityHelper):
         data = response.json()
         assert data["kata_id"] == "kyu_10_addition"
         assert data["user_id"] == user.id
+
+    def test_add_completion_with_unknown_kata_returns_404(
+        self, client: Client, session: Session
+    ):
+        self._add_user(
+            session, username="john", email="john@example.com", password="password123"
+        )
+
+        login = client.post(
+            "/auth/login", json={"email": "john@example.com", "password": "password123"}
+        )
+        token = login.json()["access_token"]
+        assert login.status_code == status.HTTP_200_OK
+        response = client.post(
+            "/completions",
+            json={"kata_id": "kyu_10_addition"},
+            headers={"Authorization": f"Bearer {token}"},
+        )
+        assert response.status_code == status.HTTP_404_NOT_FOUND
+
+    def test_token_missing_return_403(self, client: Client):
+        response1 = client.post(
+            "/completions",
+            json={"kata_id": "kyu_10_addition"},
+        )
+        response2 = client.get(
+            "/progression",
+        )
+        assert response1.status_code == status.HTTP_403_FORBIDDEN
+        assert response2.status_code == status.HTTP_403_FORBIDDEN
