@@ -65,7 +65,7 @@ class BaseEntityHelper:
 
         return kata
 
-    def _add_progression(self, session: Session, user_id, core_dan=None):
+    def _add_progression(self, session: Session, user_id: int, core_dan=None):
         progression = Progression(user_id=user_id, core_dan=core_dan)
 
         session.add(progression)
@@ -76,12 +76,12 @@ class BaseEntityHelper:
     def _add_completed_kata(
         self,
         session: Session,
-        user_id,
+        user_id: int,
         kata_id="kyu_10_addition",
         rank="kyu_10",
         discipline="core",
     ):
-        self._add_kata(session, kata_id, rank, discipline)
+        self._add_kata(session=session, id=kata_id, rank=rank, discipline=discipline)
 
         completion = KataCompletion(user_id=user_id, kata_id=kata_id)
 

@@ -159,8 +159,8 @@ class TestRecalculateProgression(BaseEntityHelper):
 
         assert progression.core_dan == "kyu_1"
 
-        kata1 = session.get(Kata, "kyu_1_modulo")
-        session.delete(kata1)
+        kata = session.get(Kata, "kyu_1_modulo")
+        session.delete(kata)
 
         recalculate_progression(user_id, session)
 
