@@ -1,13 +1,14 @@
 from fastapi import status
+from httpx import Client
 from pwdlib import PasswordHash
-from sqlmodel import select
+from sqlmodel import Session, select
 
 from app.model import Progression, User
 from tests.data.base_entity_helper import BaseEntityHelper
 
 
 class TestsRegister(BaseEntityHelper):
-    def test_register_user_success(self, client):
+    def test_register_user_success(self, client: Client):
         response = client.post(
             "/auth/register",
             json={
@@ -22,7 +23,7 @@ class TestsRegister(BaseEntityHelper):
         assert "access_token" in data
         assert data["access_token"]
 
-    def test_register_user_existing_email(self, client, session):
+    def test_register_user_existing_email(self, client: Client, session: Session):
         self._add_user(session=session, email="jack@example.com")
 
         response = client.post(
@@ -37,7 +38,7 @@ class TestsRegister(BaseEntityHelper):
         data = response.json()
         assert data["detail"] == "Email already registered"
 
-    def test_register_user_existing_username(self, client, session):
+    def test_register_user_existing_username(self, client: Client, session: Session):
         self._add_user(session=session, username="jack")
 
         response = client.post(
@@ -52,7 +53,7 @@ class TestsRegister(BaseEntityHelper):
         data = response.json()
         assert data["detail"] == "Username already exists"
 
-    def test_register_password_is_hashed(self, client, session):
+    def test_register_password_is_hashed(self, client: Client, session: Session):
         response = client.post(
             "/auth/register",
             json={
@@ -73,7 +74,7 @@ class TestsRegister(BaseEntityHelper):
         password_hash = PasswordHash.recommended()
         assert password_hash.verify("password123", user.hashed_password)
 
-    def test_register_creates_progress(self, client, session):
+    def test_register_creates_progress(self, client: Client, session: Session):
         response = client.post(
             "/auth/register",
             json={
@@ -97,7 +98,7 @@ class TestsRegister(BaseEntityHelper):
 
 
 class TestsLogin(BaseEntityHelper):
-    def test_login_user_success(self, client, session):
+    def test_login_user_success(self, client: Client, session: Session):
         self._add_user(
             session=session,
             username="john",
@@ -114,7 +115,7 @@ class TestsLogin(BaseEntityHelper):
         assert data["access_token"] is not None
         assert isinstance(data["access_token"], str)
 
-    def test_login_user_no_db_user(self, client):
+    def test_login_user_no_db_user(self, client: Client):
         response = client.post(
             "/auth/login", json={"email": "john@example.com", "password": "password123"}
         )
@@ -123,7 +124,7 @@ class TestsLogin(BaseEntityHelper):
         assert data["detail"] == "Incorrect email or password"
         assert data.get("access_token") is None
 
-    def test_login_user_wrong_password(self, client, session):
+    def test_login_user_wrong_password(self, client: Client, session: Session):
         self._add_user(
             session=session,
             username="john",
