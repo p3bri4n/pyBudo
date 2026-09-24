@@ -1,6 +1,7 @@
 from pwdlib import PasswordHash
+from sqlmodel import Session
 
-from app.model import Kata, User
+from app.model import Kata, KataCompletion, Progression, User
 
 
 class BaseEntityHelper:
@@ -12,7 +13,7 @@ class BaseEntityHelper:
 
     def _add_user(
         self,
-        session,
+        session: Session,
         username="john",
         email="john@example.com",
         password="password123",
@@ -31,7 +32,7 @@ class BaseEntityHelper:
 
     def _add_kata(
         self,
-        session,
+        session: Session,
         id="kyu_10_addition",
         rank="kyu_10",
         discipline="core",
@@ -61,4 +62,30 @@ class BaseEntityHelper:
 
         session.add(kata)
         session.commit()
+
         return kata
+
+    def _add_progression(self, session: Session, user_id, core_dan=None):
+        progression = Progression(user_id=user_id, core_dan=core_dan)
+
+        session.add(progression)
+        session.commit()
+
+        return progression
+
+    def _add_completed_kata(
+        self,
+        session: Session,
+        user_id,
+        kata_id="kyu_10_addition",
+        rank="kyu_10",
+        discipline="core",
+    ):
+        self._add_kata(session, kata_id, rank, discipline)
+
+        completion = KataCompletion(user_id=user_id, kata_id=kata_id)
+
+        session.add(completion)
+        session.commit()
+
+        return completion
