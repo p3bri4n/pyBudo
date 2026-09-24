@@ -62,6 +62,17 @@ class TestsProgressions(BaseEntityHelper):
         assert data["kata_id"] == "kyu_10_addition"
         assert data["user_id"] == user.id
 
+    def test_token_missing_return_403(self, client: Client):
+        response1 = client.post(
+            "/completions",
+            json={"kata_id": "kyu_10_addition"},
+        )
+        response2 = client.get(
+            "/progression",
+        )
+        assert response1.status_code == status.HTTP_403_FORBIDDEN
+        assert response2.status_code == status.HTTP_403_FORBIDDEN
+
     def test_add_completion_with_unknown_kata_returns_404(
         self, client: Client, session: Session
     ):
@@ -81,13 +92,37 @@ class TestsProgressions(BaseEntityHelper):
         )
         assert response.status_code == status.HTTP_404_NOT_FOUND
 
-    def test_token_missing_return_403(self, client: Client):
-        response1 = client.post(
+    def test_double_completion_return_409(self, client: Client, session: Session):
+        kata = self._add_kata(
+            session=session,
+            id="kyu_10_addition",
+            rank="kyu_10",
+            discipline="core",
+            title="core 1",
+        )
+        user = self._add_user(
+            session, username="john", email="john@example.com", password="password123"
+        )
+
+        self._add_progression(session, user_id=user.id)
+
+        login = client.post(
+            "/auth/login", json={"email": "john@example.com", "password": "password123"}
+        )
+        assert login.status_code == status.HTTP_200_OK
+        token = login.json()["access_token"]
+
+        response = client.post(
             "/completions",
-            json={"kata_id": "kyu_10_addition"},
+            json={"kata_id": kata.id},
+            headers={"Authorization": f"Bearer {token}"},
         )
-        response2 = client.get(
-            "/progression",
+        assert response.status_code == status.HTTP_200_OK
+
+        response = client.post(
+            "/completions",
+            json={"kata_id": kata.id},
+            headers={"Authorization": f"Bearer {token}"},
         )
-        assert response1.status_code == status.HTTP_403_FORBIDDEN
-        assert response2.status_code == status.HTTP_403_FORBIDDEN
+
+        assert response.status_code == status.HTTP_409_CONFLICT
