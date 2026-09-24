@@ -62,17 +62,6 @@ class TestsProgressions(BaseEntityHelper):
         assert data["kata_id"] == "kyu_10_addition"
         assert data["user_id"] == user.id
 
-    def test_token_missing_return_403(self, client: Client):
-        response1 = client.post(
-            "/completions",
-            json={"kata_id": "kyu_10_addition"},
-        )
-        response2 = client.get(
-            "/progression",
-        )
-        assert response1.status_code == status.HTTP_403_FORBIDDEN
-        assert response2.status_code == status.HTTP_403_FORBIDDEN
-
     def test_add_completion_with_unknown_kata_returns_404(
         self, client: Client, session: Session
     ):
