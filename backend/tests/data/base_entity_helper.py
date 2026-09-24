@@ -1,6 +1,7 @@
 from pwdlib import PasswordHash
+from sqlmodel import Session
 
-from app.model import Kata, User
+from app.model import DisciplineProgression, Kata, KataCompletion, Progression, User
 
 
 class BaseEntityHelper:
@@ -12,7 +13,7 @@ class BaseEntityHelper:
 
     def _add_user(
         self,
-        session,
+        session: Session,
         username="john",
         email="john@example.com",
         password="password123",
@@ -31,8 +32,8 @@ class BaseEntityHelper:
 
     def _add_kata(
         self,
-        session,
-        id="1",
+        session: Session,
+        id="kyu_10_addition",
         rank="kyu_10",
         discipline="core",
         title="Premier Kata",
@@ -61,4 +62,48 @@ class BaseEntityHelper:
 
         session.add(kata)
         session.commit()
+
         return kata
+
+    def _add_progression(self, session: Session, user_id: int, core_dan=None):
+        progression = Progression(user_id=user_id, core_dan=core_dan)
+
+        session.add(progression)
+        session.commit()
+
+        return progression
+
+    def _add_completed_kata(
+        self,
+        session: Session,
+        user_id: int,
+        kata_id="kyu_10_addition",
+        rank="kyu_10",
+        discipline="core",
+    ):
+        self._add_kata(session=session, id=kata_id, rank=rank, discipline=discipline)
+
+        completion = KataCompletion(user_id=user_id, kata_id=kata_id)
+
+        session.add(completion)
+        session.commit()
+
+        return completion
+
+    def _add_discipline_progression(
+        self,
+        session: Session,
+        user_id: int,
+        discipline="django",
+        highest_dan_practiced="kyu_8",
+    ):
+        dp = DisciplineProgression(
+            user_id=user_id,
+            discipline=discipline,
+            highest_dan_practiced=highest_dan_practiced,
+        )
+
+        session.add(dp)
+        session.commit()
+
+        return dp
