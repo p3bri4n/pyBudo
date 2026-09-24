@@ -28,7 +28,7 @@ function Login() {
         <div className="login-page">
             <div className="login-box">
                 <nav>
-                    <Link to="/register">S'inscrire</Link>
+                    <Link className={"link-dojo"} to="/register">S'inscrire</Link>
                 </nav>
                 <img alt={"logo"} src={logoPybudo} />
                 <div className="login-logo">{t("login.pybudo")}</div>

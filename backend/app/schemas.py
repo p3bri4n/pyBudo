@@ -16,6 +16,11 @@ class UserLogin(BaseModel):
     password: str
 
 
+class UserPublic(BaseModel):
+    username: str
+    email: str
+
+
 class Token(BaseModel):
     message: str
     access_token: str

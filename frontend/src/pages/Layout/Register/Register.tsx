@@ -1,8 +1,9 @@
 import { useState } from "react";
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import type {RegisterResponse} from "../../../interfaces/interfaces.ts";
 import {register} from "../../../api/authApi.ts";
 import {useTranslation} from "react-i18next";
+import "./register.css"
 
 function Register() {
     const navigate = useNavigate()
@@ -41,16 +42,20 @@ function Register() {
             localStorage.setItem("access_token", token);
             navigate("/dojo");
         } catch (error) {
-            setError(`${t("register.invalid-credentials")}`);
+            setError(`${t("register.register-error")}`);
         }
     };
 
     return (
-        <div>
+        <div className={"Register"}>
+            <Link className={"link-dojo"} to="/">
+                Retour
+            </Link>
+
             <h1>Créer un compte</h1>
 
-            <form onSubmit={handleSubmit}>
-                <div>
+            <form className={"register-form"} onSubmit={handleSubmit}>
+                <div className={"form-input"}>
                     <label htmlFor="username">Username</label>
                     <input
                         id="username"
@@ -62,7 +67,7 @@ function Register() {
                     />
                 </div>
 
-                <div>
+                <div className={"form-input"}>
                     <label htmlFor="email">Email</label>
                     <input
                         id="email"
@@ -74,7 +79,7 @@ function Register() {
                     />
                 </div>
 
-                <div>
+                <div className={"form-input"}>
                     <label htmlFor="password">Mot de passe</label>
                     <input
                         id="password"
@@ -86,7 +91,7 @@ function Register() {
                     />
                 </div>
 
-                <div>
+                <div className={"form-input"}>
                     <label htmlFor="passwordVerification">
                         Confirmer le mot de passe
                     </label>
@@ -102,7 +107,7 @@ function Register() {
 
                 {error && <p>{error}</p>}
 
-                <button type="submit">
+                <button className={"btn-dojo"} type="submit">
                     S'inscrire
                 </button>
             </form>

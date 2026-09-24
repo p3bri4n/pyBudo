@@ -1,10 +1,12 @@
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {PythonRunner} from "../../../components/PythonEditor.tsx";
+import { useAuth } from "../../../contexts/AuthContext";
 
 function Dojo() {
     const navigate = useNavigate();
     const {t} = useTranslation();
+    const { user, loading } = useAuth();
 
     const handleLogout = () => {
         localStorage.removeItem("access_token");
@@ -13,12 +15,12 @@ function Dojo() {
 
     return (
         <div>
-            <button onClick={handleLogout}>
+            <button className={"btn-dojo"} onClick={handleLogout}>
                 {t('dojo.logout')}
             </button>
             <h1>Dojo</h1>
 
-            <p>Bienvenue sur le tatami.</p>
+            <p>Bienvenue sur le tatami, {user?.username ?? "Bijita"}san.</p>
 
             <section>
                 <h2>Ma progression</h2>

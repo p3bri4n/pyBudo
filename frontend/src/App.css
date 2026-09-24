@@ -1,6 +1,46 @@
 @import 'common-styles/styles.css';
 
 .App {
-    width: 100%;
+    --wall-light: #e8d9b5;
+    --wall-mid: #d9c290;
+    --wall-warm: #c9a968;
+    --floor-light: #8a6a45;
+    --floor-dark: #5c4128;
+    --floor-line: #3f2c1a;
+
     height: 100%;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+
+    background-color: var(--wall-mid);
+
+    background-image:
+        /* vignette : assombrit les coins */
+            radial-gradient(
+                    ellipse at center,
+                    rgba(0, 0, 0, 0) 55%,
+                    rgba(30, 18, 8, 0.35) 100%
+            ),
+                /* mur chaud en haut, transition vers le sol en bas */
+            linear-gradient(
+                    180deg,
+                    var(--wall-light) 0%,
+                    var(--wall-mid) 45%,
+                    var(--wall-warm) 62%,
+                    var(--floor-light) 64%,
+                    var(--floor-dark) 100%
+            ),
+                /* lattes de bois du sol, uniquement visibles dans la zone du bas
+                   grâce au dégradé au-dessus qui masque le haut */
+            repeating-linear-gradient(
+                    90deg,
+                    var(--floor-light) 0px,
+                    var(--floor-light) 78px,
+                    var(--floor-line) 80px
+            );
+
+    background-blend-mode: normal, normal, multiply;
+    background-size: 100% 100%, 100% 100%, 100% 100%;
+    background-repeat: no-repeat, no-repeat, repeat;
 }

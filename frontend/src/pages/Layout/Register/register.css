@@ -1,0 +1,18 @@
+.Register {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+
+    padding: 3rem;
+
+    .register-form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .form-input {
+        display: flex;
+        flex-direction: column;
+    }
+}

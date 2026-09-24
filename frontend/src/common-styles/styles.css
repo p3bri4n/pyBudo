@@ -1,7 +1,273 @@
 @import 'variables.css';
 @import 'fonts.css';
+/* ==========================================================================
+   Reset pour que l'application occupe toute la hauteur/largeur de l'écran,
+   sans marges parasites ni scroll indésirable.
+   ========================================================================== */
 
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
 body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
     text-align: center;
 }
 
+/* #root ou #app selon votre framework (React, Vue, etc.) */
+#root,
+#app {
+    min-height: 100%;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==========================================================================
+   Background thème "Dojo" — à appliquer sur <body> ou un conteneur racine
+   (ex. <div id="app">) pour un fond cohérent sur toute l'application.
+
+   Composé de 3 couches, du haut vers le bas :
+   1. Mur / lumière tamisée (dégradé chaud, façon papier shoji)
+   2. Vignette douce sur les bords (profondeur)
+   3. Sol en lattes de bois (bas de l'écran)
+   ========================================================================== */
+
+
+/* ==========================================================================
+   Boutons style "Dojo" — planche de bois clair, coins arrondis, relief.
+   Basé sur le style visuel de PyBudo (bandeau nav, "Continuer l'entraînement").
+   ========================================================================== */
+
+.btn-dojo {
+    --wood-light: #e8d4a8;
+    --wood-mid: #d4b878;
+    --wood-dark: #7a5c3a;
+    --wood-border: #4a3520;
+    --text-color: #3a2a15;
+
+    font-family: "Georgia", "Noto Serif", serif;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+    color: var(--text-color);
+
+    padding: 0.75em 1.75em;
+    border: 3px solid var(--wood-border);
+    border-radius: 10px;
+
+    background:
+            repeating-linear-gradient(
+                    90deg,
+                    var(--wood-light) 0px,
+                    var(--wood-mid) 3px,
+                    var(--wood-light) 6px
+            );
+
+    box-shadow:
+            inset 0 2px 0 rgba(255, 255, 255, 0.4),
+            inset 0 -3px 4px rgba(74, 53, 32, 0.35),
+            0 3px 0 var(--wood-border),
+            0 5px 6px rgba(0, 0, 0, 0.35);
+
+    cursor: pointer;
+    transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.15s ease;
+}
+
+.btn-dojo:hover {
+    filter: brightness(1.08);
+}
+
+.btn-dojo:active {
+    transform: translateY(2px);
+    box-shadow:
+            inset 0 2px 0 rgba(255, 255, 255, 0.3),
+            inset 0 -2px 3px rgba(74, 53, 32, 0.4),
+            0 1px 0 var(--wood-border),
+            0 2px 3px rgba(0, 0, 0, 0.3);
+}
+
+.btn-dojo:disabled {
+    filter: grayscale(0.6) brightness(0.85);
+    cursor: not-allowed;
+}
+
+/* --------------------------------------------------------------------------
+   Variante compacte pour la nav du haut (鍛錬 / 進捗 / 確認)
+   -------------------------------------------------------------------------- */
+.btn-dojo--nav {
+    padding: 0.5em 1.25em;
+    font-size: 1.1rem;
+    border-radius: 8px;
+}
+
+/* --------------------------------------------------------------------------
+   Variante d'action principale, rouge laqué (ÉXÉCUTER LES TESTS)
+   -------------------------------------------------------------------------- */
+.btn-dojo--action {
+    --lacquer-light: #b5473a;
+    --lacquer-mid: #8f2e24;
+    --lacquer-border: #3a1410;
+
+    color: #f5e6c8;
+    border-color: var(--lacquer-border);
+
+    background:
+            linear-gradient(180deg, var(--lacquer-light) 0%, var(--lacquer-mid) 100%);
+
+    box-shadow:
+            inset 0 2px 0 rgba(255, 255, 255, 0.25),
+            inset 0 -3px 5px rgba(0, 0, 0, 0.35),
+            0 3px 0 var(--lacquer-border),
+            0 5px 8px rgba(0, 0, 0, 0.4);
+}
+
+.btn-dojo--action:hover {
+    filter: brightness(1.12);
+}
+
+/* --------------------------------------------------------------------------
+   Exemple d'utilisation :
+
+   <button class="btn-dojo btn-dojo--nav">鍛錬</button>
+   <button class="btn-dojo">Continuer l'entraînement →</button>
+   <button class="btn-dojo btn-dojo--action">ÉXÉCUTER LES TESTS</button>
+   -------------------------------------------------------------------------- */
+
+/* Grain de papier subtil sur toute la surface, pour casser les aplats
+   de dégradé (effet "texture" léger, sans image externe). */
+.app-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    background-image: radial-gradient(
+            rgba(74, 53, 32, 0.06) 1px,
+            transparent 1px
+    ),
+    radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 3px 3px, 5px 5px;
+    background-position: 0 0, 1px 2px;
+}
+
+/* ==========================================================================
+   Panneau "parchemin" — pour les cartes/encadrés posés sur le fond
+   (ex. la carte "Défi du dōjō"), assorti au reste du thème.
+   ========================================================================== */
+.panel-parchment {
+    --parchment: #f3e6c4;
+    --parchment-edge: #c9a968;
+    --parchment-border: #6b4a28;
+
+    background: var(--parchment);
+    background-image: radial-gradient(
+            rgba(107, 74, 40, 0.05) 1px,
+            transparent 1px
+    );
+    background-size: 3px 3px;
+
+    border: 3px solid var(--parchment-border);
+    border-radius: 14px;
+    box-shadow:
+            inset 0 0 0 4px var(--parchment-edge),
+            0 6px 14px rgba(0, 0, 0, 0.35);
+    padding: 1.5em;
+}
+
+/* ==========================================================================
+   Exemple d'utilisation :
+
+   <body class="app-bg">
+     <div class="panel-parchment">
+       ...contenu d'une carte...
+     </div>
+   </body>
+   ========================================================================== */
+
+/* ==========================================================================
+   Liens style "Dojo" — assorti aux boutons et au fond du même thème.
+   ========================================================================== */
+
+.link-dojo {
+    --ink: #6b3a1a;
+    --ink-hover: #a8321f;
+    --seal: #a8321f;
+
+    color: var(--ink);
+    font-family: "Georgia", "Noto Serif", serif;
+    font-weight: 700;
+    text-decoration: none;
+    position: relative;
+    padding-bottom: 2px;
+
+    background-image: linear-gradient(var(--seal), var(--seal));
+    background-size: 0% 2px;
+    background-position: left bottom;
+    background-repeat: no-repeat;
+
+    transition: color 0.15s ease, background-size 0.2s ease;
+}
+
+.link-dojo:hover {
+    color: var(--ink-hover);
+    background-size: 100% 2px;
+}
+
+.link-dojo:active {
+    color: var(--seal);
+}
+
+.link-dojo:focus-visible {
+    outline: 2px dashed var(--seal);
+    outline-offset: 3px;
+    border-radius: 2px;
+}
+
+.link-dojo:visited {
+    color: #8a5a3a;
+}
+
+/* --------------------------------------------------------------------------
+   Variante "discrète" — pour les liens secondaires (mentions légales,
+   texte d'aide), sans le trait animé au survol.
+   -------------------------------------------------------------------------- */
+.link-dojo--muted {
+    color: #7a6a52;
+    font-weight: 400;
+}
+
+.link-dojo--muted:hover {
+    color: var(--ink-hover);
+    background-size: 100% 1px;
+}
+
+/* --------------------------------------------------------------------------
+   Variante "sceau" — précédée d'un petit repère façon tampon rouge,
+   pour un lien mis en avant (ex. "En savoir plus", "Voir le classement").
+   -------------------------------------------------------------------------- */
+.link-dojo--seal::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 0.5em;
+    border-radius: 50%;
+    background: var(--seal);
+    vertical-align: middle;
+}
+
+/* --------------------------------------------------------------------------
+   Exemple d'utilisation :
+
+   <a href="#" class="link-dojo">Voir la progression</a>
+   <a href="#" class="link-dojo link-dojo--seal">En savoir plus</a>
+   <a href="#" class="link-dojo link-dojo--muted">Mentions légales</a>
+   -------------------------------------------------------------------------- */

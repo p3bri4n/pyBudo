@@ -34,7 +34,7 @@ export function PythonRunner() {
                 value={code}
                 onChange={(event) => setCode(event.target.value)}
             />
-            <button onClick={runCode} disabled={loading}>
+            <button className={"btn-dojo"} onClick={runCode} disabled={loading}>
                 {loading ? `${t("python-runner.execution")}` : `${t("python-runner.execute")}`}
             </button>
 
