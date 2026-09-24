@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {useNavigate} from 'react-router-dom';
-import type {RegisterResponse} from "../../interfaces/interfaces.ts";
-import {register} from "../../api/authApi.ts";
+import type {RegisterResponse} from "../../../interfaces/interfaces.ts";
+import {register} from "../../../api/authApi.ts";
 import {useTranslation} from "react-i18next";
 
 function Register() {
@@ -37,8 +37,8 @@ function Register() {
         let password: string = form.password;
         try {
             const data: RegisterResponse = await register({username, email, password});
-            const token = data.token;
-            localStorage.setItem("token", token);
+            const token = data.access_token;
+            localStorage.setItem("access_token", token);
             navigate("/dojo");
         } catch (error) {
             setError(`${t("register.invalid-credentials")}`);

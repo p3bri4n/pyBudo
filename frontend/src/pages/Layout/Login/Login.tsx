@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import {Link, useNavigate} from 'react-router-dom';
-import {login} from "../../api/authApi.ts";
-import type {LoginResponse} from "../../interfaces/interfaces.ts";
+import {login} from "../../../api/authApi.ts";
+import type {LoginResponse} from "../../../interfaces/interfaces.ts";
 import {useTranslation} from "react-i18next";
-import logoPybudo from "../../../../assets/logo_pybudo.jpeg"
+import logoPybudo from "../../../../../assets/logo_pybudo.jpeg"
 import "./login.css"
 
 function Login() {
@@ -16,8 +16,8 @@ function Login() {
     const handleLogin = async () => {
         try {
             const data: LoginResponse = await login({email, password});
-            const token = data.token;
-            localStorage.setItem("token", token);
+            const token = data.access_token;
+            localStorage.setItem("access_token", token);
             navigate("/dojo");
         } catch (error) {
             setError(`${t("login.invalid-credentials")}`);

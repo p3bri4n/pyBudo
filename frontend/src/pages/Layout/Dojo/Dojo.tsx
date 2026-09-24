@@ -1,12 +1,13 @@
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
+import {PythonRunner} from "../../../components/PythonEditor.tsx";
 
 function Dojo() {
     const navigate = useNavigate();
     const {t} = useTranslation();
 
     const handleLogout = () => {
-        localStorage.removeItem("admin_token");
+        localStorage.removeItem("access_token");
         navigate('/');
     };
 
@@ -26,6 +27,7 @@ function Dojo() {
 
             <section>
                 <h2>Mes katas</h2>
+                <PythonRunner/>
                 {/* liste des katas */}
             </section>
         </div>

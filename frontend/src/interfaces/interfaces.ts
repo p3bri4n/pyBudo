@@ -5,8 +5,9 @@ export type RegisterRequest = {
 }
 
 export type RegisterResponse = {
-    token: string;
-}
+    message: string;
+    access_token: string;
+    token_type: string;}
 
 export type LoginRequest = {
     email: string,
@@ -14,7 +15,9 @@ export type LoginRequest = {
 }
 
 export type LoginResponse = {
-    token: string;
+    message: string;
+    access_token: string;
+    token_type: string;
 };
 
 export interface ExecutionResult {

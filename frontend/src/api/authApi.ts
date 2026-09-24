@@ -1,4 +1,4 @@
-import {apiClient} from "./apiClient.tsx";
+import {apiClient} from "./apiClient.ts";
 import type {LoginRequest, LoginResponse, RegisterRequest, RegisterResponse} from "../interfaces/interfaces";
 
 export const register = async (registerRequest: RegisterRequest): Promise<RegisterResponse> => {
