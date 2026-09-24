@@ -43,13 +43,15 @@ class Kata(SQLModel, table=True):
 
 class KataCompletion(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    kata_id: str = Field(nullable=False)
+    kata_id: str = Field(foreign_key="kata.id", nullable=False, index=True)
     user_id: int = Field(foreign_key="user.id", nullable=False, index=True)
     completed_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc),
         sa_type=DateTime(timezone=True),
     )
     verified: bool = Field(default=False)
+
+    __table_args__ = (UniqueConstraint("kata_id", "user_id", name="unique_kata_user"),)
 
 
 class Progression(SQLModel, table=True):

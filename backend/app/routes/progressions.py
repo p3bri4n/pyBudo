@@ -1,7 +1,7 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException
-from sqlmodel import Session
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlmodel import Session, select
 
 from app.dependencies import get_current_user, get_session
 from app.model import KataCompletion, User
@@ -29,6 +29,18 @@ def add_completions(
     kata = get_kata(completion.kata_id, session)
     if kata is None:
         raise HTTPException(status_code=404, detail="kata not found")
+
+    completion_exist = session.exec(
+        select(KataCompletion).where(
+            KataCompletion.kata_id == kata.id, KataCompletion.user_id == user.id
+        )
+    ).first()
+
+    if completion_exist:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Completion already exist",
+        )
 
     kata_completion = KataCompletion(
         kata_id=completion.kata_id,
