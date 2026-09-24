@@ -189,7 +189,6 @@ class TestsToken(BaseEntityHelper):
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
         assert response.json()["detail"] == "Invalid token"
 
-
     def test_user_not_found(self, client: Client):
         email = "john@example.com"
         token = jwt.encode(
@@ -202,4 +201,3 @@ class TestsToken(BaseEntityHelper):
         )
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
         assert response.json()["detail"] == "Invalid token"
-        
