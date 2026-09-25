@@ -1,0 +1,43 @@
+import {useNavigate} from "react-router-dom";
+import {useTranslation} from "react-i18next";
+import {PythonRunner} from "../../../components/PythonEditor.tsx";
+import { useAuth } from "../../../contexts/useAuth.ts";
+import {Progression} from "../../../components/progress/progression.tsx";
+
+function Dojo() {
+    const navigate = useNavigate();
+    const {t} = useTranslation();
+    const { user, loading, signOut } = useAuth();
+
+    const handleLogout = () => {
+        signOut()
+        navigate('/');
+    };
+
+    if (loading) {
+        return <p>Bienvenue sur le tatami, Bijitasan.</p>;
+    }
+    return (
+        <div>
+            <button className={"btn-dojo"} onClick={handleLogout}>
+                {t('dojo.logout')}
+            </button>
+            <h1>Dojo</h1>
+
+            <p>Bienvenue sur le tatami, {user?.username ?? "Bijita"}san.</p>
+
+            <section>
+                <h2>Ma progression</h2>
+                <Progression/>
+            </section>
+
+            <section>
+                <h2>Mes katas</h2>
+                <PythonRunner/>
+                {/* liste des katas */}
+            </section>
+        </div>
+    );
+}
+
+export default Dojo;
