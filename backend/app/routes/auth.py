@@ -4,9 +4,9 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from pwdlib import PasswordHash
 from sqlmodel import Session, select
 
-from app.dependencies import generate_token, get_session
+from app.dependencies import generate_token, get_current_user, get_session
 from app.model import Progression, User
-from app.schemas import Token, UserLogin, UserRegister
+from app.schemas import Token, UserLogin, UserPublic, UserRegister
 
 router = APIRouter()
 
@@ -80,3 +80,8 @@ def login_user(user: UserLogin, session: Annotated[Session, Depends(get_session)
     encoded_jwt = generate_token(db_user.email)
 
     return Token(message="User logged in successfully", access_token=encoded_jwt)
+
+
+@router.get("/auth/me", response_model=UserPublic)
+def get_me(user: Annotated[User, Depends(get_current_user)]):
+    return user
