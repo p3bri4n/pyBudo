@@ -1,8 +1,12 @@
+from datetime import datetime, timedelta, timezone
+
+import jwt
 from fastapi import status
 from httpx import Client
 from pwdlib import PasswordHash
 from sqlmodel import Session, select
 
+from app.dependencies import ALGORITHM, SECRET_KEY
 from app.model import Progression, User
 from tests.data.base_entity_helper import BaseEntityHelper
 
@@ -138,3 +142,62 @@ class TestsLogin(BaseEntityHelper):
         data = response.json()
         assert data["detail"] == "Incorrect email or password"
         assert data.get("access_token") is None
+
+
+class TestsToken(BaseEntityHelper):
+    def test_token_missing_return_403(self, client: Client):
+        response1 = client.post(
+            "/completions",
+            json={"kata_id": "kyu_10_addition"},
+        )
+        response2 = client.get(
+            "/progression",
+        )
+        assert response1.status_code == status.HTTP_403_FORBIDDEN
+        assert response2.status_code == status.HTTP_403_FORBIDDEN
+
+    def test_no_sub_in_token(self, client: Client):
+        token = jwt.encode(
+            {"exp": datetime.now(timezone.utc) + timedelta(hours=24)},
+            SECRET_KEY,
+            algorithm=ALGORITHM,
+        )
+        response = client.get(
+            "/progression", headers={"Authorization": f"Bearer {token}"}
+        )
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
+        assert response.json()["detail"] == "Invalid token"
+
+    def test_expired_token(self, client: Client):
+        email = "john@example.com"
+        expired_token = jwt.encode(
+            {"sub": email, "exp": datetime.now(timezone.utc) - timedelta(seconds=1)},
+            SECRET_KEY,
+            algorithm=ALGORITHM,
+        )
+        response = client.get(
+            "/progression", headers={"Authorization": f"Bearer {expired_token}"}
+        )
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
+        assert response.json()["detail"] == "Expired token"
+
+    def test_bad_token(self, client: Client):
+        bad_token = "bad_token"
+        response = client.get(
+            "/progression", headers={"Authorization": f"Bearer {bad_token}"}
+        )
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
+        assert response.json()["detail"] == "Invalid token"
+
+    def test_user_not_found(self, client: Client):
+        email = "john@example.com"
+        token = jwt.encode(
+            {"email": email, "exp": datetime.now(timezone.utc) + timedelta(hours=24)},
+            SECRET_KEY,
+            algorithm=ALGORITHM,
+        )
+        response = client.get(
+            "/progression", headers={"Authorization": f"Bearer {token}"}
+        )
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
+        assert response.json()["detail"] == "Invalid token"
