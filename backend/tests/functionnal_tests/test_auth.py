@@ -144,6 +144,31 @@ class TestsLogin(BaseEntityHelper):
         assert data.get("access_token") is None
 
 
+class TestsCurrentUser(BaseEntityHelper):
+    def test_user_public_has_no_hashed_password(self, client: Client, session: Session):
+        user = self._add_user(
+            session=session,
+            username="john",
+            email="john@example.com",
+            password="password123",
+        )
+        response1 = client.post(
+            "/auth/login", json={"email": user.email, "password": "password123"}
+        )
+        assert response1.status_code == status.HTTP_200_OK
+
+        token = response1.json()["access_token"]
+
+        response2 = client.get("auth/me", headers={"Authorization": f"Bearer {token}"})
+
+        assert response2.status_code == status.HTTP_200_OK
+
+        data = response2.json()
+        assert data["username"] == "john"
+        assert data["email"] == "john@example.com"
+        assert "hashed_password" not in data
+
+
 class TestsToken(BaseEntityHelper):
     def test_token_missing_return_403(self, client: Client):
         response1 = client.post(
