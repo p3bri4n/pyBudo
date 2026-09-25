@@ -13,7 +13,7 @@ router = APIRouter()
 password_hash = PasswordHash.recommended()
 
 
-@router.post("/auth/register")
+@router.post("/auth/register", response_model=Token)
 def register_user(
     user: UserRegister, session: Annotated[Session, Depends(get_session)]
 ):
@@ -63,7 +63,7 @@ def register_user(
     return Token(message="User registered successfully", access_token=encoded_jwt)
 
 
-@router.post("/auth/login")
+@router.post("/auth/login", response_model=Token)
 def login_user(user: UserLogin, session: Annotated[Session, Depends(get_session)]):
     # Vérifie que l'utilisateur existe
     db_user = session.exec(select(User).where(User.email == user.email)).first()

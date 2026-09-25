@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Any
 
 from pydantic import BaseModel, ConfigDict
@@ -35,6 +36,13 @@ class TokenData(BaseModel):
 
 class KataCompletionCreate(BaseModel):
     kata_id: str
+
+
+class KataCompletionPublic(BaseModel):
+    kata_id: str
+    user_id: int
+    completed_at: datetime
+    verified: bool
 
 
 class DisciplineProgressionPublic(BaseModel):
