@@ -1,7 +1,7 @@
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {PythonRunner} from "../../../components/PythonEditor.tsx";
-import { useAuth } from "../../../contexts/AuthContext";
+import { useAuth } from "../../../contexts/AuthContext.ts";
 import {Progression} from "../../../components/progress/progression.tsx";
 
 function Dojo() {
@@ -14,6 +14,13 @@ function Dojo() {
         navigate('/');
     };
 
+    if (loading) {
+        return (
+            <div>
+                Loading
+            </div>
+        )
+    }
     return (
         <div>
             <button className={"btn-dojo"} onClick={handleLogout}>

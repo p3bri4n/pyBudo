@@ -19,7 +19,7 @@ function Login() {
             const token = data.access_token;
             localStorage.setItem("access_token", token);
             navigate("/dojo");
-        } catch (error) {
+        } catch {
             setError(`${t("login.invalid-credentials")}`);
         }
     }

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import type { InputEvent, ChangeEvent } from "react";
 import {Link, useNavigate} from 'react-router-dom';
 import type {RegisterResponse} from "../../../interfaces/interfaces.ts";
 import {register} from "../../../api/authApi.ts";
@@ -16,7 +17,7 @@ function Register() {
     });
     const [error, setError] = useState("");
 
-    const handleChange = (event: any) => {
+    const handleChange = (event: ChangeEvent<HTMLFormElement>): void => {
         const { name, value } = event.target;
 
         setForm((prev) => ({
@@ -25,7 +26,7 @@ function Register() {
         }));
     };
 
-    const handleSubmit = async (event: any) => {
+    const handleSubmit = async (event: InputEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault();
         setError("");
 
@@ -41,7 +42,7 @@ function Register() {
             const token = data.access_token;
             localStorage.setItem("access_token", token);
             navigate("/dojo");
-        } catch (error) {
+        } catch {
             setError(`${t("register.register-error")}`);
         }
     };
