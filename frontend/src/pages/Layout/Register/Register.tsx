@@ -59,6 +59,7 @@ function Register() {
                     <label htmlFor="username">Username</label>
                     <input
                         id="username"
+                        placeholder={t("register.username")}
                         name="username"
                         type="text"
                         value={form.username}
@@ -73,6 +74,7 @@ function Register() {
                         id="email"
                         name="email"
                         type="email"
+                        placeholder={t("register.email")}
                         value={form.email}
                         onChange={handleChange}
                         required
@@ -85,6 +87,7 @@ function Register() {
                         id="password"
                         name="password"
                         type="password"
+                        placeholder={t("register.password")}
                         value={form.password}
                         onChange={handleChange}
                         required
@@ -99,6 +102,7 @@ function Register() {
                         id="passwordVerification"
                         name="passwordVerification"
                         type="password"
+                        placeholder={t("register.password-verification")}
                         value={form.passwordVerification}
                         onChange={handleChange}
                         required

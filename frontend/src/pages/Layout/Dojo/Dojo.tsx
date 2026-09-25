@@ -2,6 +2,7 @@ import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {PythonRunner} from "../../../components/PythonEditor.tsx";
 import { useAuth } from "../../../contexts/AuthContext";
+import {Progression} from "../../../components/progress/progression.tsx";
 
 function Dojo() {
     const navigate = useNavigate();
@@ -24,7 +25,7 @@ function Dojo() {
 
             <section>
                 <h2>Ma progression</h2>
-                {/* progression de l'utilisateur */}
+                <Progression/>
             </section>
 
             <section>
