@@ -273,15 +273,13 @@ Cela concerne notamment :
 Exemple :
 
 ```python
-def validate_exercise_submission(submission: str) -> bool:
-    ...
+def validate_exercise_submission(submission: str) -> bool: ...
 ```
 
 et non :
 
 ```python
-def valider_reponse_exercice(reponse: str) -> bool:
-    ...
+def valider_reponse_exercice(reponse: str) -> bool: ...
 ```
 
 La **documentation** et les **docstrings** peuvent être rédigées en français.
