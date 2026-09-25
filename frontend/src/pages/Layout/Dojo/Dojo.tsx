@@ -15,7 +15,7 @@ function Dojo() {
     };
 
     if (loading) {
-        return <p>Chargement...</p>;
+        return <p>Bienvenue sur le tatami, Bijitasan.</p>;
     }
     return (
         <div>
