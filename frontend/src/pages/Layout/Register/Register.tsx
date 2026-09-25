@@ -5,6 +5,7 @@ import type {RegisterResponse} from "../../../interfaces/interfaces.ts";
 import {register} from "../../../api/authApi.ts";
 import {useTranslation} from "react-i18next";
 import "./register.css"
+import {useAuth} from "../../../contexts/useAuth.ts"
 
 function Register() {
     const navigate = useNavigate()
@@ -16,6 +17,7 @@ function Register() {
         passwordVerification: "",
     });
     const [error, setError] = useState("");
+    const { signIn } = useAuth();
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
         const { name, value } = event.target;
@@ -40,7 +42,7 @@ function Register() {
         try {
             const data: RegisterResponse = await register({username, email, password});
             const token = data.access_token;
-            localStorage.setItem("access_token", token);
+            await signIn(token)
             navigate("/dojo");
         } catch {
             setError(`${t("register.register-error")}`);

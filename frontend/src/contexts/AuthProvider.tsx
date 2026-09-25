@@ -29,11 +29,25 @@ export function AuthProvider({ children }: {children: ReactNode}) {
         loadUser();
     }, []);
 
+    async function signIn(token: string) {
+        localStorage.setItem("access_token", token)
+        const data = await getMyInfos()
+        setUser(data)
+    }
+
+    function signOut() {
+        localStorage.removeItem("access_token")
+        setUser(null)
+    }
+
     return (
         <AuthContext.Provider
             value={{
                 user,
                 loading,
+                
+                signIn,
+                signOut
             }}
         >
             {children}

@@ -5,6 +5,7 @@ import type {LoginResponse} from "../../../interfaces/interfaces.ts";
 import {useTranslation} from "react-i18next";
 import logoPybudo from "../../../../../assets/logo_pybudo.jpeg"
 import "./login.css"
+import {useAuth} from "../../../contexts/useAuth.ts"
 
 function Login() {
     const [email, setEmail]       = useState('');
@@ -12,12 +13,13 @@ function Login() {
     const [error, setError]       = useState('');
     const navigate = useNavigate();
     const {t} = useTranslation()
+    const { signIn } = useAuth();
 
     const handleLogin = async () => {
         try {
             const data: LoginResponse = await login({email, password});
             const token = data.access_token;
-            localStorage.setItem("access_token", token);
+            await signIn(token)
             navigate("/dojo");
         } catch {
             setError(`${t("login.invalid-credentials")}`);

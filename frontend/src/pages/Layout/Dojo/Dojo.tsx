@@ -7,10 +7,10 @@ import {Progression} from "../../../components/progress/progression.tsx";
 function Dojo() {
     const navigate = useNavigate();
     const {t} = useTranslation();
-    const { user, loading } = useAuth();
+    const { user, loading, signOut } = useAuth();
 
     const handleLogout = () => {
-        localStorage.removeItem("access_token");
+        signOut()
         navigate('/');
     };
 
