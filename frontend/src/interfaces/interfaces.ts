@@ -26,6 +26,12 @@ export interface User {
     email: string;
 }
 
+export interface AuthContextType {
+    user: User | null;
+    loading: boolean;
+}
+
+
 export interface ExecutionResult {
     stdout: string
     stderr: string

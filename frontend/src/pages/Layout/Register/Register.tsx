@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { InputEvent, ChangeEvent } from "react";
+import type { FormEvent, ChangeEvent } from "react";
 import {Link, useNavigate} from 'react-router-dom';
 import type {RegisterResponse} from "../../../interfaces/interfaces.ts";
 import {register} from "../../../api/authApi.ts";
@@ -17,7 +17,7 @@ function Register() {
     });
     const [error, setError] = useState("");
 
-    const handleChange = (event: ChangeEvent<HTMLFormElement>): void => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
         const { name, value } = event.target;
 
         setForm((prev) => ({
@@ -26,7 +26,7 @@ function Register() {
         }));
     };
 
-    const handleSubmit = async (event: InputEvent<HTMLFormElement>): Promise<void> => {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault();
         setError("");
 
