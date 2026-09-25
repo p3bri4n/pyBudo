@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta, timezone
 from os import getenv
 from typing import Annotated
 
@@ -15,12 +16,22 @@ if not SECRET_KEY:
 
 ALGORITHM = "HS256"
 
+TOKEN_TTL = timedelta(hours=24)
+
 bearer_scheme = HTTPBearer()
 
 
 def get_session():
     with Session(engine) as session:
         yield session
+
+
+def generate_token(email: str):
+    return jwt.encode(
+        {"sub": email, "exp": datetime.now(timezone.utc) + TOKEN_TTL},
+        SECRET_KEY,
+        algorithm=ALGORITHM,
+    )
 
 
 def get_current_user(
@@ -38,6 +49,13 @@ def get_current_user(
                 detail="Invalid token",
                 headers={"WWW-Authenticate": "Bearer"},
             )
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Expired token",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
     except jwt.PyJWTError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

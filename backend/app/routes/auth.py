@@ -1,11 +1,10 @@
 from typing import Annotated
 
-import jwt
 from fastapi import APIRouter, Depends, HTTPException, status
 from pwdlib import PasswordHash
 from sqlmodel import Session, select
 
-from app.dependencies import ALGORITHM, SECRET_KEY, get_session, get_current_user
+from app.dependencies import generate_token, get_current_user, get_session
 from app.model import Progression, User
 from app.schemas import Token, UserLogin, UserPublic, UserRegister
 
@@ -59,7 +58,7 @@ def register_user(
     session.refresh(progress)
 
     # Génère le token JWT
-    encoded_jwt = jwt.encode({"sub": user.email}, SECRET_KEY, algorithm=ALGORITHM)
+    encoded_jwt = generate_token(user.email)
 
     return Token(message="User registered successfully", access_token=encoded_jwt)
 
@@ -78,13 +77,11 @@ def login_user(user: UserLogin, session: Annotated[Session, Depends(get_session)
         )
 
     # Génère le token JWT
-    encoded_jwt = jwt.encode({"sub": db_user.email}, SECRET_KEY, algorithm=ALGORITHM)
+    encoded_jwt = generate_token(db_user.email)
 
     return Token(message="User logged in successfully", access_token=encoded_jwt)
 
 
 @router.get("/auth/me", response_model=UserPublic)
-def get_me(
-    user: Annotated[User, Depends(get_current_user)]
-):
+def get_me(user: Annotated[User, Depends(get_current_user)]):
     return user
