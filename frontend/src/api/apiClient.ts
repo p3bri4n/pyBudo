@@ -23,7 +23,7 @@ apiClient.interceptors.response.use(
     (response: AxiosResponse) => response,
     (error:AxiosError) => {
         if (error.response?.status === 401 || error.response?.status === 403) {
-            localStorage.removeItem('token');
+            localStorage.removeItem('access_token');
             window.location.href = '/';
         }
         return Promise.reject(error);

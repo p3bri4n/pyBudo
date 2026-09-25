@@ -34,7 +34,7 @@ function Login() {
                 <div className="login-logo">{t("login.pybudo")}</div>
                 {error && <div className="error-msg">{error}</div>}
                 <div className={"login-container"}>
-                    <input type="email"    placeholder={t("login.email")}  value={email}    onChange={e => setEmail(e.target.value)} />
+                    <input type="email" placeholder={t("login.email")}  value={email}    onChange={e => setEmail(e.target.value)} />
                     <input type="password" placeholder={t("login.password")}  value={password} onChange={e => setPassword(e.target.value)} />
                     <button className={"btn-dojo"} onClick={handleLogin}>{t("login.login")}</button>
                 </div>
