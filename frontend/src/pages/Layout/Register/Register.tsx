@@ -33,9 +33,9 @@ function Register() {
             setError("Les mots de passe ne correspondent pas.");
             return;
         }
-        let username: string = form.password;
-        let email: string = form.email;
-        let password: string = form.password;
+        const username: string = form.password;
+        const email: string = form.email;
+        const password: string = form.password;
         try {
             const data: RegisterResponse = await register({username, email, password});
             const token = data.access_token;
