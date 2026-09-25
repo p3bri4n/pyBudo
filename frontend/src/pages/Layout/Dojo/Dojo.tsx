@@ -15,11 +15,7 @@ function Dojo() {
     };
 
     if (loading) {
-        return (
-            <div>
-                Loading
-            </div>
-        )
+        return <p>Chargement...</p>;
     }
     return (
         <div>
