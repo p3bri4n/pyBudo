@@ -5,7 +5,7 @@ from sqlmodel import Session, select
 
 from app.dependencies import get_current_user, get_session
 from app.model import KataCompletion, User
-from app.schemas import KataCompletionCreate, ProgressionPublic
+from app.schemas import KataCompletionCreate, KataCompletionPublic, ProgressionPublic
 from app.services.katas import get_kata
 from app.services.recalculate import recalculate_progression
 
@@ -20,7 +20,7 @@ def get_user_progress(user: Annotated[User, Depends(get_current_user)]):
     return progression_public
 
 
-@router.post("/completions")
+@router.post("/completions", response_model=KataCompletionPublic)
 def add_completions(
     completion: KataCompletionCreate,
     user: Annotated[User, Depends(get_current_user)],
