@@ -36,7 +36,7 @@ function Register() {
             setError("Les mots de passe ne correspondent pas.");
             return;
         }
-        const username: string = form.password;
+        const username: string = form.username;
         const email: string = form.email;
         const password: string = form.password;
         try {
