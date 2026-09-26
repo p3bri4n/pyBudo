@@ -5,7 +5,7 @@ all:
 	docker-compose build && docker-compose up -d
 
 backend:
-	docker-compose build backend && docker-compose up -d postgres backend
+	docker-compose build api && docker-compose up -d db api
 
 frontend:
 	docker-compose build frontend && docker-compose up -d frontend
