@@ -7,11 +7,12 @@
     "french": "Français"
   },
   "login": {
-    "register": "S'inscire",
+    "register": "S'inscrire",
     "login": "Se connecter",
     "pybudo": "Connexion à PyBudo",
     "email": "Email",
-    "password": "Mot de passe"
+    "password": "Mot de passe",
+    "invalid-credentials": "Email ou mot de passe incorrect"
   },
   "register": {
     "create-account": "Créer un compte",

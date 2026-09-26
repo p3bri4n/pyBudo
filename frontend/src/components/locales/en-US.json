@@ -11,7 +11,8 @@
     "login": "Login",
     "pybudo": "Login to PyBudo",
     "email": "Email",
-    "password": "Password"
+    "password": "Password",
+    "invalid-credentials": "Incorrect email or password"
   },
   "register": {
     "create-account": "Create an account",
@@ -26,8 +27,8 @@
   },
   "dojo": {
     "logout":"Logout",
-    "welcome-visitor": "Welcome on the tatami mat, Bijitasan.",
-    "welcome": "Welcome on the tatami mat",
+    "welcome-visitor": "Welcome to the tatami mat, Bijitasan.",
+    "welcome": "Welcome to the tatami mat",
     "progression": "My progression",
     "katas": "My Katas"
   },

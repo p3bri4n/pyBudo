@@ -115,7 +115,7 @@ function Register() {
                 {error && <p>{error}</p>}
 
                 <button className={"btn-dojo"} type="submit">
-                    S'inscrire
+                    {t("register.register")}
                 </button>
             </form>
         </div>
