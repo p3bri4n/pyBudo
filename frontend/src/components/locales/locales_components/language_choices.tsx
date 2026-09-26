@@ -17,7 +17,7 @@ const LanguageChoices = () => {
                     className={`language ${i18n.language === lang ? 'active' : ''}`}
                     onClick={() => setLanguage(lang)}
                 >
-                    {t(`languages.${lang === 'en-US' ? 'english' :'french'}`)}
+                    {t(`languages.${lang === 'fr-FR' ? 'french' :'english'}`)}
                 </span>
             ))}
         </div>

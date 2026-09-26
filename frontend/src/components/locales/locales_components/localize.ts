@@ -8,7 +8,7 @@ const Localize = i18n.use(initReactI18next).init({
         'fr-FR': { translation: French },
         'en-US': { translation: English },
     },
-    lng: localStorage.getItem('CURRENT_LANGUAGE') || 'fr-FR',
+    lng: localStorage.getItem('CURRENT_LANGUAGE') || 'en-US',
     fallbackLng: 'fr-FR',
     interpolation: { escapeValue: false },
 });
