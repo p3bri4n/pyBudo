@@ -33,7 +33,7 @@ function Register() {
         setError("");
 
         if (form.password !== form.passwordVerification) {
-            setError("Les mots de passe ne correspondent pas.");
+            setError(`${t("register.not-matching-passwords")}`);
             return;
         }
         const username: string = form.username;
@@ -52,14 +52,14 @@ function Register() {
     return (
         <div className={"Register"}>
             <Link className={"link-dojo"} to="/">
-                Retour
+                {t("register.back")}
             </Link>
 
-            <h1>Créer un compte</h1>
+            <h1>{t("register.create-account")}</h1>
 
             <form className={"register-form"} onSubmit={handleSubmit}>
                 <div className={"form-input"}>
-                    <label htmlFor="username">Username</label>
+                    <label htmlFor="username">{t("register.username")}</label>
                     <input
                         id="username"
                         placeholder={t("register.username")}
@@ -72,7 +72,7 @@ function Register() {
                 </div>
 
                 <div className={"form-input"}>
-                    <label htmlFor="email">Email</label>
+                    <label htmlFor="email">{t("register.email")}</label>
                     <input
                         id="email"
                         name="email"
@@ -85,7 +85,7 @@ function Register() {
                 </div>
 
                 <div className={"form-input"}>
-                    <label htmlFor="password">Mot de passe</label>
+                    <label htmlFor="password">{t("register.password")}</label>
                     <input
                         id="password"
                         name="password"
@@ -99,7 +99,7 @@ function Register() {
 
                 <div className={"form-input"}>
                     <label htmlFor="passwordVerification">
-                        Confirmer le mot de passe
+                        {t("register.password-verification")}
                     </label>
                     <input
                         id="passwordVerification"
