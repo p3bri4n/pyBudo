@@ -3,7 +3,7 @@ import {Link, useNavigate} from 'react-router-dom';
 import {login} from "../../../api/authApi.ts";
 import type {LoginResponse} from "../../../interfaces/interfaces.ts";
 import {useTranslation} from "react-i18next";
-import logoPybudo from "../../../../../assets/logo_pybudo.jpeg"
+import logoPybudo from "../../../assets/images/logo_pybudo.jpeg"
 import "./login.css"
 import {useAuth} from "../../../contexts/useAuth.ts"
 
