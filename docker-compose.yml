@@ -4,6 +4,8 @@ services:
       context: ./backend
     ports:
       - "${PORT}:8000"
+    networks:
+      - pybudo_network
     environment:
       DATABASE_URL: "${DATABASE_URL}"
       SECRET_KEY: "${SECRET_KEY:?SECRET_KEY manquant}"
@@ -19,6 +21,8 @@ services:
       POSTGRES_DB: "${POSTGRES_DB}"
     ports:
       - "${DB_PORT}:5432"
+    networks:
+      - pybudo_network
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -27,5 +31,22 @@ services:
       timeout: 5s
       retries: 5
 
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL}
+    restart: unless-stopped
+    depends_on:
+      - api
+    networks:
+      - pybudo_network
+    ports:
+      - "5173:80"
 volumes:
   postgres_data:
+
+networks:
+  pybudo_network:
+    driver: bridge
