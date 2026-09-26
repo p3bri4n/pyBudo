@@ -15,7 +15,7 @@ function Dojo() {
     };
 
     if (loading) {
-        return <p>Bienvenue sur le tatami, Bijitasan.</p>;
+        return <p>{t("dojo.welcome-visitor")}</p>;
     }
     return (
         <div>
@@ -24,15 +24,15 @@ function Dojo() {
             </button>
             <h1>Dojo</h1>
 
-            <p>Bienvenue sur le tatami, {user?.username ?? "Bijita"}san.</p>
+            <p>{t("dojo.welcome")}, {user?.username ?? "Bijita"}san.</p>
 
             <section>
-                <h2>Ma progression</h2>
+                <h2>{t("dojo.progression")}</h2>
                 <Progression/>
             </section>
 
             <section>
-                <h2>Mes katas</h2>
+                <h2>{t("dojo.katas")}</h2>
                 <PythonRunner/>
                 {/* liste des katas */}
             </section>

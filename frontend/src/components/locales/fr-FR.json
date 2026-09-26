@@ -1,0 +1,42 @@
+{
+  "layout": {
+    "pybudo": "PyBudo"
+  },
+  "languages": {
+    "english": "Anglais",
+    "french": "Français"
+  },
+  "login": {
+    "register": "S'inscrire",
+    "login": "Se connecter",
+    "pybudo": "Connexion à PyBudo",
+    "email": "Email",
+    "password": "Mot de passe",
+    "invalid-credentials": "Email ou mot de passe incorrect"
+  },
+  "register": {
+    "create-account": "Créer un compte",
+    "not-matching-passwords": "Les mots de passe ne correspondent pas",
+    "register-error": "Une erreur est survenue lors de l'inscription",
+    "back": "Retour",
+    "username": "Nom d'utilisateur",
+    "email": "Email",
+    "password": "Mot de passe",
+    "password-verification": "Confirmer le mot de passe",
+    "register": "S'inscrire"
+  },
+  "dojo": {
+    "logout":"Se déconnecter",
+    "welcome-visitor": "Bienvenue sur le tatami, Bijitasan.",
+    "welcome": "Bienvenue sur le tatami",
+    "progression": "Ma progression",
+    "katas": "Mes Katas"
+  },
+  "progression": {
+    "progression": "ma progression"
+  },
+  "python-runner": {
+    "execution": "Execution",
+    "execute": "Executer"
+  }
+}
