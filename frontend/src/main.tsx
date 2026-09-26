@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
 import {AuthProvider} from "./contexts/AuthProvider";
+import './components/locales/locales_components/localize.ts'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
