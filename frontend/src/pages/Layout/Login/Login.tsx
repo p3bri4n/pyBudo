@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {login} from "../../../api/authApi.ts";
 import type {LoginResponse} from "../../../interfaces/interfaces.ts";
 import {useTranslation} from "react-i18next";
@@ -29,9 +29,6 @@ function Login() {
     return (
         <div className="login-page">
             <div className="login-box">
-                <nav>
-                    <Link className={"link-dojo"} to="/register">{t("login.register")}</Link>
-                </nav>
                 <img alt={"logo"} src={logoPybudo} />
                 <div className="login-logo">{t("login.pybudo")}</div>
                 {error && <div className="error-msg">{error}</div>}

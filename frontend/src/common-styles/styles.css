@@ -1,5 +1,3 @@
-@import 'variables.css';
-@import 'fonts.css';
 /* ==========================================================================
    Reset pour que l'application occupe toute la hauteur/largeur de l'écran,
    sans marges parasites ni scroll indésirable.
@@ -20,7 +18,6 @@ body {
     text-align: center;
 }
 
-/* #root ou #app selon votre framework (React, Vue, etc.) */
 #root,
 #app {
     min-height: 100%;
@@ -28,18 +25,11 @@ body {
     width: 100%;
     display: flex;
     flex-direction: column;
+    --text-color: #3a2a15;
+    --text-secondary: #4a3820;
+    --text-muted: #5a4a30;
+
 }
-
-/* ==========================================================================
-   Background thème "Dojo" — à appliquer sur <body> ou un conteneur racine
-   (ex. <div id="app">) pour un fond cohérent sur toute l'application.
-
-   Composé de 3 couches, du haut vers le bas :
-   1. Mur / lumière tamisée (dégradé chaud, façon papier shoji)
-   2. Vignette douce sur les bords (profondeur)
-   3. Sol en lattes de bois (bas de l'écran)
-   ========================================================================== */
-
 
 /* ==========================================================================
    Boutons style "Dojo" — planche de bois clair, coins arrondis, relief.

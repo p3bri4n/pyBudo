@@ -1,13 +1,26 @@
 {
-  "layout": {
-    "pybudo": "PyBudo"
-  },
   "languages": {
     "english": "English",
     "french": "French"
   },
-  "login": {
+  "layout": {
+    "pybudo": "pyBudo",
+    "pybudo-tm": "© PyBudo",
+    "dojo-code": "The code dōjō"
+  },
+  "landing": {
+    "learn": "Learn Python like a Samurai",
+    "training": "PyBudo trains you in the dōjō: solve code katas, rise from peasant to master samurai, and get your mastery recognized in each discipline.",
     "register": "Register",
+    "login": "Login",
+    "progressive_katas_title": "Progressive katas",
+    "progressive_katas_text": "Code exercises ordered by rank, from peasant to master samurai.",
+    "multiple_disciplines_title": "Multiple disciplines ",
+    "multiple_disciplines_text": "Python, data structures, frameworks - each path has its own journey.",
+    "tests_title": "Direct tests",
+    "tests_text": "Test your solutions and see directly if the kata is passed."
+  },
+  "login": {
     "login": "Login",
     "pybudo": "Login to PyBudo",
     "email": "Email",

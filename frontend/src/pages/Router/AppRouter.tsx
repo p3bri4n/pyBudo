@@ -5,13 +5,15 @@ import Login from "../Layout/Login/Login";
 import Dojo from "../Layout/Dojo/Dojo";
 import AuthGuard from "../Layout/AuthGuard";
 import Register from "../Layout/Register/Register";
+import LandingPage from "../Layout/LandingPage/LandingPage.tsx";
 
 
 const AppRouter = () => {
     return (
         <Routes>
             <Route element={<Layout />}>
-                <Route path="/" element={<Login />} />
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route
                     path="/dojo"
