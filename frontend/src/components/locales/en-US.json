@@ -9,12 +9,12 @@
     "dojo-code": "Dōjō's code"
   },
   "landing": {
-    "learn": "Learn Python like a samouraï",
-    "training": "PyBudo trains you in the dōjō : solve code katas, upgrade from peasant to master samouraï, and make your mastery acknowledgable in each discipline.",
+    "learn": "Learn Python like a Samourai",
+    "training": "PyBudo trains you in the dōjō : solve code katas, upgrade from peasant to master samourai, and make your mastery acknowledgable in each discipline.",
     "register": "Register",
     "login": "Login",
     "progressive_katas_title": "Progressive katas",
-    "progressive_katas_text": "Code exercises ordered by rank, from peasant to master samouraï.",
+    "progressive_katas_text": "Code exercises ordered by rank, from peasant to master samourai.",
     "multiple_disciplines_title": "Multiple disciplines ",
     "multiple_disciplines_text": "Python, data structures, frameworks - each path has its own journey.",
     "tests_title": "Direct tests",
