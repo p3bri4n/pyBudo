@@ -6,7 +6,7 @@ export default function LandingPage() {
   const {t} = useTranslation();
 
   return (
-    <div className="app-bg">
+    <div className="LandingPage">
 
       <section className="hero">
         <h1>{t("landing.learn")}</h1>
