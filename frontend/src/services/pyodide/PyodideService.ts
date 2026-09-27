@@ -5,7 +5,7 @@ let pyodide: PyodideInterface | null = null;
 
 export async function getPyodide() {
     if (!pyodide) {
-        pyodide = await loadPyodide();
+        pyodide = await loadPyodide({ indexURL: "/pyodide/" });
     }
 
     return pyodide;
