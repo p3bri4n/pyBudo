@@ -1,10 +1,12 @@
 {
-  "layout": {
-    "pybudo": "PyBudo"
-  },
   "languages": {
     "english": "Anglais",
     "french": "Français"
+  },
+  "layout": {
+    "pybudo": "pyBudo",
+    "pybudo-tm": "© PyBudo",
+    "dojo-code": "Le dōjō du code"
   },
   "landing": {
     "learn": "Apprends Python comme un samouraï",

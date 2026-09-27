@@ -17,7 +17,7 @@ function Layout() {
 
             <footer>
                 <LanguageChoices/>
-                © PyBudo — Le dōjō du code
+                {t("layout.pybudo-tm")} - {t("layout.dojo-code")}
             </footer>
         </div>
     );
