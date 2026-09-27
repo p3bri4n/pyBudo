@@ -1,9 +1,9 @@
 .Layout {
-    min-height: 100vh;
+    min-height: 100dvh;
     gap: 0.5rem;
 }
 
 .Layout__main {
-    min-height: 100vh;
+    min-height: 100dvh;
     gap: 0.5rem;
 }
