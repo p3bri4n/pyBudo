@@ -19,7 +19,6 @@
     "tests_text": "Exécute tes solutions et vois immédiatement si le kata est réussi."
   },
   "login": {
-    "register": "S'inscrire",
     "login": "Se connecter",
     "pybudo": "Connexion à PyBudo",
     "email": "Email",

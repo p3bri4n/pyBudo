@@ -19,7 +19,6 @@
     "tests_text": "Test your solutions and see directly if the kata is passed."
   },
   "login": {
-    "register": "Register",
     "login": "Login",
     "pybudo": "Login to PyBudo",
     "email": "Email",
