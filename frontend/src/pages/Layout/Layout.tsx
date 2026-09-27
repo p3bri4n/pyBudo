@@ -6,18 +6,18 @@ function Layout() {
     const {t} = useTranslation();
 
     return (
-        <div>
+        <div className={"Layout"}>
             <header>
                 <h1>{t("layout.pybudo")}</h1>
             </header>
 
-            <main>
+            <main className={"Layout__main"}>
                 <Outlet />
             </main>
 
             <footer>
                 <LanguageChoices/>
-                {t("layout.pybudo")}
+                © PyBudo — Le dōjō du code
             </footer>
         </div>
     );

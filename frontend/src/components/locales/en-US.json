@@ -6,6 +6,18 @@
     "english": "English",
     "french": "French"
   },
+  "landing": {
+    "learn": "Learn Python like a samouraï",
+    "training": "PyBudo trains you in the dōjō : solve code katas, upgrade from peasant to master samouraï, and make your mastery acknowledgable in each discipline.",
+    "register": "Register",
+    "login": "Login",
+    "progressive_katas_title": "Progressive katas",
+    "progressive_katas_text": "Code exercises ordered by rank, from peasant to master samouraï.",
+    "multiple_disciplines_title": "Multiple disciplines ",
+    "multiple_disciplines_text": "Python, data structures, frameworks - each path has its own journey.",
+    "tests_title": "Direct tests",
+    "tests_text": "Test your solutions and see directly if the kata is passed."
+  },
   "login": {
     "register": "Register",
     "login": "Login",
