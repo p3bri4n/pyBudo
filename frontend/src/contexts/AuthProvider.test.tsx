@@ -17,9 +17,9 @@ describe("AuthProvider", () => {
 
         await act(() => result.current.signIn("jeton-test"))
 
-        expect(localStorage.getItem("access_token")).equal("jeton-test")
-        expect(result.current.user?.email).equal("test@example.com")
-        expect(result.current.user?.username).equal("test")
+        expect(localStorage.getItem("access_token")).toBe("jeton-test")
+        expect(result.current.user?.email).toBe("test@example.com")
+        expect(result.current.user?.username).toBe("test")
     });
 
     it("Delete token and User with SignOut", async () => {
