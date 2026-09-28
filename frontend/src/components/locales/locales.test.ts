@@ -24,11 +24,11 @@ describe("locales", () => {
         const paths2 = new Set(flattenKeys(en));
 
         // Calcul des différences
-        const manquantsDansF2 = [...paths1].filter(x => !paths2.has(x));
-        const manquantsDansF1 = [...paths2].filter(x => !paths1.has(x));
+        const missingInF2 = [...paths1].filter(x => !paths2.has(x));
+        const missingInF1 = [...paths2].filter(x => !paths1.has(x));
 
         // Résultat
-        expect(manquantsDansF1, "Keys are missing on fr-FR.json").toEqual([]);
-        expect(manquantsDansF2, "Keys are missing on en-US.json").toEqual([]);
+        expect(missingInF1, "Keys are missing on fr-FR.json").toEqual([]);
+        expect(missingInF2, "Keys are missing on en-US.json").toEqual([]);
     })
 })
