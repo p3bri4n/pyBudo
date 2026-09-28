@@ -45,7 +45,7 @@ def recalculate_progression(user_id: int, session: Session):
     # Récupère la progression de l'utilisateur
     progression: Progression = session.exec(
         select(Progression).where(Progression.user_id == user_id)
-    ).one()
+    ).first()
     # Actualise son core_dan (rank sur le tronc commun)
     progression.core_dan = core_dan
 
