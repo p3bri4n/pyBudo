@@ -46,10 +46,16 @@
     "katas": "My Katas",
     "katas-loading": "Loading katas...",
     "katas-error": "Unable to load katas.",
-    "kata-passed": "Passed"
+    "kata-passed": "Passed",
+    "completion-error": "The kata passed but could not be saved.",
+    "katas-all-passed": "Well done, you passed every kata!"
   },
   "progression": {
-    "progression": "my progression"
+    "progression": "my progression",
+    "loading": "Loading progression...",
+    "error": "Unable to load progression.",
+    "core": "Core",
+    "no-rank": "No rank yet"
   },
   "python-runner": {
     "execution": "Execution",

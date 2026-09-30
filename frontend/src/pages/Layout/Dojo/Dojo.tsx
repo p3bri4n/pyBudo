@@ -5,19 +5,36 @@ import {useTranslation} from "react-i18next";
 import {PythonRunner} from "../../../components/PythonEditor.tsx";
 import { useAuth } from "../../../contexts/useAuth.ts";
 import {Progression} from "../../../components/progress/progression.tsx";
-import {useKatas} from "../../../hooks/useKatas.ts";
+import {DEFAULT_RANK, useKatas} from "../../../hooks/useKatas.ts";
+import {useProgression} from "../../../hooks/useProgression.ts";
+import {useKataProgression} from "../../../hooks/useKataProgression.ts";
 import type {Kata} from "../../../interfaces/interfaces.ts";
 
 function Dojo() {
     const navigate = useNavigate();
     const {t} = useTranslation();
     const { user, loading, signOut } = useAuth();
-    const { katas, loading: katasLoading, error: katasError } = useKatas();
+    const {
+        progression,
+        loading: progressionLoading,
+        error: progressionError,
+        refresh: refreshProgression,
+    } = useProgression();
+    const { passedKataIds, error: completionError, completeKata } = useKataProgression();
+    // Rang à travailler calculé par le backend. Il passe au suivant quand tous
+    // les katas du rang sont réussis (après refreshProgression). kyu_10 si la
+    // progression n'a pas pu être chargée.
+    const rank = progression
+        ? progression.current_rank
+        : progressionLoading ? undefined : DEFAULT_RANK;
+    const { katas, loading: katasLoading, error: katasError } = useKatas(rank);
     const [selectedKata, setSelectedKata] = useState<Kata | null>(null);
-    const [passedKataIds, setPassedKataIds] = useState<Set<string>>(new Set());
 
-    const handleKataPassed = (kata: Kata) => {
-        setPassedKataIds((ids) => new Set(ids).add(kata.id));
+    const handleKataPassed = async (kata: Kata) => {
+        if (passedKataIds?.has(kata.id)) return;
+        if (await completeKata(kata.id)) {
+            refreshProgression();
+        }
     };
 
     const handleLogout = () => {
@@ -41,6 +58,8 @@ function Dojo() {
                 <h2>{t("dojo.katas")}</h2>
                 {katasLoading && <p>{t("dojo.katas-loading")}</p>}
                 {katasError && <p>{t("dojo.katas-error")}</p>}
+                {completionError && <p>{t("dojo.completion-error")}</p>}
+                {!katasLoading && !katasError && katas.length === 0 && <p>{t("dojo.katas-all-passed")}</p>}
                 <ul className="kata-list">
                     {katas.map((kata) => (
                         <li key={kata.id}>
@@ -51,7 +70,7 @@ function Dojo() {
                             >
                                 <h3>{kata.title}</h3>
                                 <span className="kata-rank">{kata.rank}</span>
-                                {passedKataIds.has(kata.id) && (
+                                {passedKataIds?.has(kata.id) && (
                                     <span className="kata-passed"> ✅ {t("dojo.kata-passed")}</span>
                                 )}
                             </button>
@@ -62,7 +81,11 @@ function Dojo() {
 
             <section>
                 <h2>{t("dojo.progression")}</h2>
-                <Progression/>
+                <Progression
+                    progression={progression}
+                    loading={progressionLoading}
+                    error={progressionError}
+                />
             </section>
 
             <section className="kata-workspace">

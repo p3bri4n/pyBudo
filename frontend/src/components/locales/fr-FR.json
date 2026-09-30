@@ -46,10 +46,16 @@
     "katas": "Mes Katas",
     "katas-loading": "Chargement des katas...",
     "katas-error": "Impossible de charger les katas.",
-    "kata-passed": "Réussi"
+    "kata-passed": "Réussi",
+    "completion-error": "Le kata est réussi mais n'a pas pu être enregistré.",
+    "katas-all-passed": "Bravo, tu as réussi tous les katas !"
   },
   "progression": {
-    "progression": "ma progression"
+    "progression": "ma progression",
+    "loading": "Chargement de la progression...",
+    "error": "Impossible de charger la progression.",
+    "core": "Tronc commun",
+    "no-rank": "Aucun rang"
   },
   "python-runner": {
     "execution": "Execution",

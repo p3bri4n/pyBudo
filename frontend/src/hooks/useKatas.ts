@@ -1,17 +1,23 @@
 import {useEffect, useState} from "react";
-import type {Kata} from "../interfaces/interfaces.ts";
+import {getKatas} from "../api/katasApi.ts";
+import type {Kata, Rank} from "../interfaces/interfaces.ts";
 
-export function useKatas() {
-    const [katas, setKatas] = useState<Kata[]>([]);
+export const DEFAULT_RANK: Rank = "kyu_10";
+
+// rank : le rang des katas à afficher (current_rank de la progression)
+//   - undefined tant qu'il n'est pas connu
+//   - null quand tous les katas sont réussis
+export function useKatas(rank: Rank | null | undefined) {
+    const [allKatas, setAllKatas] = useState<Kata[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         let cancelled = false;
 
-        import("../../bootstrap_katas_v2.json")
-            .then((module) => {
-                if (!cancelled) setKatas(module.default as Kata[]);
+        getKatas()
+            .then((katas) => {
+                if (!cancelled) setAllKatas(katas);
             })
             .catch((err: unknown) => {
                 if (!cancelled) setError(err instanceof Error ? err.message : String(err));
@@ -25,5 +31,7 @@ export function useKatas() {
         };
     }, []);
 
-    return {katas, loading, error};
+    const katas = rank ? allKatas.filter((kata) => kata.rank === rank) : [];
+
+    return {katas, loading: loading || rank === undefined, error};
 }

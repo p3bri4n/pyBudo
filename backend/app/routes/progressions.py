@@ -7,17 +7,46 @@ from app.dependencies import get_current_user, get_session
 from app.model import KataCompletion, User
 from app.schemas import KataCompletionCreate, KataCompletionPublic, ProgressionPublic
 from app.services.katas import get_kata
-from app.services.recalculate import recalculate_progression
+from app.services.recalculate import (
+    core_rank_status,
+    get_core_katas,
+    recalculate_progression,
+)
 
 router = APIRouter()
 
 
 @router.get("/progression", response_model=ProgressionPublic)
-def get_user_progress(user: Annotated[User, Depends(get_current_user)]):
+def get_user_progress(
+    user: Annotated[User, Depends(get_current_user)],
+    session: Annotated[Session, Depends(get_session)],
+):
+    completed_ids = set(
+        session.exec(
+            select(KataCompletion.kata_id).where(KataCompletion.user_id == user.id)
+        ).all()
+    )
+    _, current_rank = core_rank_status(
+        get_core_katas(session), completed_ids, user.progression.core_dan
+    )
+
     progression_public = ProgressionPublic(
-        core_dan=user.progression.core_dan, disciplines=user.discipline_progressions
+        core_dan=user.progression.core_dan,
+        current_rank=current_rank,
+        disciplines=user.discipline_progressions,
     )
     return progression_public
+
+
+@router.get("/completions", response_model=list[KataCompletionPublic])
+def get_completions(
+    user: Annotated[User, Depends(get_current_user)],
+    session: Annotated[Session, Depends(get_session)],
+):
+    # Katas réussis par l'utilisateur connecté uniquement
+    return session.exec(
+        select(KataCompletion).where(KataCompletion.user_id == user.id)
+    ).all()
 
 
 @router.post("/completions", response_model=KataCompletionPublic)

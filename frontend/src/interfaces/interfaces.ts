@@ -1,3 +1,5 @@
+import type {RANKS} from "../constants/constants.ts";
+
 export type RegisterRequest = {
     username: string
     email: string
@@ -47,25 +49,17 @@ export interface KataTest {
     output: unknown
 }
 
+// Correspond à KataPublic renvoyé par GET /katas
 export interface Kata {
     id: string
-    kata_type: string
-    rank: string
+    rank: Rank
     discipline: string
     variant_of: string | null
     title: string
     statement: string
     signature: string
-    solution_reference: string
     tests: KataTest[]
     concepts_used: string[]
-    metadata: {
-        model: string
-        level_spec_version: string
-        attempts: number
-        status: string
-        violations_detected: string[]
-    }
 }
 
 export interface KataTestResult {
@@ -80,4 +74,25 @@ export interface KataTestReport {
     error: string | null
     results: KataTestResult[]
     stdout?: string
+}
+
+export type Rank = typeof RANKS[number]
+
+export interface DisciplineProgression {
+    discipline: string
+    highest_dan_practiced: Rank
+}
+
+export interface UserProgression {
+    core_dan: Rank | null
+    // Rang dont les katas sont à faire, null quand tous les katas sont réussis
+    current_rank: Rank | null
+    disciplines: DisciplineProgression[]
+}
+
+export interface KataCompletion {
+    kata_id: string
+    user_id: number
+    completed_at: string
+    verified: boolean
 }

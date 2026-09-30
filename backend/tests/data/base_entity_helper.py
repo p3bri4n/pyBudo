@@ -90,6 +90,14 @@ class BaseEntityHelper:
 
         return completion
 
+    def _add_completion(self, session: Session, user_id: int, kata_id: str):
+        completion = KataCompletion(user_id=user_id, kata_id=kata_id)
+
+        session.add(completion)
+        session.commit()
+
+        return completion
+
     def _add_discipline_progression(
         self,
         session: Session,
