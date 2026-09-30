@@ -54,8 +54,6 @@ class DisciplineProgressionPublic(BaseModel):
 
 class ProgressionPublic(BaseModel):
     core_dan: Rank | None
-    # Rang dont les katas sont à faire, None quand tous les katas sont réussis
-    current_rank: Rank | None = None
     disciplines: list[DisciplineProgressionPublic] = []
 
 

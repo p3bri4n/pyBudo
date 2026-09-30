@@ -85,8 +85,6 @@ export interface DisciplineProgression {
 
 export interface UserProgression {
     core_dan: Rank | null
-    // Rang dont les katas sont à faire, null quand tous les katas sont réussis
-    current_rank: Rank | null
     disciplines: DisciplineProgression[]
 }
 

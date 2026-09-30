@@ -5,7 +5,7 @@ import {useTranslation} from "react-i18next";
 import {PythonRunner} from "../../../components/PythonEditor.tsx";
 import { useAuth } from "../../../contexts/useAuth.ts";
 import {Progression} from "../../../components/progress/progression.tsx";
-import {DEFAULT_RANK, useKatas} from "../../../hooks/useKatas.ts";
+import {useKatas} from "../../../hooks/useKatas.ts";
 import {useProgression} from "../../../hooks/useProgression.ts";
 import {useKataProgression} from "../../../hooks/useKataProgression.ts";
 import type {Kata} from "../../../interfaces/interfaces.ts";
@@ -21,13 +21,8 @@ function Dojo() {
         refresh: refreshProgression,
     } = useProgression();
     const { passedKataIds, error: completionError, completeKata } = useKataProgression();
-    // Rang à travailler calculé par le backend. Il passe au suivant quand tous
-    // les katas du rang sont réussis (après refreshProgression). kyu_10 si la
-    // progression n'a pas pu être chargée.
-    const rank = progression
-        ? progression.current_rank
-        : progressionLoading ? undefined : DEFAULT_RANK;
-    const { katas, loading: katasLoading, error: katasError } = useKatas(rank);
+    // Katas du rang à travailler, qui passe au suivant quand tous ses katas sont réussis
+    const { katas, loading: katasLoading, error: katasError } = useKatas(passedKataIds);
     const [selectedKata, setSelectedKata] = useState<Kata | null>(null);
 
     const handleKataPassed = async (kata: Kata) => {

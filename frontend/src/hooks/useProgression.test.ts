@@ -9,7 +9,7 @@ vi.mock("../api/progressionApi", () => ({
 
 describe("useProgression", () => {
     it("Returns the user progression", async () => {
-        const data = { core_dan: "kyu_8" as const, current_rank: "kyu_5" as const, disciplines: [{ discipline: "web", highest_dan_practiced: "kyu_10" as const }] };
+        const data = { core_dan: "kyu_8" as const, disciplines: [{ discipline: "web", highest_dan_practiced: "kyu_10" as const }] };
         vi.mocked(getProgression).mockResolvedValue(data);
 
         const { result } = renderHook(() => useProgression());
@@ -33,11 +33,11 @@ describe("useProgression", () => {
 
 describe("useProgression refresh", () => {
     it("Fetches the progression again", async () => {
-        vi.mocked(getProgression).mockResolvedValue({ core_dan: null, current_rank: "kyu_10" as const, disciplines: [] });
+        vi.mocked(getProgression).mockResolvedValue({ core_dan: null, disciplines: [] });
         const { result } = renderHook(() => useProgression());
         await waitFor(() => expect(result.current.loading).toBe(false));
 
-        vi.mocked(getProgression).mockResolvedValue({ core_dan: "kyu_10" as const, current_rank: "kyu_8" as const, disciplines: [] });
+        vi.mocked(getProgression).mockResolvedValue({ core_dan: "kyu_10" as const, disciplines: [] });
         act(() => result.current.refresh());
 
         await waitFor(() => expect(result.current.progression?.core_dan).toBe("kyu_10"));

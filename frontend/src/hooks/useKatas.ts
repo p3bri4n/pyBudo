@@ -1,13 +1,21 @@
 import {useEffect, useState} from "react";
 import {getKatas} from "../api/katasApi.ts";
+import {RANKS} from "../constants/constants.ts";
 import type {Kata, Rank} from "../interfaces/interfaces.ts";
 
-export const DEFAULT_RANK: Rank = "kyu_10";
+// Premier rang, dans l'ordre croissant, qui a encore des katas "core" à réussir.
+// null quand tous les katas "core" sont réussis. Les rangs sans kata sont ignorés.
+export function currentRank(katas: Kata[], passedKataIds: Set<string>): Rank | null {
+    const coreKatas = katas.filter((kata) => kata.discipline === "core");
+    return RANKS.find((rank) =>
+        coreKatas.some((kata) => kata.rank === rank && !passedKataIds.has(kata.id))
+    ) ?? null;
+}
 
-// rank : le rang des katas à afficher (current_rank de la progression)
-//   - undefined tant qu'il n'est pas connu
-//   - null quand tous les katas sont réussis
-export function useKatas(rank: Rank | null | undefined) {
+// passedKataIds : les katas réussis par l'utilisateur, null tant qu'ils ne sont pas chargés.
+// Renvoie les katas du rang à travailler, qui passe au suivant quand tous
+// les katas "core" du rang sont réussis.
+export function useKatas(passedKataIds: Set<string> | null) {
     const [allKatas, setAllKatas] = useState<Kata[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -31,7 +39,8 @@ export function useKatas(rank: Rank | null | undefined) {
         };
     }, []);
 
+    const rank = passedKataIds ? currentRank(allKatas, passedKataIds) : null;
     const katas = rank ? allKatas.filter((kata) => kata.rank === rank) : [];
 
-    return {katas, loading: loading || rank === undefined, error};
+    return {katas, rank, loading: loading || passedKataIds === null, error};
 }
