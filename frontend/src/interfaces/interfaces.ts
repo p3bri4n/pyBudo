@@ -41,3 +41,43 @@ export interface ExecutionResult {
     result: unknown
     error: string | null
 }
+
+export interface KataTest {
+    input: unknown[]
+    output: unknown
+}
+
+export interface Kata {
+    id: string
+    kata_type: string
+    rank: string
+    discipline: string
+    variant_of: string | null
+    title: string
+    statement: string
+    signature: string
+    solution_reference: string
+    tests: KataTest[]
+    concepts_used: string[]
+    metadata: {
+        model: string
+        level_spec_version: string
+        attempts: number
+        status: string
+        violations_detected: string[]
+    }
+}
+
+export interface KataTestResult {
+    input: unknown[]
+    expected: unknown
+    got: unknown
+    error: string | null
+    passed: boolean
+}
+
+export interface KataTestReport {
+    error: string | null
+    results: KataTestResult[]
+    stdout?: string
+}
