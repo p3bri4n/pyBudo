@@ -31,6 +31,19 @@ services:
       timeout: 5s
       retries: 5
 
+  adminer:
+    image: adminer
+    profiles: ["dev"]
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      ADMINER_DEFAULT_SERVER: db
+    networks:
+      - pybudo_network
+    ports:
+      - "8080:8080"
+
   frontend-dev:
     profiles: ["dev"]
     build:
