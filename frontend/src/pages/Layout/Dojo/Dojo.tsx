@@ -22,8 +22,7 @@ function Dojo() {
     } = useProgression();
 
     const { passedKataIds, error: completionError, completeKata } = useKataProgression();
-    // Katas du rang à travailler, qui passe au suivant quand tous ses katas sont réussis
-    const { katas, loading: katasLoading, error: katasError } = useKatas(passedKataIds);
+    const { katas, loading: katasLoading, error: katasError } = useKatas();
     const [selectedKata, setSelectedKata] = useState<Kata | null>(null);
 
     const handleKataPassed = async (kata: Kata) => {
@@ -55,7 +54,6 @@ function Dojo() {
                 {katasLoading && <p>{t("dojo.katas-loading")}</p>}
                 {katasError && <p>{t("dojo.katas-error")}</p>}
                 {completionError && <p>{t("dojo.completion-error")}</p>}
-                {!katasLoading && !katasError && katas.length === 0 && <p>{t("dojo.katas-all-passed")}</p>}
                 <ul className="kata-list">
                     {katas.map((kata) => (
                         <li key={kata.id}>
