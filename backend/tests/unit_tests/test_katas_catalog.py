@@ -1,22 +1,9 @@
-from pydantic import TypeAdapter
 
-from app.schemas import KataInternal, KataPublic
-from app.scripts.seed import load_katas
+from app.scripts.seed import load_katas, validate_catalog
 from tests.data.base_entity_helper import BaseEntityHelper
 
 
 class TestsKatasCatalog(BaseEntityHelper):
-    def test_katas_match_public_schema(self):
-        for kata in load_katas():
-            TypeAdapter(KataPublic).validate_python(kata)
-
-    def test_katas_have_internal_fields(self):
-        for kata in load_katas():
-            TypeAdapter(KataInternal).validate_python(kata)
-            assert "status" in kata["metadata"], f"{kata['id']} n'a pas de status"
-
-    def test_katas_ids_are_unique(self):
-        seen = set()
-        for kata in load_katas():
-            assert kata["id"] not in seen, f"id en double : {kata['id']}"
-            seen.add(kata["id"])
+    def test_validate_catalog(self):
+        katas = load_katas()
+        validate_catalog(katas)
