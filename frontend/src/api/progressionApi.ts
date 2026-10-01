@@ -1,7 +1,6 @@
 import {apiClient, authHeaders} from "./apiClient.ts";
+import {token} from "./authApi.ts";
 import type {KataCompletion, UserProgression} from "../interfaces/interfaces";
-
-const token = () => localStorage.getItem('access_token');
 
 export const getProgression = async (): Promise<UserProgression> => {
     const response = await apiClient.get(
@@ -10,7 +9,6 @@ export const getProgression = async (): Promise<UserProgression> => {
     return response.data;
 }
 
-// L'utilisateur est déduit du token par le backend : seul kata_id est envoyé
 export const addCompletion = async (kataId: string): Promise<KataCompletion> => {
     const response = await apiClient.post(
         "/completions",

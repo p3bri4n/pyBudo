@@ -20,6 +20,7 @@ function Dojo() {
         error: progressionError,
         refresh: refreshProgression,
     } = useProgression();
+
     const { passedKataIds, error: completionError, completeKata } = useKataProgression();
     // Katas du rang à travailler, qui passe au suivant quand tous ses katas sont réussis
     const { katas, loading: katasLoading, error: katasError } = useKatas(passedKataIds);

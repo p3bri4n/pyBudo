@@ -3,7 +3,6 @@ import {isAxiosError} from "axios";
 import {addCompletion, getCompletions} from "../api/progressionApi.ts";
 
 export function useKataProgression() {
-    // null tant que les katas réussis ne sont pas chargés
     const [passedKataIds, setPassedKataIds] = useState<Set<string> | null>(null);
     const [error, setError] = useState<string | null>(null);
 
@@ -25,8 +24,6 @@ export function useKataProgression() {
         };
     }, []);
 
-    // Enregistre le kata comme réussi pour l'utilisateur connecté.
-    // Renvoie true si le kata est enregistré, y compris s'il l'était déjà (409).
     const completeKata = useCallback(async (kataId: string): Promise<boolean> => {
         setError(null);
         try {
