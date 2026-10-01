@@ -20,6 +20,17 @@ def get_user_progress(user: Annotated[User, Depends(get_current_user)]):
     return progression_public
 
 
+@router.get("/completions", response_model=list[KataCompletionPublic])
+def get_completions(
+    user: Annotated[User, Depends(get_current_user)],
+    session: Annotated[Session, Depends(get_session)],
+):
+    # Katas réussis par l'utilisateur connecté uniquement
+    return session.exec(
+        select(KataCompletion).where(KataCompletion.user_id == user.id)
+    ).all()
+
+
 @router.post("/completions", response_model=KataCompletionPublic)
 def add_completions(
     completion: KataCompletionCreate,

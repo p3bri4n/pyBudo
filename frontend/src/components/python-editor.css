@@ -1,11 +1,17 @@
 .pythonEditor {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
+.editorMain {
+    flex: 0 1 auto;
+    width: 800px;
+    min-width: 0;
+    max-width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     gap: 0.5rem;
 }
@@ -16,4 +22,38 @@
     text-align: left;
     border-radius: 6px;
     overflow: hidden;
+}
+
+.testReport {
+    flex: 0 0 280px;
+    text-align: left;
+}
+
+@media (max-width: 768px) {
+    .pythonEditor {
+        flex-direction: column;
+    }
+
+    .editorMain,
+    .testReport {
+        flex-basis: auto;
+        width: 100%;
+    }
+}
+
+.testResults {
+    list-style: none;
+    padding: 0;
+}
+
+.testResults li {
+    margin-bottom: 0.25rem;
+}
+
+.testPassed {
+    color: #2e9e4f;
+}
+
+.testFailed {
+    color: #d9534f;
 }

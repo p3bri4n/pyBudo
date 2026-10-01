@@ -1,13 +1,36 @@
+import "./dojo.css";
+import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {PythonRunner} from "../../../components/PythonEditor.tsx";
 import { useAuth } from "../../../contexts/useAuth.ts";
 import {Progression} from "../../../components/progress/progression.tsx";
+import {useKatas} from "../../../hooks/useKatas.ts";
+import {useProgression} from "../../../hooks/useProgression.ts";
+import {useKataProgression} from "../../../hooks/useKataProgression.ts";
+import type {Kata} from "../../../interfaces/interfaces.ts";
 
 function Dojo() {
     const navigate = useNavigate();
     const {t} = useTranslation();
     const { user, loading, signOut } = useAuth();
+    const {
+        progression,
+        loading: progressionLoading,
+        error: progressionError,
+        refresh: refreshProgression,
+    } = useProgression();
+    const { passedKataIds, error: completionError, completeKata } = useKataProgression();
+    // Katas du rang à travailler, qui passe au suivant quand tous ses katas sont réussis
+    const { katas, loading: katasLoading, error: katasError } = useKatas(passedKataIds);
+    const [selectedKata, setSelectedKata] = useState<Kata | null>(null);
+
+    const handleKataPassed = async (kata: Kata) => {
+        if (passedKataIds?.has(kata.id)) return;
+        if (await completeKata(kata.id)) {
+            refreshProgression();
+        }
+    };
 
     const handleLogout = () => {
         signOut()
@@ -27,14 +50,55 @@ function Dojo() {
             <p>{t("dojo.welcome")}, {user?.username ?? "Bijita"}san.</p>
 
             <section>
-                <h2>{t("dojo.progression")}</h2>
-                <Progression/>
+                <h2>{t("dojo.katas")}</h2>
+                {katasLoading && <p>{t("dojo.katas-loading")}</p>}
+                {katasError && <p>{t("dojo.katas-error")}</p>}
+                {completionError && <p>{t("dojo.completion-error")}</p>}
+                {!katasLoading && !katasError && katas.length === 0 && <p>{t("dojo.katas-all-passed")}</p>}
+                <ul className="kata-list">
+                    {katas.map((kata) => (
+                        <li key={kata.id}>
+                            <button
+                                type="button"
+                                className={`kata-item${selectedKata?.id === kata.id ? " kata-item--selected" : ""}`}
+                                onClick={() => setSelectedKata(kata)}
+                            >
+                                <h3>{kata.title}</h3>
+                                <span className="kata-rank">{kata.rank}</span>
+                                {passedKataIds?.has(kata.id) && (
+                                    <span className="kata-passed"> ✅ {t("dojo.kata-passed")}</span>
+                                )}
+                            </button>
+                        </li>
+                    ))}
+                </ul>
             </section>
 
             <section>
-                <h2>{t("dojo.katas")}</h2>
-                <PythonRunner/>
-                {/* liste des katas */}
+                <h2>{t("dojo.progression")}</h2>
+                <Progression
+                    progression={progression}
+                    loading={progressionLoading}
+                    error={progressionError}
+                />
+            </section>
+
+            <section className="kata-workspace">
+                {selectedKata && (
+                    <aside className="kata-details">
+                        <h2>{selectedKata.title}</h2>
+                        <p>{selectedKata.statement}</p>
+                    </aside>
+                )}
+                <div className="kata-editor">
+                    {/* key : remonte l'éditeur pour repartir de la signature à chaque changement de kata */}
+                    <PythonRunner
+                        key={selectedKata?.id}
+                        initialCode={selectedKata ? `${selectedKata.signature}\n    pass\n` : undefined}
+                        kata={selectedKata ?? undefined}
+                        onKataPassed={handleKataPassed}
+                    />
+                </div>
             </section>
         </div>
     );

@@ -39,17 +39,31 @@
     "register": "S'inscrire"
   },
   "dojo": {
-    "logout":"Se déconnecter",
+    "logout": "Se déconnecter",
     "welcome-visitor": "Bienvenue sur le tatami, Bijitasan.",
     "welcome": "Bienvenue sur le tatami",
     "progression": "Ma progression",
-    "katas": "Mes Katas"
+    "katas": "Mes Katas",
+    "katas-loading": "Chargement des katas...",
+    "katas-error": "Impossible de charger les katas.",
+    "kata-passed": "Réussi",
+    "completion-error": "Le kata est réussi mais n'a pas pu être enregistré.",
+    "katas-all-passed": "Bravo, tu as réussi tous les katas !"
   },
   "progression": {
-    "progression": "ma progression"
+    "progression": "ma progression",
+    "loading": "Chargement de la progression...",
+    "error": "Impossible de charger la progression.",
+    "core": "Tronc commun",
+    "no-rank": "Aucun rang"
   },
   "python-runner": {
     "execution": "Execution",
-    "execute": "Executer"
+    "execute": "Executer",
+    "kata-passed": "Kata réussi ! Tous les tests sont passés.",
+    "tests-summary": "{{passed}}/{{total}} tests réussis",
+    "expected": "attendu",
+    "got": "obtenu",
+    "error": "erreur"
   }
 }
