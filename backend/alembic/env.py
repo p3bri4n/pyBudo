@@ -1,15 +1,12 @@
 import os
-
-from pathlib import Path
 from logging.config import fileConfig
-
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
-from sqlmodel import SQLModel
+from pathlib import Path
 
 from dotenv import load_dotenv
-from alembic import context
+from sqlalchemy import engine_from_config, pool
+from sqlmodel import SQLModel
 
+from alembic import context
 from app.model import *
 
 BASE_DIR = Path(__file__).resolve().parents[2]
