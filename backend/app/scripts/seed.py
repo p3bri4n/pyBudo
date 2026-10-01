@@ -6,7 +6,7 @@ from sqlmodel import Session
 from app.db import engine, init_db
 from app.model import Kata
 
-KATAS_PATH = Path(__file__).resolve().parents[1] / "data" / "examples.json"
+KATAS_PATH = Path(__file__).resolve().parents[1] / "data" / "katas.json"
 
 
 def load_katas():
