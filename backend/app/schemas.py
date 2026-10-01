@@ -78,10 +78,12 @@ class MethodCall(BaseModel):
     args: list[Any]
     expected_return: Any
 
+
 class ClassKataTest(BaseModel):
     init: list[Any]
     calls: list[MethodCall]
     expected_state: dict[str, Any]
+
 
 class FunctionKataPublic(KataBase):
     kata_type: Literal["function"]
