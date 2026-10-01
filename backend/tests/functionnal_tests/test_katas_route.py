@@ -59,6 +59,7 @@ class TestsKatas(BaseEntityHelper):
         kata = self._add_kata(
             session=session,
             kata_type="class",
+            class_name="test-class",
         )
         response = client.get("/katas")
         assert response.status_code == status.HTTP_200_OK

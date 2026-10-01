@@ -93,7 +93,7 @@ class FunctionKataPublic(KataBase):
 class ClassKataPublic(KataBase):
     kata_type: Literal["class"]
     tests: list[ClassKataTest]
-    class_name: str | None
+    class_name: str
 
 
 KataPublic = Annotated[
