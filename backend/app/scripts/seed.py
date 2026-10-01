@@ -4,7 +4,7 @@ from pathlib import Path
 from pydantic import TypeAdapter
 from sqlmodel import Session
 
-from app.db import engine, init_db
+from app.db import engine
 from app.model import Kata
 from app.schemas import KataInternal, KataPublic
 
@@ -44,5 +44,4 @@ def seed_katas():
 
 
 if __name__ == "__main__":
-    init_db()
     seed_katas()
