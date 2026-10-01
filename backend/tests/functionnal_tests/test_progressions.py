@@ -115,3 +115,57 @@ class TestsProgressions(BaseEntityHelper):
         )
 
         assert response.status_code == status.HTTP_409_CONFLICT
+
+    def test_get_completions_returns_only_user_completions(
+        self, client: Client, session: Session
+    ):
+        user = self._add_user(
+            session, username="john", email="john@example.com", password="password123"
+        )
+        other = self._add_user(
+            session, username="jane", email="jane@example.com", password="password123"
+        )
+        self._add_completed_kata(session, user_id=user.id, kata_id="kyu_10_addition")
+        self._add_completed_kata(session, user_id=other.id, kata_id="kyu_10_perimetre")
+
+        login = client.post(
+            "/auth/login", json={"email": "john@example.com", "password": "password123"}
+        )
+        assert login.status_code == status.HTTP_200_OK
+        token = login.json()["access_token"]
+
+        response = client.get(
+            "/completions", headers={"Authorization": f"Bearer {token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+
+        data = response.json()
+        assert len(data) == 1
+        assert data[0]["kata_id"] == "kyu_10_addition"
+        assert data[0]["user_id"] == user.id
+
+    def test_get_completions_without_completion_returns_empty_list(
+        self, client: Client, session: Session
+    ):
+        self._add_user(
+            session, username="john", email="john@example.com", password="password123"
+        )
+
+        login = client.post(
+            "/auth/login", json={"email": "john@example.com", "password": "password123"}
+        )
+        assert login.status_code == status.HTTP_200_OK
+        token = login.json()["access_token"]
+
+        response = client.get(
+            "/completions", headers={"Authorization": f"Bearer {token}"}
+        )
+        assert response.status_code == status.HTTP_200_OK
+        assert response.json() == []
+
+    def test_get_completions_without_token_is_rejected(self, client: Client):
+        response = client.get("/completions")
+        assert response.status_code in (
+            status.HTTP_401_UNAUTHORIZED,
+            status.HTTP_403_FORBIDDEN,
+        )

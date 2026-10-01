@@ -39,17 +39,31 @@
     "register": "Register"
   },
   "dojo": {
-    "logout":"Logout",
+    "logout": "Logout",
     "welcome-visitor": "Welcome to the tatami mat, Bijitasan.",
     "welcome": "Welcome to the tatami mat",
     "progression": "My progression",
-    "katas": "My Katas"
+    "katas": "My Katas",
+    "katas-loading": "Loading katas...",
+    "katas-error": "Unable to load katas.",
+    "kata-passed": "Passed",
+    "completion-error": "The kata passed but could not be saved.",
+    "katas-all-passed": "Well done, you passed every kata!"
   },
   "progression": {
-    "progression": "my progression"
+    "progression": "my progression",
+    "loading": "Loading progression...",
+    "error": "Unable to load progression.",
+    "core": "Core",
+    "no-rank": "No rank yet"
   },
   "python-runner": {
     "execution": "Execution",
-    "execute": "Execute"
+    "execute": "Execute",
+    "kata-passed": "Kata passed! All tests succeeded.",
+    "tests-summary": "{{passed}}/{{total}} tests passed",
+    "expected": "expected",
+    "got": "got",
+    "error": "error"
   }
 }

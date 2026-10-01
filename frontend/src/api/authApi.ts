@@ -6,7 +6,7 @@ import type {
     RegisterResponse, User
 } from "../interfaces/interfaces";
 
-const token = () => localStorage.getItem('access_token');
+export const token = () => localStorage.getItem('access_token');
 
 export const register = async (registerRequest: RegisterRequest): Promise<RegisterResponse> => {
     const response = await apiClient.post(
