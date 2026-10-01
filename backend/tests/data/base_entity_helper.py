@@ -34,6 +34,7 @@ class BaseEntityHelper:
         self,
         session: Session,
         id="kyu_10_addition",
+        kata_type="function",
         rank="kyu_10",
         discipline="core",
         title="Premier Kata",
@@ -48,6 +49,7 @@ class BaseEntityHelper:
 
         kata = Kata(
             id=id,
+            kata_type=kata_type,
             rank=rank,
             discipline=discipline,
             title=title,
