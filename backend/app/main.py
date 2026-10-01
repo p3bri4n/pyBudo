@@ -3,14 +3,12 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.db import init_db
 from app.routes import auth, health, katas, progressions
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     print("Application is starting up")
-    init_db()
     yield
     print("Application is shutting down")
 
