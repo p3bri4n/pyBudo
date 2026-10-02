@@ -1,5 +1,4 @@
 import type { components } from "./tsschema"
-import type {RANKS} from "../constants/constants.ts";
 
 export type RegisterRequest = components["schemas"]["UserRegister"]
 export type LoginRequest = components["schemas"]["UserLogin"]
@@ -9,12 +8,9 @@ export type Kata = components["schemas"]["KataPublic"]
 export type UserProgression = components["schemas"]["ProgressionPublic"]
 export type KataCompletion = components["schemas"]["KataCompletionPublic"]
 
-export type Rank = typeof RANKS[number]
-
 export interface AuthContextType {
     user: User | null;
     loading: boolean;
-
     signIn: (token: string) => Promise<void>;
     signOut: () => void;
 }
