@@ -3,6 +3,8 @@
     padding: 0;
     display: flex;
     flex-wrap: nowrap;
+    /* safe : revient à gauche quand la liste déborde, pour garder le premier kata accessible au scroll */
+    justify-content: safe center;
     gap: 1rem;
     overflow-x: auto;
 }
@@ -84,4 +86,9 @@
 .kata-passed {
     font-size: 0.85rem;
     color: #2e9e4f;
+}
+
+.kata-rank-select {
+    display: inline-block;
+    margin-bottom: 1rem;
 }

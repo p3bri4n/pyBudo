@@ -44,6 +44,7 @@
     "welcome": "Bienvenue sur le tatami",
     "progression": "Ma progression",
     "katas": "Mes Katas",
+    "rank": "Rang :",
     "katas-loading": "Chargement des katas...",
     "katas-error": "Impossible de charger les katas.",
     "kata-passed": "Réussi",

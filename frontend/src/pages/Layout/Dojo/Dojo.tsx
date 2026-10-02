@@ -1,6 +1,5 @@
 import "./dojo.css";
 import {useState} from "react";
-import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {PythonRunner} from "../../../components/PythonEditor.tsx";
 import { useAuth } from "../../../contexts/useAuth.ts";
@@ -8,12 +7,12 @@ import {Progression} from "../../../components/progress/progression.tsx";
 import {useKatas} from "../../../hooks/useKatas.ts";
 import {useProgression} from "../../../hooks/useProgression.ts";
 import {useKataProgression} from "../../../hooks/useKataProgression.ts";
-import type {Kata} from "../../../interfaces/interfaces.ts";
+import type {Kata, Rank} from "../../../interfaces/interfaces.ts";
+import {RANKS} from "../../../constants/constants.ts";
 
 function Dojo() {
-    const navigate = useNavigate();
     const {t} = useTranslation();
-    const { user, loading, signOut } = useAuth();
+    const { loading } = useAuth();
     const {
         progression,
         loading: progressionLoading,
@@ -22,8 +21,21 @@ function Dojo() {
     } = useProgression();
 
     const { passedKataIds, error: completionError, completeKata } = useKataProgression();
-    const { katas, loading: katasLoading, error: katasError } = useKatas();
+    const { katas: allKatas, loading: katasLoading, error: katasError } = useKatas();
+    const [selectedRank, setSelectedRank] = useState<Rank | null>(null);
     const [selectedKata, setSelectedKata] = useState<Kata | null>(null);
+
+    // Rangs présents dans la réponse /katas, dans l'ordre croissant
+    const ranks = RANKS.filter((rank) => allKatas.some((kata) => kata.rank === rank));
+    // Par défaut, le rang de l'utilisateur, ou le premier rang disponible s'il n'a pas de kata
+    const userRank = progression?.core_dan && ranks.includes(progression.core_dan) ? progression.core_dan : null;
+    const displayedRank = selectedRank ?? userRank ?? ranks[0] ?? null;
+    const katas = allKatas.filter((kata) => kata.rank === displayedRank);
+
+    const handleRankChange = (rank: Rank) => {
+        setSelectedRank(rank);
+        setSelectedKata(null);
+    };
 
     const handleKataPassed = async (kata: Kata) => {
         if (passedKataIds?.has(kata.id)) return;
@@ -32,25 +44,27 @@ function Dojo() {
         }
     };
 
-    const handleLogout = () => {
-        signOut()
-        navigate('/');
-    };
-
     if (loading) {
         return <p>{t("dojo.welcome-visitor")}</p>;
     }
     return (
         <div>
-            <button className={"btn-dojo"} onClick={handleLogout}>
-                {t('dojo.logout')}
-            </button>
-            <h1>Dojo</h1>
-
-            <p>{t("dojo.welcome")}, {user?.username ?? "Bijita"}san.</p>
 
             <section>
                 <h2>{t("dojo.katas")}</h2>
+                {ranks.length > 0 && (
+                    <label className="kata-rank-select">
+                        {t("dojo.rank")}{" "}
+                        <select
+                            value={displayedRank ?? ""}
+                            onChange={(event) => handleRankChange(event.target.value as Rank)}
+                        >
+                            {ranks.map((rank) => (
+                                <option key={rank} value={rank}>{rank}</option>
+                            ))}
+                        </select>
+                    </label>
+                )}
                 {katasLoading && <p>{t("dojo.katas-loading")}</p>}
                 {katasError && <p>{t("dojo.katas-error")}</p>}
                 {completionError && <p>{t("dojo.completion-error")}</p>}

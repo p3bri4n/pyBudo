@@ -1,0 +1,17 @@
+/* Grille à 3 colonnes égales sur les côtés : le titre reste centré,
+   que le bouton de déconnexion soit affiché ou non */
+.Layout__header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+}
+
+.Layout__title {
+    grid-column: 2;
+}
+
+.Layout__logout {
+    grid-column: 3;
+    justify-self: end;
+    margin-right: 1rem;
+}
