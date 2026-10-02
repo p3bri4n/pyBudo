@@ -17,13 +17,12 @@ function Layout() {
     return (
         <div className={"Layout"}>
             <header className={"Layout__header"}>
-                {user ? (
+                {/* Déconnecté, pas de titre : le nom figure déjà sur le logo de la page */}
+                {user && (
                     <div className={"Layout__title"}>
                         <h1>Dojo</h1>
                         <p>{t("dojo.welcome")}, {user.username}san.</p>
                     </div>
-                ) : (
-                    <h1 className={"Layout__title"}>{t("layout.pybudo")}</h1>
                 )}
                 {user && (
                     <button className={"btn-dojo Layout__logout"} onClick={handleLogout}>
