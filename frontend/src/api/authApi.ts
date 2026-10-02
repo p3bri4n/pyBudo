@@ -1,7 +1,6 @@
 import {apiClient, authHeaders} from "./apiClient.ts";
 import type {
     LoginRequest,
-    TokenResponse,
     RegisterRequest,
     TokenResponse, User
 } from "../interfaces/interfaces";
