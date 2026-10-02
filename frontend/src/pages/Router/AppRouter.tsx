@@ -1,9 +1,10 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
 
 import Layout from "../Layout/Layout";
 import Login from "../Layout/Login/Login";
 import Dojo from "../Layout/Dojo/Dojo";
-import AuthGuard from "../Layout/AuthGuard";
+import AuthGuard from "../Guards/AuthGuard";
+import GuestGuard from "../Guards/GuestGuard";
 import Register from "../Layout/Register/Register";
 import LandingPage from "../Layout/LandingPage/LandingPage.tsx";
 
@@ -12,17 +13,17 @@ const AppRouter = () => {
     return (
         <Routes>
             <Route element={<Layout />}>
-                <Route path="/" element={<LandingPage />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route
-                    path="/dojo"
-                    element={
-                        <AuthGuard>
-                            <Dojo />
-                        </AuthGuard>
-                    }
-                />
+                {/* Pages visiteurs : un utilisateur connecté est redirigé vers le Dojo */}
+                <Route element={<GuestGuard><Outlet /></GuestGuard>}>
+                    <Route path="/" element={<LandingPage />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                </Route>
+
+                {/* Pages connectées : un visiteur est redirigé vers l'accueil */}
+                <Route element={<AuthGuard><Outlet /></AuthGuard>}>
+                    <Route path="/dojo" element={<Dojo />} />
+                </Route>
             </Route>
 
 
