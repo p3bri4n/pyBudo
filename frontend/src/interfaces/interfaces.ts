@@ -2,9 +2,8 @@ import type { components } from "./tsschema"
 import type {RANKS} from "../constants/constants.ts";
 
 export type RegisterRequest = components["schemas"]["UserRegister"]
-export type RegisterResponse = components["schemas"]["Token"]
 export type LoginRequest = components["schemas"]["UserLogin"]
-export type LoginResponse = components["schemas"]["Token"]
+export type TokenResponse = components["schemas"]["Token"]
 export type User = components["schemas"]["UserPublic"];
 export type Kata = components["schemas"]["KataPublic"]
 export type UserProgression = components["schemas"]["ProgressionPublic"]

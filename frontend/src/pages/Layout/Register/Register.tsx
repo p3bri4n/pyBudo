@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { FormEvent, ChangeEvent } from "react";
 import {Link, useNavigate} from 'react-router-dom';
-import type {RegisterResponse} from "../../../interfaces/interfaces.ts";
+import type {TokenResponse} from "../../../interfaces/interfaces.ts";
 import {register} from "../../../api/authApi.ts";
 import {useTranslation} from "react-i18next";
 import "./register.css"
@@ -40,7 +40,7 @@ function Register() {
         const email: string = form.email;
         const password: string = form.password;
         try {
-            const data: RegisterResponse = await register({username, email, password});
+            const data: TokenResponse = await register({username, email, password});
             const token = data.access_token;
             await signIn(token)
             navigate("/dojo");

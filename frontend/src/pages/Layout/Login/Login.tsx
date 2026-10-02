@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import {useNavigate} from 'react-router-dom';
 import {login} from "../../../api/authApi.ts";
-import type {LoginResponse} from "../../../interfaces/interfaces.ts";
+import type {TokenResponse} from "../../../interfaces/interfaces.ts";
 import {useTranslation} from "react-i18next";
 import logoPybudo from "../../../assets/images/logo_pybudo.jpeg"
 import "./login.css"
@@ -17,7 +17,7 @@ function Login() {
 
     const handleLogin = async () => {
         try {
-            const data: LoginResponse = await login({email, password});
+            const data: TokenResponse = await login({email, password});
             const token = data.access_token;
             await signIn(token)
             navigate("/dojo");
