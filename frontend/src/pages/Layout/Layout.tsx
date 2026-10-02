@@ -1,14 +1,35 @@
-import {Outlet} from "react-router-dom";
+import "./layout-header.css";
+import {Outlet, useNavigate} from "react-router-dom";
 import LanguageChoices from "../../components/locales/locales_components/language_choices.tsx";
 import {useTranslation} from "react-i18next";
+import {useAuth} from "../../contexts/useAuth.ts";
 
 function Layout() {
     const {t} = useTranslation();
+    const navigate = useNavigate();
+    const {user, signOut} = useAuth();
+
+    const handleLogout = () => {
+        signOut()
+        navigate('/');
+    };
 
     return (
         <div className={"Layout"}>
-            <header>
-                <h1>{t("layout.pybudo")}</h1>
+            <header className={"Layout__header"}>
+                {user ? (
+                    <div className={"Layout__title"}>
+                        <h1>Dojo</h1>
+                        <p>{t("dojo.welcome")}, {user.username}san.</p>
+                    </div>
+                ) : (
+                    <h1 className={"Layout__title"}>{t("layout.pybudo")}</h1>
+                )}
+                {user && (
+                    <button className={"btn-dojo Layout__logout"} onClick={handleLogout}>
+                        {t('dojo.logout')}
+                    </button>
+                )}
             </header>
 
             <main className={"Layout__main"}>
