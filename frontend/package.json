@@ -42,5 +42,9 @@
     "vite": "^8.3.0",
     "vite-plugin-static-copy": "^4.1.1",
     "vitest": "^5.0.2"
-  }
+  },
+  "overrides": {
+    "openapi-typescript": {
+      "typescript": "$typescript"
+    }
 }
