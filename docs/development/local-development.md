@@ -15,3 +15,6 @@ Exemple :
 APP_ENV=development
 DATABASE_URL=...
 ```
+
+## Recuperer les types depuis fastAPI:
+npm run gen:api
