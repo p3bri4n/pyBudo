@@ -1,32 +1,16 @@
+import type { components } from "./tsschema"
 import type {RANKS} from "../constants/constants.ts";
 
-export type RegisterRequest = {
-    username: string
-    email: string
-    password: string
-}
+export type RegisterRequest = components["schemas"]["UserRegister"]
+export type RegisterResponse = components["schemas"]["Token"]
+export type LoginRequest = components["schemas"]["UserLogin"]
+export type LoginResponse = components["schemas"]["Token"]
+export type User = components["schemas"]["UserPublic"];
+export type Kata = components["schemas"]["KataPublic"]
+export type UserProgression = components["schemas"]["ProgressionPublic"]
+export type KataCompletion = components["schemas"]["KataCompletionPublic"]
 
-export type RegisterResponse = {
-    message: string
-    access_token: string
-    token_type: string
-}
-
-export type LoginRequest = {
-    email: string
-    password: string
-}
-
-export type LoginResponse = {
-    message: string
-    access_token: string
-    token_type: string
-};
-
-export interface User {
-    username: string;
-    email: string;
-}
+export type Rank = typeof RANKS[number]
 
 export interface AuthContextType {
     user: User | null;
@@ -36,30 +20,11 @@ export interface AuthContextType {
     signOut: () => void;
 }
 
-
 export interface ExecutionResult {
     stdout: string
     stderr: string
     result: unknown
     error: string | null
-}
-
-export interface KataTest {
-    input: unknown[]
-    output: unknown
-}
-
-// Correspond à KataPublic renvoyé par GET /katas
-export interface Kata {
-    id: string
-    rank: Rank
-    discipline: string
-    variant_of: string | null
-    title: string
-    statement: string
-    signature: string
-    tests: KataTest[]
-    concepts_used: string[]
 }
 
 export interface KataTestResult {
@@ -74,23 +39,4 @@ export interface KataTestReport {
     error: string | null
     results: KataTestResult[]
     stdout?: string
-}
-
-export type Rank = typeof RANKS[number]
-
-export interface DisciplineProgression {
-    discipline: string
-    highest_dan_practiced: Rank
-}
-
-export interface UserProgression {
-    core_dan: Rank | null
-    disciplines: DisciplineProgression[]
-}
-
-export interface KataCompletion {
-    kata_id: string
-    user_id: number
-    completed_at: string
-    verified: boolean
 }
