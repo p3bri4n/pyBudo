@@ -47,4 +47,5 @@
     "openapi-typescript": {
       "typescript": "$typescript"
     }
+  }
 }
