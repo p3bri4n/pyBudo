@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",
-    "gen:api": "npx openapi-typescript http://localhost:8000/openapi.json -o src/interfaces/tsschema.d.ts"
+    "gen:api": "openapi-typescript http://localhost:8000/openapi.json -o src/interfaces/tsschema.d.ts"
   },
   "dependencies": {
     "@codemirror/commands": "^6.11.1",
