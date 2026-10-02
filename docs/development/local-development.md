@@ -15,3 +15,6 @@ Exemple :
 APP_ENV=development
 DATABASE_URL=...
 ```
+
+## Recuperer les types depuis fastAPI:
+npx openapi-typescript   http://localhost:8000/openapi.json   -o ./src/interfaces/tsschema.d.ts
