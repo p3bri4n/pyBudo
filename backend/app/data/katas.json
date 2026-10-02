@@ -1,0 +1,671 @@
+[
+  {
+    "id": "kyu_10_perimetre",
+    "kata_type": "function",
+    "rank": "kyu_10",
+    "discipline": "core",
+    "variant_of": null,
+    "title": "Périmètre d'un rectangle",
+    "statement": "Écrivez une fonction qui calcule le périmètre d'un rectangle à partir de sa largeur et sa hauteur.",
+    "signature": "def calculer_perimetre_rectangle(largeur: float, hauteur: float) -> float:",
+    "solution_reference": "def calculer_perimetre_rectangle(largeur, hauteur):\n    return 2 * (largeur + hauteur)",
+    "tests": [
+      {
+        "input": [
+          3,
+          4
+        ],
+        "output": 14
+      },
+      {
+        "input": [
+          0,
+          0
+        ],
+        "output": 0
+      },
+      {
+        "input": [
+          5,
+          5
+        ],
+        "output": 20
+      },
+      {
+        "input": [
+          10.5,
+          2
+        ],
+        "output": 25.0
+      }
+    ],
+    "concepts_used": [
+      "operateurs arithmetiques"
+    ],
+    "metadata": {
+      "model": "claude",
+      "level_spec_version": "kyu_manuel-v1",
+      "attempts": 1,
+      "status": "publie",
+      "violations_detected": []
+    }
+  },
+  {
+    "id": "kyu_10_celsius",
+    "kata_type": "function",
+    "rank": "kyu_10",
+    "discipline": "core",
+    "variant_of": null,
+    "title": "Celsius vers Fahrenheit",
+    "statement": "Écrivez une fonction qui convertit une température de Celsius en Fahrenheit.",
+    "signature": "def convertir_celsius_fahrenheit(celsius: float) -> float:",
+    "solution_reference": "def convertir_celsius_fahrenheit(celsius):\n    return celsius * 9 / 5 + 32",
+    "tests": [
+      {
+        "input": [
+          0
+        ],
+        "output": 32.0
+      },
+      {
+        "input": [
+          100
+        ],
+        "output": 212.0
+      },
+      {
+        "input": [
+          -40
+        ],
+        "output": -40.0
+      },
+      {
+        "input": [
+          37
+        ],
+        "output": 98.6
+      }
+    ],
+    "concepts_used": [
+      "operateurs arithmetiques"
+    ],
+    "metadata": {
+      "model": "claude",
+      "level_spec_version": "kyu_manuel-v1",
+      "attempts": 1,
+      "status": "publie",
+      "violations_detected": []
+    }
+  },
+  {
+    "id": "kyu_10_moyenne",
+    "kata_type": "function",
+    "rank": "kyu_10",
+    "discipline": "core",
+    "variant_of": null,
+    "title": "Moyenne de trois notes",
+    "statement": "Écrivez une fonction qui calcule la moyenne de trois notes.",
+    "signature": "def calculer_moyenne_trois(a: float, b: float, c: float) -> float:",
+    "solution_reference": "def calculer_moyenne_trois(a, b, c):\n    return (a + b + c) / 3",
+    "tests": [
+      {
+        "input": [
+          10,
+          10,
+          10
+        ],
+        "output": 10.0
+      },
+      {
+        "input": [
+          0,
+          10,
+          20
+        ],
+        "output": 10.0
+      },
+      {
+        "input": [
+          15,
+          12,
+          18
+        ],
+        "output": 15.0
+      },
+      {
+        "input": [
+          5,
+          5,
+          5
+        ],
+        "output": 5.0
+      }
+    ],
+    "concepts_used": [
+      "operateurs arithmetiques"
+    ],
+    "metadata": {
+      "model": "claude",
+      "level_spec_version": "kyu_manuel-v1",
+      "attempts": 1,
+      "status": "publie",
+      "violations_detected": []
+    }
+  },
+  {
+    "id": "kyu_10_prix_ttc",
+    "kata_type": "function",
+    "rank": "kyu_10",
+    "discipline": "core",
+    "variant_of": null,
+    "title": "Prix toutes taxes comprises",
+    "statement": "Écrivez une fonction qui calcule le prix TTC à partir du prix HT et du taux de TVA (en pourcentage).",
+    "signature": "def calculer_prix_ttc(prix_ht: float, taux_tva: float) -> float:",
+    "solution_reference": "def calculer_prix_ttc(prix_ht, taux_tva):\n    return prix_ht * (1 + taux_tva / 100)",
+    "tests": [
+      {
+        "input": [
+          100,
+          20
+        ],
+        "output": 120.0
+      },
+      {
+        "input": [
+          50,
+          10
+        ],
+        "output": 55.00000000000001
+      },
+      {
+        "input": [
+          0,
+          20
+        ],
+        "output": 0.0
+      },
+      {
+        "input": [
+          200,
+          5.5
+        ],
+        "output": 211.0
+      }
+    ],
+    "concepts_used": [
+      "operateurs arithmetiques"
+    ],
+    "metadata": {
+      "model": "claude",
+      "level_spec_version": "kyu_manuel-v1",
+      "attempts": 1,
+      "status": "publie",
+      "violations_detected": []
+    }
+  },
+  {
+    "id": "kyu_8_somme_liste",
+    "kata_type": "function",
+    "rank": "kyu_8",
+    "discipline": "core",
+    "variant_of": null,
+    "title": "Somme d'une liste",
+    "statement": "Écrivez une fonction qui calcule la somme des éléments d'une liste de nombres.",
+    "signature": "def somme_liste(nombres: list) -> float:",
+    "solution_reference": "def somme_liste(nombres):\n    total = 0\n    for n in nombres:\n        total += n\n    return total",
+    "tests": [
+      {
+        "input": [
+          [
+            1,
+            2,
+            3
+          ]
+        ],
+        "output": 6
+      },
+      {
+        "input": [
+          []
+        ],
+        "output": 0
+      },
+      {
+        "input": [
+          [
+            10,
+            -5,
+            5
+          ]
+        ],
+        "output": 10
+      },
+      {
+        "input": [
+          [
+            100
+          ]
+        ],
+        "output": 100
+      }
+    ],
+    "concepts_used": [
+      "boucle for"
+    ],
+    "metadata": {
+      "model": "claude",
+      "level_spec_version": "kyu_manuel-v1",
+      "attempts": 1,
+      "status": "publie",
+      "violations_detected": []
+    }
+  },
+  {
+    "id": "kyu_8_maximum",
+    "kata_type": "function",
+    "rank": "kyu_8",
+    "discipline": "core",
+    "variant_of": null,
+    "title": "Trouver le maximum",
+    "statement": "Écrivez une fonction qui trouve le plus grand élément d'une liste de nombres, sans utiliser max().",
+    "signature": "def trouver_maximum(nombres: list) -> float:",
+    "solution_reference": "def trouver_maximum(nombres):\n    plus_grand = nombres[0]\n    for n in nombres:\n        if n > plus_grand:\n            plus_grand = n\n    return plus_grand",
+    "tests": [
+      {
+        "input": [
+          [
+            3,
+            7,
+            2
+          ]
+        ],
+        "output": 7
+      },
+      {
+        "input": [
+          [
+            5
+          ]
+        ],
+        "output": 5
+      },
+      {
+        "input": [
+          [
+            -1,
+            -5,
+            -2
+          ]
+        ],
+        "output": -1
+      },
+      {
+        "input": [
+          [
+            4,
+            4,
+            4
+          ]
+        ],
+        "output": 4
+      }
+    ],
+    "concepts_used": [
+      "boucle for",
+      "if"
+    ],
+    "metadata": {
+      "model": "claude",
+      "level_spec_version": "kyu_manuel-v1",
+      "attempts": 1,
+      "status": "publie",
+      "violations_detected": []
+    }
+  },
+  {
+    "id": "kyu_8_occurrences",
+    "kata_type": "function",
+    "rank": "kyu_8",
+    "discipline": "core",
+    "variant_of": null,
+    "title": "Compter les occurrences",
+    "statement": "Écrivez une fonction qui compte combien de fois une valeur apparaît dans une liste.",
+    "signature": "def compter_occurrences(liste: list, valeur) -> int:",
+    "solution_reference": "def compter_occurrences(liste, valeur):\n    compteur = 0\n    for element in liste:\n        if element == valeur:\n            compteur += 1\n    return compteur",
+    "tests": [
+      {
+        "input": [
+          [
+            1,
+            2,
+            2,
+            3,
+            2
+          ],
+          2
+        ],
+        "output": 3
+      },
+      {
+        "input": [
+          [],
+          1
+        ],
+        "output": 0
+      },
+      {
+        "input": [
+          [
+            "a",
+            "b",
+            "a"
+          ],
+          "a"
+        ],
+        "output": 2
+      },
+      {
+        "input": [
+          [
+            1,
+            1,
+            1
+          ],
+          2
+        ],
+        "output": 0
+      }
+    ],
+    "concepts_used": [
+      "boucle for",
+      "if"
+    ],
+    "metadata": {
+      "model": "claude",
+      "level_spec_version": "kyu_manuel-v1",
+      "attempts": 1,
+      "status": "publie",
+      "violations_detected": []
+    }
+  },
+  {
+    "id": "kyu_8_carres",
+    "kata_type": "function",
+    "rank": "kyu_8",
+    "discipline": "core",
+    "variant_of": null,
+    "title": "Liste des carrés",
+    "statement": "Écrivez une fonction qui renvoie une nouvelle liste contenant le carré de chaque élément, sans utiliser de compréhension de liste.",
+    "signature": "def liste_des_carres(nombres: list) -> list:",
+    "solution_reference": "def liste_des_carres(nombres):\n    resultat = []\n    for n in nombres:\n        resultat.append(n * n)\n    return resultat",
+    "tests": [
+      {
+        "input": [
+          [
+            1,
+            2,
+            3
+          ]
+        ],
+        "output": [
+          1,
+          4,
+          9
+        ]
+      },
+      {
+        "input": [
+          []
+        ],
+        "output": []
+      },
+      {
+        "input": [
+          [
+            0,
+            -2,
+            4
+          ]
+        ],
+        "output": [
+          0,
+          4,
+          16
+        ]
+      },
+      {
+        "input": [
+          [
+            5
+          ]
+        ],
+        "output": [
+          25
+        ]
+      }
+    ],
+    "concepts_used": [
+      "boucle for",
+      "list.append"
+    ],
+    "metadata": {
+      "model": "claude",
+      "level_spec_version": "kyu_manuel-v1",
+      "attempts": 1,
+      "status": "publie",
+      "violations_detected": []
+    }
+  },
+  {
+    "id": "kyu_5_saluer",
+    "kata_type": "function",
+    "rank": "kyu_5",
+    "discipline": "core",
+    "variant_of": null,
+    "title": "Saluer avec un message par défaut",
+    "statement": "Écrivez une fonction qui salue une personne. Le mot de salutation doit valoir 'Bonjour' par défaut si non précisé.",
+    "signature": "def saluer(nom: str, salutation: str = 'Bonjour') -> str:",
+    "solution_reference": "def saluer(nom, salutation='Bonjour'):\n    return f'{salutation}, {nom} !'",
+    "tests": [
+      {
+        "input": [
+          "Alice"
+        ],
+        "output": "Bonjour, Alice !"
+      },
+      {
+        "input": [
+          "Bob",
+          "Salut"
+        ],
+        "output": "Salut, Bob !"
+      },
+      {
+        "input": [
+          "Claire",
+          "Bonsoir"
+        ],
+        "output": "Bonsoir, Claire !"
+      },
+      {
+        "input": [
+          ""
+        ],
+        "output": "Bonjour,  !"
+      }
+    ],
+    "concepts_used": [
+      "fonction",
+      "parametre par defaut",
+      "f-string"
+    ],
+    "metadata": {
+      "model": "claude",
+      "level_spec_version": "kyu_manuel-v1",
+      "attempts": 1,
+      "status": "publie",
+      "violations_detected": []
+    }
+  },
+  {
+    "id": "kyu_5_prix_final",
+    "kata_type": "function",
+    "rank": "kyu_5",
+    "discipline": "core",
+    "variant_of": null,
+    "title": "Prix final avec TVA par défaut",
+    "statement": "Écrivez une fonction qui calcule le prix final avec un taux de TVA par défaut de 20%.",
+    "signature": "def calculer_prix_final(prix: float, taux_tva: float = 20) -> float:",
+    "solution_reference": "def calculer_prix_final(prix, taux_tva=20):\n    return prix * (1 + taux_tva / 100)",
+    "tests": [
+      {
+        "input": [
+          100
+        ],
+        "output": 120.0
+      },
+      {
+        "input": [
+          100,
+          10
+        ],
+        "output": 110.00000000000001
+      },
+      {
+        "input": [
+          0
+        ],
+        "output": 0.0
+      },
+      {
+        "input": [
+          50,
+          5.5
+        ],
+        "output": 52.75
+      }
+    ],
+    "concepts_used": [
+      "fonction",
+      "parametre par defaut"
+    ],
+    "metadata": {
+      "model": "claude",
+      "level_spec_version": "kyu_manuel-v1",
+      "attempts": 1,
+      "status": "publie",
+      "violations_detected": []
+    }
+  },
+  {
+    "id": "kyu_5_mots_longueur",
+    "kata_type": "function",
+    "rank": "kyu_5",
+    "discipline": "core",
+    "variant_of": null,
+    "title": "Compter les mots par longueur",
+    "statement": "Écrivez une fonction qui reçoit une phrase et renvoie un dictionnaire associant chaque longueur de mot au nombre de mots ayant cette longueur.",
+    "signature": "def compter_mots_par_longueur(texte: str) -> dict:",
+    "solution_reference": "def compter_mots_par_longueur(texte):\n    mots = texte.split()\n    result = {}\n    for mot in mots:\n        longueur = len(mot)\n        result[longueur] = result.get(longueur, 0) + 1\n    return result",
+    "tests": [
+      {
+        "input": [
+          "le chat mange"
+        ],
+        "output": {
+          "2": 1,
+          "4": 1,
+          "5": 1
+        }
+      },
+      {
+        "input": [
+          ""
+        ],
+        "output": {}
+      },
+      {
+        "input": [
+          "a bb ccc dd e"
+        ],
+        "output": {
+          "1": 2,
+          "2": 2,
+          "3": 1
+        }
+      },
+      {
+        "input": [
+          "bonjour a tous"
+        ],
+        "output": {
+          "7": 1,
+          "1": 1,
+          "4": 1
+        }
+      }
+    ],
+    "concepts_used": [
+      "dict",
+      "str.split",
+      "fonction"
+    ],
+    "metadata": {
+      "model": "claude",
+      "level_spec_version": "kyu_manuel-v1",
+      "attempts": 1,
+      "status": "publie",
+      "violations_detected": []
+    }
+  },
+  {
+    "id": "kyu_5_mdp_valide",
+    "kata_type": "function",
+    "rank": "kyu_5",
+    "discipline": "core",
+    "variant_of": null,
+    "title": "Vérifier un mot de passe",
+    "statement": "Écrivez une fonction qui vérifie si un mot de passe atteint une longueur minimale, fixée à 8 caractères par défaut.",
+    "signature": "def verifier_mot_de_passe(mot_de_passe: str, longueur_min: int = 8) -> bool:",
+    "solution_reference": "def verifier_mot_de_passe(mot_de_passe, longueur_min=8):\n    return len(mot_de_passe) >= longueur_min",
+    "tests": [
+      {
+        "input": [
+          "abc123"
+        ],
+        "output": false
+      },
+      {
+        "input": [
+          "motdepasse123"
+        ],
+        "output": true
+      },
+      {
+        "input": [
+          "short",
+          4
+        ],
+        "output": true
+      },
+      {
+        "input": [
+          ""
+        ],
+        "output": false
+      }
+    ],
+    "concepts_used": [
+      "fonction",
+      "parametre par defaut",
+      "len"
+    ],
+    "metadata": {
+      "model": "claude",
+      "level_spec_version": "kyu_manuel-v1",
+      "attempts": 1,
+      "status": "publie",
+      "violations_detected": []
+    }
+  }
+]
