@@ -6,6 +6,15 @@
     align-items: center;
 }
 
+/* Réduit pour ne pas étirer l'en-tête, le logo 256 reste net */
+.Layout__logo {
+    grid-column: 1;
+    justify-self: start;
+    margin-left: 1rem;
+    width: auto;
+    height: 96px;
+}
+
 .Layout__title {
     grid-column: 2;
 }
