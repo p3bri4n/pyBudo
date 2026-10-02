@@ -1,9 +1,10 @@
 import { useState } from "react";
 import type { FormEvent, ChangeEvent } from "react";
-import {Link, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import type {TokenResponse} from "../../../interfaces/interfaces.ts";
 import {register} from "../../../api/authApi.ts";
 import {useTranslation} from "react-i18next";
+import LandingPage from "../LandingPage/LandingPage.tsx";
 import "./register.css"
 import {useAuth} from "../../../contexts/useAuth.ts"
 
@@ -49,76 +50,73 @@ function Register() {
         }
     };
 
+    // Même mise en page que la page d'accueil, le formulaire remplace les boutons
     return (
-        <div className={"Register"}>
-            <Link className={"link-dojo"} to="/">
-                {t("register.back")}
-            </Link>
+        <LandingPage>
+            <div className={"Register"}>
+                <form className={"register-form"} onSubmit={handleSubmit}>
+                    <div className={"form-input"}>
+                        <label htmlFor="username">{t("register.username")}</label>
+                        <input
+                            id="username"
+                            placeholder={t("register.username")}
+                            name="username"
+                            type="text"
+                            value={form.username}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
 
-            <h1>{t("register.create-account")}</h1>
+                    <div className={"form-input"}>
+                        <label htmlFor="email">{t("register.email")}</label>
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            placeholder={t("register.email")}
+                            value={form.email}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
 
-            <form className={"register-form"} onSubmit={handleSubmit}>
-                <div className={"form-input"}>
-                    <label htmlFor="username">{t("register.username")}</label>
-                    <input
-                        id="username"
-                        placeholder={t("register.username")}
-                        name="username"
-                        type="text"
-                        value={form.username}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
+                    <div className={"form-input"}>
+                        <label htmlFor="password">{t("register.password")}</label>
+                        <input
+                            id="password"
+                            name="password"
+                            type="password"
+                            placeholder={t("register.password")}
+                            value={form.password}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
 
-                <div className={"form-input"}>
-                    <label htmlFor="email">{t("register.email")}</label>
-                    <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        placeholder={t("register.email")}
-                        value={form.email}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
+                    <div className={"form-input"}>
+                        <label htmlFor="passwordVerification">
+                            {t("register.password-verification")}
+                        </label>
+                        <input
+                            id="passwordVerification"
+                            name="passwordVerification"
+                            type="password"
+                            placeholder={t("register.password-verification")}
+                            value={form.passwordVerification}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
 
-                <div className={"form-input"}>
-                    <label htmlFor="password">{t("register.password")}</label>
-                    <input
-                        id="password"
-                        name="password"
-                        type="password"
-                        placeholder={t("register.password")}
-                        value={form.password}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
+                    {error && <p>{error}</p>}
 
-                <div className={"form-input"}>
-                    <label htmlFor="passwordVerification">
-                        {t("register.password-verification")}
-                    </label>
-                    <input
-                        id="passwordVerification"
-                        name="passwordVerification"
-                        type="password"
-                        placeholder={t("register.password-verification")}
-                        value={form.passwordVerification}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-
-                {error && <p>{error}</p>}
-
-                <button className={"btn-dojo"} type="submit">
-                    {t("register.register")}
-                </button>
-            </form>
-        </div>
+                    <button className={"btn-dojo"} type="submit">
+                        {t("register.register")}
+                    </button>
+                </form>
+            </div>
+        </LandingPage>
     );
 }
 

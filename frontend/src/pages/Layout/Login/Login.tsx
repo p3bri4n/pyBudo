@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import {login} from "../../../api/authApi.ts";
 import type {TokenResponse} from "../../../interfaces/interfaces.ts";
 import {useTranslation} from "react-i18next";
-import logoPybudo from "../../../assets/images/logo_pybudo.jpeg"
+import LandingPage from "../LandingPage/LandingPage.tsx";
 import "./login.css"
 import {useAuth} from "../../../contexts/useAuth.ts"
 
@@ -26,19 +26,16 @@ function Login() {
         }
     }
 
+    // Même mise en page que la page d'accueil, le formulaire remplace les boutons
     return (
-        <div className="login-page">
-            <div className="login-box">
-                <img alt={"logo"} src={logoPybudo} />
-                <div className="login-logo">{t("login.pybudo")}</div>
-                {error && <div className="error-msg">{error}</div>}
-                <div className={"login-container"}>
-                    <input type="email" placeholder={t("login.email")}  value={email}    onChange={e => setEmail(e.target.value)} />
-                    <input type="password" placeholder={t("login.password")}  value={password} onChange={e => setPassword(e.target.value)} />
-                    <button className={"btn-dojo"} onClick={handleLogin}>{t("login.login")}</button>
-                </div>
+        <LandingPage>
+            {error && <div className="error-msg">{error}</div>}
+            <div className={"login-container"}>
+                <input type="email" placeholder={t("login.email")}  value={email}    onChange={e => setEmail(e.target.value)} />
+                <input type="password" placeholder={t("login.password")}  value={password} onChange={e => setPassword(e.target.value)} />
+                <button className={"btn-dojo"} onClick={handleLogin}>{t("login.login")}</button>
             </div>
-        </div>
+        </LandingPage>
     );
 }
 

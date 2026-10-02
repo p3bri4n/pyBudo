@@ -4,8 +4,6 @@
     text-align: center;
     align-items: center;
 
-    padding: 3rem;
-
     .register-form {
         display: flex;
         flex-direction: column;

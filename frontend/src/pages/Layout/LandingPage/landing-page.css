@@ -9,6 +9,13 @@
     padding: 0 1.5rem;
     color: #3a2a15;
   }
+  .hero-logo {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto 1rem;
+  }
+
   .hero h1 {
     font-size: 2.2rem;
     margin: 0 0 0.5rem;
