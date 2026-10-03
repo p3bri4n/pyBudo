@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {login} from "../../../api/authApi.ts";
 import type {TokenResponse} from "../../../interfaces/interfaces.ts";
 import {useTranslation} from "react-i18next";
@@ -34,6 +34,7 @@ function Login() {
                 <input type="email" placeholder={t("login.email")}  value={email}    onChange={e => setEmail(e.target.value)} />
                 <input type="password" placeholder={t("login.password")}  value={password} onChange={e => setPassword(e.target.value)} />
                 <button className={"btn-dojo"} onClick={handleLogin}>{t("login.login")}</button>
+                <Link className={"link-dojo link-dojo--muted"} to="/">{t("login.back")}</Link>
             </div>
         </LandingPage>
     );

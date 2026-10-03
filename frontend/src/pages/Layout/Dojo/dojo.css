@@ -16,18 +16,37 @@
 
 .kata-item {
     width: 100%;
-    border: 1px solid currentColor;
-    border-radius: 8px;
-    padding: 1rem;
-    background: none;
-    color: inherit;
+    /* Même encadré translucide que le paragraphe du hero de l'accueil */
+    border: 1px solid rgba(74, 53, 32, 0.2);
+    border-radius: 14px;
+    padding: 1rem 1.25rem;
+    background: rgba(255, 250, 235, 0.35);
+    color: #3a2a15;
     font: inherit;
+    /* Même police que le paragraphe du hero */
+    font-family: var(--font-paragraph);
     text-align: left;
     cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
+.kata-item:hover {
+    background: rgba(255, 250, 235, 0.55);
+}
+
+/* Titre du kata : hérite la police du paragraphe du hero, en graisse normale */
+.kata-item h3 {
+    margin: 0 0 0.5rem;
+    font-weight: 400;
+    font-size: 1.2rem;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+}
+
+/* Bordure renforcée par une ombre interne : ne décale pas le contenu */
 .kata-item--selected {
-    border-width: 3px;
+    border-color: rgba(74, 53, 32, 0.7);
+    box-shadow: inset 0 0 0 2px rgba(74, 53, 32, 0.7);
 }
 
 .kata-rank {
@@ -56,6 +75,11 @@
     justify-self: end;
     max-width: 300px;
     text-align: left;
+}
+
+/* Énoncé aligné à gauche : le titre parchemin suit */
+.kata-details h2 {
+    margin-inline: 0;
 }
 
 .kata-editor .editorMain {
