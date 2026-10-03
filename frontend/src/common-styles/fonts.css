@@ -1,16 +1,22 @@
 /* ==========================================================================
    Polices "dōjō" chargées depuis Google Fonts (voir index.html) :
    - Yuji Syuku : calligraphie traditionnelle, pour le texte et les titres
+   - Zen Old Mincho : mincho ancienne, plus lisible pour les paragraphes
    - Shojumaru : effet pinceau japonais, réservée aux boutons
    ========================================================================== */
 
 :root {
     --font-body: "Yuji Syuku", "Georgia", "Noto Serif", serif;
+    --font-paragraph: "Zen Old Mincho", "Georgia", "Noto Serif", serif;
     --font-button: "Shojumaru", "Georgia", serif;
 }
 
 body {
     font-family: var(--font-body);
+}
+
+p {
+    font-family: var(--font-paragraph);
 }
 
 /* Les deux polices n'existent qu'en graisse normale : évite un faux gras flou */
