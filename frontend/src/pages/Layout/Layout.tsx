@@ -1,3 +1,4 @@
+import "./layout.css";
 import "./layout-header.css";
 import {Outlet, useNavigate} from "react-router-dom";
 import LanguageChoices from "../../components/locales/locales_components/language_choices.tsx";

@@ -4,6 +4,22 @@
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
+    /* Collé en haut de page, reste visible au défilement */
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: var(--wall-light);
+}
+
+/* Supprime les marges par défaut qui décollent l'en-tête du haut de page */
+.Layout__title h1,
+.Layout__title p {
+    margin: 0;
+}
+
+/* En-tête vide (pages visiteurs) : pas de bandeau affiché */
+.Layout__header:empty {
+    display: none;
 }
 
 /* Réduit pour ne pas étirer l'en-tête, le logo 256 reste net */

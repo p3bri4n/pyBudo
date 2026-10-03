@@ -11,26 +11,6 @@ export default function LandingPage({ children }: { children?: ReactNode }) {
   return (
     <div className="LandingPage">
 
-      <section className="hero">
-        <Link to="/">
-          <img className="hero-logo" src={logoPybudo} alt="PyBudo" width={256} height={279} />
-        </Link>
-        <h1>{t("landing.learn")}</h1>
-        <p>
-          {t("landing.training")}
-        </p>
-        {children ?? (
-          <div className="hero-actions">
-            <Link className="btn-dojo btn-dojo--action" to="/register">
-              {t("landing.register")}
-            </Link>
-            <Link className="btn-dojo" to="/login">
-              {t("landing.login")}
-            </Link>
-          </div>
-        )}
-      </section>
-
       <section className="panel-parchment">
         <div className="features">
           <div className="feature">
@@ -49,6 +29,31 @@ export default function LandingPage({ children }: { children?: ReactNode }) {
             <p>{t("landing.tests_text")}</p>
           </div>
         </div>
+      </section>
+
+      <section className="hero">
+        <Link to="/">
+          <img className="hero-logo" src={logoPybudo} alt="PyBudo" width={256} height={279} />
+        </Link>
+        {/* Titre et présentation réservés à l'accueil : Login et Register passent leur formulaire en children */}
+        {!children && (
+          <>
+            <h1>{t("landing.learn")}</h1>
+            <p>
+              {t("landing.training")}
+            </p>
+          </>
+        )}
+        {children ?? (
+          <div className="hero-actions">
+            <Link className="btn-dojo btn-dojo--action" to="/register">
+              {t("landing.register")}
+            </Link>
+            <Link className="btn-dojo" to="/login">
+              {t("landing.login")}
+            </Link>
+          </div>
+        )}
       </section>
     </div>
   );

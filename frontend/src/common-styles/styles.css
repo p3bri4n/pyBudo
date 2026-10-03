@@ -1,3 +1,5 @@
+@import "fonts.css";
+
 /* ==========================================================================
    Reset pour que l'application occupe toute la hauteur/largeur de l'écran,
    sans marges parasites ni scroll indésirable.
@@ -32,56 +34,79 @@ body {
 }
 
 /* ==========================================================================
-   Boutons style "Dojo" — planche de bois clair, coins arrondis, relief.
-   Basé sur le style visuel de PyBudo (bandeau nav, "Continuer l'entraînement").
+   Boutons style "Dojo" — makimono : parchemin tendu entre deux rouleaux
+   de bois, dessinés par ::before et ::after (aucune image).
    ========================================================================== */
 
 .btn-dojo {
-    --wood-light: #e8d4a8;
-    --wood-mid: #d4b878;
-    --wood-dark: #7a5c3a;
-    --wood-border: #4a3520;
+    --paper-light: #f6ebcd;
+    --paper: #ecd9a8;
+    --paper-shade: #c9a968;
+    --paper-edge: #8a6a3a;
+    --rod-light: #a8743f;
+    --rod: #6b4423;
+    --rod-dark: #3f2612;
     --text-color: #3a2a15;
 
-    font-family: "Georgia", "Noto Serif", serif;
-    font-weight: 700;
+    position: relative;
+    display: inline-block;
+    font-family: var(--font-button);
+    /* Shojumaru n'existe qu'en graisse normale : évite un faux gras flou */
+    font-weight: 400;
     font-size: 1rem;
     letter-spacing: 0.02em;
     color: var(--text-color);
+    text-decoration: none;
 
-    padding: 0.75em 1.75em;
-    border: 3px solid var(--wood-border);
-    border-radius: 10px;
+    padding: 0.7em 2em;
+    /* Laisse la place aux rouleaux qui dépassent sur les côtés */
+    margin-inline: 14px;
+    border: 0;
+    border-block: 1px solid var(--paper-edge);
+    border-radius: 0;
 
     background:
-            repeating-linear-gradient(
-                    90deg,
-                    var(--wood-light) 0px,
-                    var(--wood-mid) 3px,
-                    var(--wood-light) 6px
-            );
+            linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent 40%, rgba(120, 80, 30, 0.12)),
+            linear-gradient(90deg, var(--paper-shade), var(--paper) 8%, var(--paper-light) 50%, var(--paper) 92%, var(--paper-shade));
 
-    box-shadow:
-            inset 0 2px 0 rgba(255, 255, 255, 0.4),
-            inset 0 -3px 4px rgba(74, 53, 32, 0.35),
-            0 3px 0 var(--wood-border),
-            0 5px 6px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 4px 6px rgba(40, 25, 10, 0.3);
 
     cursor: pointer;
-    transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.15s ease;
+    transition: transform 0.08s ease, filter 0.15s ease;
+}
+
+/* Rouleaux de bois aux deux extrémités */
+.btn-dojo::before,
+.btn-dojo::after {
+    content: "";
+    position: absolute;
+    top: -7px;
+    bottom: -7px;
+    width: 14px;
+    border-radius: 7px;
+    background: linear-gradient(90deg, var(--rod-dark), var(--rod-light) 40%, var(--rod) 70%, var(--rod-dark));
+    box-shadow: 0 3px 4px rgba(40, 25, 10, 0.35);
+}
+
+.btn-dojo::before {
+    left: -12px;
+}
+
+.btn-dojo::after {
+    right: -12px;
 }
 
 .btn-dojo:hover {
-    filter: brightness(1.08);
+    filter: brightness(1.05);
 }
 
 .btn-dojo:active {
     transform: translateY(2px);
-    box-shadow:
-            inset 0 2px 0 rgba(255, 255, 255, 0.3),
-            inset 0 -2px 3px rgba(74, 53, 32, 0.4),
-            0 1px 0 var(--wood-border),
-            0 2px 3px rgba(0, 0, 0, 0.3);
+}
+
+.btn-dojo:focus-visible {
+    outline: 2px dashed #a8321f;
+    outline-offset: 10px;
 }
 
 .btn-dojo:disabled {
@@ -95,32 +120,13 @@ body {
 .btn-dojo--nav {
     padding: 0.5em 1.25em;
     font-size: 1.1rem;
-    border-radius: 8px;
 }
 
 /* --------------------------------------------------------------------------
-   Variante d'action principale, rouge laqué (ÉXÉCUTER LES TESTS)
+   Variante d'action principale, texte à l'encre rouge (ÉXÉCUTER LES TESTS)
    -------------------------------------------------------------------------- */
 .btn-dojo--action {
-    --lacquer-light: #b5473a;
-    --lacquer-mid: #8f2e24;
-    --lacquer-border: #3a1410;
-
-    color: #f5e6c8;
-    border-color: var(--lacquer-border);
-
-    background:
-            linear-gradient(180deg, var(--lacquer-light) 0%, var(--lacquer-mid) 100%);
-
-    box-shadow:
-            inset 0 2px 0 rgba(255, 255, 255, 0.25),
-            inset 0 -3px 5px rgba(0, 0, 0, 0.35),
-            0 3px 0 var(--lacquer-border),
-            0 5px 8px rgba(0, 0, 0, 0.4);
-}
-
-.btn-dojo--action:hover {
-    filter: brightness(1.12);
+    color: #a8321f;
 }
 
 /* --------------------------------------------------------------------------
@@ -169,7 +175,7 @@ body {
     box-shadow:
             inset 0 0 0 4px var(--parchment-edge),
             0 6px 14px rgba(0, 0, 0, 0.35);
-    padding: 1.5em;
+    padding: 0.75em 1em;
 }
 
 /* ==========================================================================
@@ -192,7 +198,7 @@ body {
     --seal: #a8321f;
 
     color: var(--ink);
-    font-family: "Georgia", "Noto Serif", serif;
+    font-family: var(--font-body);
     font-weight: 700;
     text-decoration: none;
     position: relative;

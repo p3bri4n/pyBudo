@@ -1,9 +1,12 @@
+/* Colonne pleine hauteur : le contenu prend l'espace libre,
+   ce qui pousse le footer en bas de la fenêtre même si la page est courte */
 .Layout {
     min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
     gap: 0.5rem;
 }
 
 .Layout__main {
-    min-height: 100dvh;
-    gap: 0.5rem;
+    flex: 1;
 }

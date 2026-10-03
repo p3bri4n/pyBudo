@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { FormEvent, ChangeEvent } from "react";
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import type {TokenResponse} from "../../../interfaces/interfaces.ts";
 import {register} from "../../../api/authApi.ts";
 import {useTranslation} from "react-i18next";
@@ -114,6 +114,7 @@ function Register() {
                     <button className={"btn-dojo"} type="submit">
                         {t("register.register")}
                     </button>
+                    <Link className={"link-dojo link-dojo--muted"} to="/">{t("register.back")}</Link>
                 </form>
             </div>
         </LandingPage>

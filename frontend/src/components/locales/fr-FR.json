@@ -25,7 +25,8 @@
     "pybudo": "Connexion à PyBudo",
     "email": "Email",
     "password": "Mot de passe",
-    "invalid-credentials": "Email ou mot de passe incorrect"
+    "invalid-credentials": "Email ou mot de passe incorrect",
+    "back": "Retour"
   },
   "register": {
     "create-account": "Créer un compte",
