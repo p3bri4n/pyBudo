@@ -9,10 +9,10 @@ export const getProgression = async (): Promise<UserProgression> => {
     return response.data;
 }
 
-export const addCompletion = async (kataId: string): Promise<KataCompletion> => {
+export const addCompletion = async (kataId: string, code: string): Promise<KataCompletion> => {
     const response = await apiClient.post(
         "/completions",
-        {kata_id: kataId},
+        {kata_id: kataId, code: code},
         authHeaders(token()))
     return response.data;
 }

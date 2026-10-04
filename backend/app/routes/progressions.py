@@ -54,8 +54,7 @@ def add_completions(
         )
 
     kata_completion = KataCompletion(
-        kata_id=completion.kata_id,
-        user_id=user.id,
+        kata_id=completion.kata_id, user_id=user.id, code=completion.code
     )
 
     session.add(kata_completion)

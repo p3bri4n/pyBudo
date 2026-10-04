@@ -13,12 +13,14 @@ const axiosError = (status: number) => new AxiosError("Request failed", undefine
     status, statusText: "", data: {}, headers: {}, config: { headers: new AxiosHeaders() },
 });
 
-const completion = (kata_id: string) => ({ kata_id, user_id: 1, completed_at: "2026-09-30T10:00:00Z", verified: false });
+const completion = (kata_id: string, code: string) => ({ kata_id, user_id: 1, code: code, completed_at: "2026-09-30T10:00:00Z", verified: false });
 
 describe("useKataProgression", () => {
     beforeEach(() => {
         vi.clearAllMocks();
-        vi.mocked(getCompletions).mockResolvedValue([completion("kyu_10_perimetre")]);
+        vi.mocked(getCompletions).mockResolvedValue([completion(
+            "kyu_10_perimetre",
+            "def test\n   return 'test_kyu_10_perimetre'")]);
     })
 
     it("Loads the passed katas of the user", async () => {
@@ -29,17 +31,23 @@ describe("useKataProgression", () => {
         expect(result.current.passedKataIds).toEqual(new Set(["kyu_10_perimetre"]));
     })
 
-    it("Sends the kata id and adds it to the passed katas", async () => {
-        vi.mocked(addCompletion).mockResolvedValue(completion("kyu_10_celsius"));
+    it("Sends the kata id and the code and adds it to the passed katas", async () => {
+        vi.mocked(addCompletion).mockResolvedValue(completion(
+            "kyu_10_celsius",
+            "def test\n   return 'test_kyu_10_celsius'"
+        ));
         const { result } = renderHook(() => useKataProgression());
         await waitFor(() => expect(result.current.loading).toBe(false));
 
         let saved;
         await act(async () => {
-            saved = await result.current.completeKata("kyu_10_celsius");
+            saved = await result.current.completeKata(
+                "kyu_10_celsius",
+                "def test\n   return 'test_kyu_10_celsius'"
+            );
         });
 
-        expect(addCompletion).toHaveBeenCalledWith("kyu_10_celsius");
+        expect(addCompletion).toHaveBeenCalledWith("kyu_10_celsius", "def test\n   return 'test_kyu_10_celsius'");
         expect(saved).toBe(true);
         expect(result.current.passedKataIds).toEqual(new Set(["kyu_10_perimetre", "kyu_10_celsius"]));
     })
@@ -51,7 +59,8 @@ describe("useKataProgression", () => {
 
         let saved;
         await act(async () => {
-            saved = await result.current.completeKata("kyu_10_celsius");
+            saved = await result.current.completeKata("kyu_10_celsius",
+                "def test\n   return 'test_kyu_10_celsius'");
         });
 
         expect(saved).toBe(true);
@@ -66,7 +75,9 @@ describe("useKataProgression", () => {
 
         let saved;
         await act(async () => {
-            saved = await result.current.completeKata("kyu_10_celsius");
+            saved = await result.current.completeKata(
+                "kyu_10_celsius",
+                "def test\n   return 'test_kyu_10_celsius'");
         });
 
         expect(saved).toBe(false);

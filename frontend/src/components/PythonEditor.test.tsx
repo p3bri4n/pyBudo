@@ -66,7 +66,7 @@ describe("PythonRunner", () => {
         fireEvent.click(screen.getByText("python-runner.execute"));
 
         expect(await screen.findByText("python-runner.kata-passed")).toBeInTheDocument();
-        expect(onKataPassed).toHaveBeenCalledWith(kata);
+        expect(onKataPassed).toHaveBeenCalledWith(kata, "print('Hello pyBudo!')");
     })
 
     it("Shows failed tests without calling onKataPassed", async () => {
