@@ -24,10 +24,10 @@ export function useKataProgression() {
         };
     }, []);
 
-    const completeKata = useCallback(async (kataId: string): Promise<boolean> => {
+    const completeKata = useCallback(async (kataId: string, code: string): Promise<boolean> => {
         setError(null);
         try {
-            await addCompletion(kataId);
+            await addCompletion(kataId, code);
         } catch (err: unknown) {
             if (!(isAxiosError(err) && err.response?.status === 409)) {
                 setError(err instanceof Error ? err.message : String(err));

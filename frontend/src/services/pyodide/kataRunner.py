@@ -12,7 +12,9 @@ def _equal(got, expected):
     if isinstance(got, list) and isinstance(expected, list):
         return len(got) == len(expected) and all(map(_equal, got, expected))
     if isinstance(got, dict) and isinstance(expected, dict):
-        return got.keys() == expected.keys() and all(_equal(got[k], expected[k]) for k in got)
+        return got.keys() == expected.keys() and all(
+            _equal(got[k], expected[k]) for k in got
+        )
     return got == expected
 
 
@@ -34,7 +36,9 @@ def _run_kata_tests(user_code, func_name, tests_json):
 
     func = namespace.get(func_name)
     if not callable(func):
-        return json.dumps({"error": f"NameError: '{func_name}' is not defined", "results": []})
+        return json.dumps(
+            {"error": f"NameError: '{func_name}' is not defined", "results": []}
+        )
 
     results = [
         {"input": test["input"], "expected": test["output"], **_run_test(func, test)}
