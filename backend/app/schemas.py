@@ -36,10 +36,10 @@ class TokenData(BaseModel):
 
 class KataCompletionCreate(BaseModel):
     kata_id: str
+    code: str
 
 
-class KataCompletionPublic(BaseModel):
-    kata_id: str
+class KataCompletionPublic(KataCompletionCreate):
     user_id: int
     completed_at: datetime
     verified: bool

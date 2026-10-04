@@ -14,7 +14,7 @@ const DEFAULT_CODE = "print('Hello pyBudo!')";
 type PythonRunnerProps = {
     initialCode?: string
     kata?: Kata
-    onKataPassed?: (kata: Kata) => void
+    onKataPassed?: (kata: Kata, code: string) => void
 }
 
 function formatValue(value: unknown): string {
@@ -53,7 +53,7 @@ export function PythonRunner({initialCode = DEFAULT_CODE, kata, onKataPassed}: P
             setOutput(testReport.stdout ?? "");
             setReport(testReport);
             if (isKataPassed(testReport)) {
-                onKataPassed?.(kata);
+                onKataPassed?.(kata, code);
             }
         } catch (error) {
             setReport({error: String(error), results: []});

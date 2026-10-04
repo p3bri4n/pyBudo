@@ -37,9 +37,9 @@ function Dojo() {
         setSelectedKata(null);
     };
 
-    const handleKataPassed = async (kata: Kata) => {
+    const handleKataPassed = async (kata: Kata, code: string) => {
         if (passedKataIds?.has(kata.id)) return;
-        if (await completeKata(kata.id)) {
+        if (await completeKata(kata.id, code)) {
             refreshProgression();
         }
     };
