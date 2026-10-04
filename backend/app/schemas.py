@@ -21,11 +21,17 @@ class UserPublic(BaseModel):
     username: str
     email: str
     role: str
+    created_at: datetime
 
 
 class UserAdmin(UserPublic):
     id: int
     is_active: bool
+
+
+class UserStats(BaseModel):
+    total_users: int
+    active_users: int
 
 
 class Token(BaseModel):
@@ -49,6 +55,11 @@ class KataCompletionPublic(KataCompletionCreate):
     user_id: int
     completed_at: datetime
     verified: bool
+
+
+class KataStats(BaseModel):
+    katas_number: int
+    published_katas: int
 
 
 class DisciplineProgressionPublic(BaseModel):
