@@ -1,8 +1,9 @@
 from contextlib import asynccontextmanager
 
-from app.routes import auth, health, katas, progressions
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
+from app.routes import auth, health, katas, progressions
 
 
 @asynccontextmanager

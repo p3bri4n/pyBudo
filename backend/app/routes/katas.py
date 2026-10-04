@@ -1,10 +1,11 @@
 from typing import Annotated
 
+from fastapi import APIRouter, Depends
+from sqlmodel import Session, select
+
 from app.dependencies import get_session
 from app.model import Kata
 from app.schemas import KataPublic
-from fastapi import APIRouter, Depends
-from sqlmodel import Session, select
 
 router = APIRouter()
 

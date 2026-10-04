@@ -1,11 +1,12 @@
 import json
 from pathlib import Path
 
+from pydantic import TypeAdapter
+from sqlmodel import Session
+
 from app.db import engine
 from app.model import Kata
 from app.schemas import KataInternal, KataPublic
-from pydantic import TypeAdapter
-from sqlmodel import Session
 
 KATAS_PATH = Path(__file__).resolve().parents[1] / "data" / "katas.json"
 

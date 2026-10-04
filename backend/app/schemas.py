@@ -1,8 +1,9 @@
 from datetime import datetime
 from typing import Annotated, Any, Literal
 
-from app.rank import Rank
 from pydantic import BaseModel, ConfigDict, Field
+
+from app.rank import Rank
 
 
 class UserRegister(BaseModel):

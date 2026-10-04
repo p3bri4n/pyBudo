@@ -1,8 +1,9 @@
 import copy
 
 import pytest
-from app.scripts.seed import load_katas, validate_catalog
 from pydantic import ValidationError
+
+from app.scripts.seed import load_katas, validate_catalog
 from tests.data.base_entity_helper import BaseEntityHelper
 
 

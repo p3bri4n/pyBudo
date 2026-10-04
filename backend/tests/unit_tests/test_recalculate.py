@@ -1,6 +1,7 @@
+from sqlmodel import Session, select
+
 from app.model import DisciplineProgression, Kata, Progression
 from app.services.recalculate import highest_rank, recalculate_progression
-from sqlmodel import Session, select
 from tests.data.base_entity_helper import BaseEntityHelper
 
 

@@ -1,5 +1,6 @@
-from app.services.katas import get_kata
 from sqlmodel import Session
+
+from app.services.katas import get_kata
 from tests.data.base_entity_helper import BaseEntityHelper
 
 
