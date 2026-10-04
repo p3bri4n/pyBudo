@@ -17,6 +17,7 @@ class User(SQLModel, table=True):
     username: str = Field(index=True, unique=True)
     email: str = Field(index=True, unique=True)
     hashed_password: str
+    role: str = Field(default="user")
     is_active: bool = Field(default=True)
 
     progression: Optional["Progression"] = Relationship(
