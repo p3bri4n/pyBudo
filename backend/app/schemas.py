@@ -1,7 +1,7 @@
 from datetime import datetime
-from typing import Any
+from typing import Annotated, Any, Literal
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 from app.rank import Rank
 
@@ -57,12 +57,7 @@ class ProgressionPublic(BaseModel):
     disciplines: list[DisciplineProgressionPublic] = []
 
 
-class KataTest(BaseModel):
-    input: list[Any]
-    output: Any
-
-
-class KataPublic(BaseModel):
+class KataBase(BaseModel):
     id: str
     rank: Rank
     discipline: str
@@ -70,10 +65,43 @@ class KataPublic(BaseModel):
     title: str
     statement: str
     signature: str
-    tests: list[KataTest]
     concepts_used: list[str]
 
 
-class KataInternal(KataPublic):
+class KataTest(BaseModel):
+    input: list[Any]
+    output: Any
+
+
+class MethodCall(BaseModel):
+    method: str
+    args: list[Any]
+    expected_return: Any
+
+
+class ClassKataTest(BaseModel):
+    init: list[Any]
+    calls: list[MethodCall]
+    expected_state: dict[str, Any]
+
+
+class FunctionKataPublic(KataBase):
+    kata_type: Literal["function"]
+    tests: list[KataTest]
+
+
+class ClassKataPublic(KataBase):
+    kata_type: Literal["class"]
+    tests: list[ClassKataTest]
+    class_name: str
+
+
+KataPublic = Annotated[
+    FunctionKataPublic | ClassKataPublic,
+    Field(discriminator="kata_type"),
+]
+
+
+class KataInternal(KataBase):
     solution_reference: str
     metadata: dict

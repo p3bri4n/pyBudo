@@ -34,6 +34,7 @@ class BaseEntityHelper:
         self,
         session: Session,
         id="kyu_10_addition",
+        kata_type="function",
         rank="kyu_10",
         discipline="core",
         title="Premier Kata",
@@ -44,10 +45,12 @@ class BaseEntityHelper:
         tests=None,
         concepts_used=None,
         meta=None,
+        class_name=None,
     ):
 
         kata = Kata(
             id=id,
+            kata_type=kata_type,
             rank=rank,
             discipline=discipline,
             title=title,
@@ -58,6 +61,7 @@ class BaseEntityHelper:
             tests=tests if tests is not None else [],
             concepts_used=concepts_used if concepts_used is not None else [],
             meta=meta if meta is not None else {},
+            class_name=class_name,
         )
 
         session.add(kata)

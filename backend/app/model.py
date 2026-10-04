@@ -29,6 +29,7 @@ class User(SQLModel, table=True):
 
 class Kata(SQLModel, table=True):
     id: str = Field(default=None, primary_key=True)
+    kata_type: str = Field(default="function")
     rank: str = Field(index=True)
     discipline: str = Field(index=True)
     variant_of: str | None = Field(default=None)
@@ -39,6 +40,7 @@ class Kata(SQLModel, table=True):
     tests: list[dict] = Field(default_factory=list, sa_column=Column(JSON))
     concepts_used: list[str] = Field(default_factory=list, sa_column=Column(JSON))
     meta: dict = Field(sa_column=Column("metadata", JSON))
+    class_name: str | None = Field(default=None)
 
 
 class KataCompletion(SQLModel, table=True):
