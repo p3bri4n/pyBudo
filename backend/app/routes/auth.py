@@ -1,12 +1,11 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, status
-from pwdlib import PasswordHash
-from sqlmodel import Session, select
-
 from app.dependencies import generate_token, get_current_user, get_session
 from app.model import Progression, User
 from app.schemas import Token, UserLogin, UserPublic, UserRegister
+from fastapi import APIRouter, Depends, HTTPException, status
+from pwdlib import PasswordHash
+from sqlmodel import Session, select
 
 router = APIRouter()
 

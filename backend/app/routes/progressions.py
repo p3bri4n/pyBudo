@@ -1,13 +1,12 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, status
-from sqlmodel import Session, select
-
 from app.dependencies import get_current_user, get_session
 from app.model import KataCompletion, User
 from app.schemas import KataCompletionCreate, KataCompletionPublic, ProgressionPublic
 from app.services.katas import get_kata
 from app.services.recalculate import recalculate_progression
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlmodel import Session, select
 
 router = APIRouter()
 
@@ -54,8 +53,7 @@ def add_completions(
         )
 
     kata_completion = KataCompletion(
-        kata_id=completion.kata_id,
-        user_id=user.id,
+        kata_id=completion.kata_id, user_id=user.id, code=completion.code
     )
 
     session.add(kata_completion)

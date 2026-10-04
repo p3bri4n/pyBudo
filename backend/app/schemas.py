@@ -1,9 +1,8 @@
 from datetime import datetime
 from typing import Annotated, Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field
-
 from app.rank import Rank
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class UserRegister(BaseModel):
@@ -36,10 +35,10 @@ class TokenData(BaseModel):
 
 class KataCompletionCreate(BaseModel):
     kata_id: str
+    code: str
 
 
-class KataCompletionPublic(BaseModel):
-    kata_id: str
+class KataCompletionPublic(KataCompletionCreate):
     user_id: int
     completed_at: datetime
     verified: bool

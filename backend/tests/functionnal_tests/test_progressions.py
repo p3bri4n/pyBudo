@@ -1,7 +1,6 @@
 from fastapi import status
 from httpx import Client
 from sqlmodel import Session
-
 from tests.data.base_entity_helper import BaseEntityHelper
 
 
@@ -51,9 +50,11 @@ class TestsProgressions(BaseEntityHelper):
         assert login.status_code == status.HTTP_200_OK
         token = login.json()["access_token"]
 
+        code = "def perimetre(a, b):\n    return 2 * (a + b)"
+
         response = client.post(
             "/completions",
-            json={"kata_id": kata.id},
+            json={"kata_id": kata.id, "code": code},
             headers={"Authorization": f"Bearer {token}"},
         )
         assert response.status_code == status.HTTP_200_OK
@@ -74,9 +75,12 @@ class TestsProgressions(BaseEntityHelper):
         )
         token = login.json()["access_token"]
         assert login.status_code == status.HTTP_200_OK
+
+        code = "def perimetre(a, b):\n    return 2 * (a + b)"
+
         response = client.post(
             "/completions",
-            json={"kata_id": "kyu_10_addition"},
+            json={"kata_id": "kyu_10_addition", "code": code},
             headers={"Authorization": f"Bearer {token}"},
         )
         assert response.status_code == status.HTTP_404_NOT_FOUND
@@ -101,16 +105,18 @@ class TestsProgressions(BaseEntityHelper):
         assert login.status_code == status.HTTP_200_OK
         token = login.json()["access_token"]
 
+        code = "def perimetre(a, b):\n    return 2 * (a + b)"
+
         response = client.post(
             "/completions",
-            json={"kata_id": kata.id},
+            json={"kata_id": kata.id, "code": code},
             headers={"Authorization": f"Bearer {token}"},
         )
         assert response.status_code == status.HTTP_200_OK
 
         response = client.post(
             "/completions",
-            json={"kata_id": kata.id},
+            json={"kata_id": kata.id, "code": code},
             headers={"Authorization": f"Bearer {token}"},
         )
 

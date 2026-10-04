@@ -1,6 +1,5 @@
-from sqlmodel import Session
-
 from app.model import Kata
+from sqlmodel import Session
 
 
 def get_kata(kata_id: str, session: Session) -> Kata | None:

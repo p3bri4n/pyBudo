@@ -1,8 +1,7 @@
-from sqlmodel import Session, select
-
 from app.model import DisciplineProgression, Kata, KataCompletion, Progression
 from app.rank import RANK_ORDER
 from app.services.katas import get_kata
+from sqlmodel import Session, select
 
 
 # Trouve le rank le plus elevé parmi la liste donnée
