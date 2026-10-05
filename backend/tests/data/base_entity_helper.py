@@ -70,7 +70,7 @@ class BaseEntityHelper:
             variant_of=variant_of,
             tests=tests if tests is not None else [],
             concepts_used=concepts_used if concepts_used is not None else [],
-            meta=meta if meta is not None else {},
+            meta=meta if meta is not None else {"status": "publie"},
             class_name=class_name,
         )
 

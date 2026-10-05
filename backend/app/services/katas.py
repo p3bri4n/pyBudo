@@ -1,7 +1,11 @@
-from sqlmodel import Session
+from sqlmodel import Session, select
 
 from app.model import Kata
 
 
 def get_kata(kata_id: str, session: Session) -> Kata | None:
-    return session.get(Kata, kata_id)
+    return session.exec(
+        select(Kata).where(
+            Kata.id == kata_id, Kata.meta["status"].as_string() == "publie"
+        )
+    ).first()
