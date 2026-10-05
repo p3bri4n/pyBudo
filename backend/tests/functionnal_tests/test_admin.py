@@ -67,19 +67,6 @@ class TestsAdminKatas(BaseEntityHelper):
         )
         assert response_not_found.status_code == status.HTTP_404_NOT_FOUND
 
-    def test_get_katas_stats(self, client: Client, session: Session):
-        self._add_user(session, role="admin")
-        self._add_kata(session, id="kyu_10_addition", meta={"status": "publie"})
-        self._add_kata(session, id="kyu_9_subtraction", meta={"status": "draft"})
-        token = self._auth_user(client)
-        response = client.get(
-            "/admin/katas/stats", headers={"Authorization": f"Bearer {token}"}
-        )
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        assert data["katas_number"] == 2
-        assert data["published_katas"] == 1
-
 
 class TestsAdminUsers(BaseEntityHelper):
     def test_admin_users_no_hashed_password(self, client: Client, session: Session):
@@ -107,7 +94,9 @@ class TestsAdminUsers(BaseEntityHelper):
         )
         assert response_not_found.status_code == status.HTTP_404_NOT_FOUND
 
-    def test_user_stats(self, client: Client, session: Session):
+
+class TestsAdminStats(BaseEntityHelper):
+    def test_admin_stats(self, client: Client, session: Session):
         self._add_user(session, role="admin")
         self._add_user(
             session,
@@ -116,11 +105,17 @@ class TestsAdminUsers(BaseEntityHelper):
             email="test@example.com",
             is_active=False,
         )
+        self._add_kata(session, id="kyu_10_addition", meta={"status": "publie"})
+        self._add_kata(session, id="kyu_9_subtraction", meta={"status": "draft"})
+
         token = self._auth_user(client)
         response = client.get(
-            "/admin/users/stats", headers={"Authorization": f"Bearer {token}"}
+            "/admin/stats", headers={"Authorization": f"Bearer {token}"}
         )
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
-        assert data["total_users"] == 2
-        assert data["active_users"] == 1
+        assert data["katas"]["katas_number"] == 2
+        assert data["katas"]["published_katas"] == 1
+
+        assert data["users"]["total_users"] == 2
+        assert data["users"]["active_users"] == 1

@@ -21,23 +21,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/admin/katas/stats": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Kata Stats */
-        get: operations["get_kata_stats_admin_katas_stats_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/admin/users": {
         parameters: {
             query?: never;
@@ -47,23 +30,6 @@ export interface paths {
         };
         /** Get Users */
         get: operations["get_users_admin_users_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/admin/users/stats": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Users Stats */
-        get: operations["get_users_stats_admin_users_stats_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -98,6 +64,23 @@ export interface paths {
         };
         /** Get Kata */
         get: operations["get_kata_admin_katas__kata_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Admin Stats */
+        get: operations["get_admin_stats_admin_stats_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -230,6 +213,11 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AdminStats */
+        AdminStats: {
+            users: components["schemas"]["UserStats"];
+            katas: components["schemas"]["KataStats"];
+        };
         /** ClassKataInternal */
         ClassKataInternal: {
             /** Metadata */
@@ -549,26 +537,6 @@ export interface operations {
             };
         };
     };
-    get_kata_stats_admin_katas_stats_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["KataStats"];
-                };
-            };
-        };
-    };
     get_users_admin_users_get: {
         parameters: {
             query?: never;
@@ -585,26 +553,6 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["UserAdmin"][];
-                };
-            };
-        };
-    };
-    get_users_stats_admin_users_stats_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["UserStats"];
                 };
             };
         };
@@ -667,6 +615,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_admin_stats_admin_stats_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminStats"];
                 };
             };
         };
