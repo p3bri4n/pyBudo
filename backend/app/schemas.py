@@ -64,6 +64,11 @@ class KataStats(BaseModel):
     published_katas: int
 
 
+class AdminStats(BaseModel):
+    users: UserStats
+    katas: KataStats
+
+
 class DisciplineProgressionPublic(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
