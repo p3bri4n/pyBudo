@@ -10,6 +10,6 @@ from app.schemas import KataPublic
 router = APIRouter(prefix="/katas")
 
 
-@router.get("/", response_model=list[KataPublic])
+@router.get("", response_model=list[KataPublic])
 def get_katas(session: Annotated[Session, Depends(get_session)]):
     return session.exec(select(Kata)).all()
