@@ -5,6 +5,8 @@ from pydantic import AliasChoices, BaseModel, ConfigDict, Field
 
 from app.rank import Rank
 
+MAX_CODE_LENGTH = 5000
+
 
 class UserRegister(BaseModel):
     username: str
@@ -48,7 +50,7 @@ class TokenData(BaseModel):
 
 class KataCompletionCreate(BaseModel):
     kata_id: str
-    code: str
+    code: str = Field(max_length=MAX_CODE_LENGTH)
 
 
 class KataCompletionPublic(KataCompletionCreate):
