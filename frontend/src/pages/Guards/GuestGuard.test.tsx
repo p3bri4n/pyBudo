@@ -32,7 +32,11 @@ describe("GuestGuard", () => {
     })
 
     it("Redirects to the dojo with user", () => {
-        vi.mocked(useAuth).mockReturnValue({ user: { username: "test", email: "test@example.com" }, loading: false, signIn: vi.fn(), signOut: vi.fn() })
+        vi.mocked(useAuth).mockReturnValue({ user: {
+            username: "test", email: "test@example.com",
+            role: "user",
+            created_at: "2023-01-01T00:00:00Z"
+        }, loading: false, signIn: vi.fn(), signOut: vi.fn() })
         renderHome()
         expect(screen.getByText("Dojo")).toBeInTheDocument()
         expect(screen.queryByText("Accueil")).not.toBeInTheDocument()

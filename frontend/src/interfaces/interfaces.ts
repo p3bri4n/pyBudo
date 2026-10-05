@@ -4,7 +4,9 @@ export type RegisterRequest = components["schemas"]["UserRegister"]
 export type LoginRequest = components["schemas"]["UserLogin"]
 export type TokenResponse = components["schemas"]["Token"]
 export type User = components["schemas"]["UserPublic"];
-export type Kata = components["schemas"]["KataPublic"]
+export type FunctionKata = components["schemas"]["FunctionKataPublic"]
+export type ClassKata = components["schemas"]["ClassKataPublic"]
+export type Kata = FunctionKata | ClassKata
 export type UserProgression = components["schemas"]["ProgressionPublic"]
 export type KataCompletion = components["schemas"]["KataCompletionPublic"]
 

@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Annotated, Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import AliasChoices, BaseModel, ConfigDict, Field
 
 from app.rank import Rank
 
@@ -20,6 +20,18 @@ class UserLogin(BaseModel):
 class UserPublic(BaseModel):
     username: str
     email: str
+    role: str
+    created_at: datetime
+
+
+class UserAdmin(UserPublic):
+    id: int
+    is_active: bool
+
+
+class UserStats(BaseModel):
+    total_users: int
+    active_users: int
 
 
 class Token(BaseModel):
@@ -45,6 +57,11 @@ class KataCompletionPublic(KataCompletionCreate):
     verified: bool
 
 
+class KataStats(BaseModel):
+    katas_number: int
+    published_katas: int
+
+
 class DisciplineProgressionPublic(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
@@ -68,7 +85,7 @@ class KataBase(BaseModel):
     concepts_used: list[str]
 
 
-class KataTest(BaseModel):
+class FunctionKataTest(BaseModel):
     input: list[Any]
     output: Any
 
@@ -87,7 +104,7 @@ class ClassKataTest(BaseModel):
 
 class FunctionKataPublic(KataBase):
     kata_type: Literal["function"]
-    tests: list[KataTest]
+    tests: list[FunctionKataTest]
 
 
 class ClassKataPublic(KataBase):
@@ -102,6 +119,22 @@ KataPublic = Annotated[
 ]
 
 
-class KataInternal(KataBase):
+class KataInternalBase(BaseModel):
+    metadata: dict = Field(
+        validation_alias=AliasChoices("meta", "metadata")
+    )  # Le champ est nommé "meta" dans la base de données
     solution_reference: str
-    metadata: dict
+
+
+class FunctionKataInternal(FunctionKataPublic, KataInternalBase):
+    pass
+
+
+class ClassKataInternal(ClassKataPublic, KataInternalBase):
+    pass
+
+
+KataInternal = Annotated[
+    FunctionKataInternal | ClassKataInternal,
+    Field(discriminator="kata_type"),
+]
