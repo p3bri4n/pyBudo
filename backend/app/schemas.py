@@ -36,7 +36,7 @@ class TokenData(BaseModel):
 
 class KataCompletionCreate(BaseModel):
     kata_id: str
-    code: str
+    code: str = Field(max_length=5000)
 
 
 class KataCompletionPublic(KataCompletionCreate):
