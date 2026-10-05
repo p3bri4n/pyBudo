@@ -1,3 +1,4 @@
+from httpx import Client
 from pwdlib import PasswordHash
 from sqlmodel import Session
 
@@ -6,6 +7,13 @@ from app.model import DisciplineProgression, Kata, KataCompletion, Progression, 
 
 class BaseEntityHelper:
     """Base de test pour tous les tests"""
+
+    def _auth_user(
+        self, client: Client, email="john@example.com", password="password123"
+    ):
+        login = client.post("/auth/login", json={"email": email, "password": password})
+        assert login.status_code == 200
+        return login.json()["access_token"]
 
     def _hash_password(self, password):
         password_hash = PasswordHash.recommended()
@@ -17,6 +25,7 @@ class BaseEntityHelper:
         username="john",
         email="john@example.com",
         password="password123",
+        role="user",
         is_active=True,
     ):
         hashed_password = self._hash_password(password)
@@ -24,6 +33,7 @@ class BaseEntityHelper:
             username=username,
             email=email,
             hashed_password=hashed_password,
+            role=role,
             is_active=is_active,
         )
         session.add(user)

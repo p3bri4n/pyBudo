@@ -8,12 +8,12 @@ from app.dependencies import generate_token, get_current_user, get_session
 from app.model import Progression, User
 from app.schemas import Token, UserLogin, UserPublic, UserRegister
 
-router = APIRouter()
+router = APIRouter(prefix="/auth")
 
 password_hash = PasswordHash.recommended()
 
 
-@router.post("/auth/register", response_model=Token)
+@router.post("/register", response_model=Token)
 def register_user(
     user: UserRegister, session: Annotated[Session, Depends(get_session)]
 ):
@@ -63,7 +63,7 @@ def register_user(
     return Token(message="User registered successfully", access_token=encoded_jwt)
 
 
-@router.post("/auth/login", response_model=Token)
+@router.post("/login", response_model=Token)
 def login_user(user: UserLogin, session: Annotated[Session, Depends(get_session)]):
     # Vérifie que l'utilisateur existe
     db_user = session.exec(select(User).where(User.email == user.email)).first()
@@ -82,6 +82,6 @@ def login_user(user: UserLogin, session: Annotated[Session, Depends(get_session)
     return Token(message="User logged in successfully", access_token=encoded_jwt)
 
 
-@router.get("/auth/me", response_model=UserPublic)
+@router.get("/me", response_model=UserPublic)
 def get_me(user: Annotated[User, Depends(get_current_user)]):
     return user

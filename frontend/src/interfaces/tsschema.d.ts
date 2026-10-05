@@ -4,6 +4,108 @@
  */
 
 export interface paths {
+    "/admin/katas": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Katas */
+        get: operations["get_katas_admin_katas_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/katas/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Kata Stats */
+        get: operations["get_kata_stats_admin_katas_stats_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Users */
+        get: operations["get_users_admin_users_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/users/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Users Stats */
+        get: operations["get_users_stats_admin_users_stats_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/users/{user_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get User */
+        get: operations["get_user_admin_users__user_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/katas/{kata_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Kata */
+        get: operations["get_kata_admin_katas__kata_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -128,42 +230,14 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        /** DisciplineProgressionPublic */
-        DisciplineProgressionPublic: {
-            /** Discipline */
-            discipline: string;
-            /**
-             * Highest Dan Practiced
-             * @enum {string}
-             */
-            highest_dan_practiced: "kyu_10" | "kyu_9" | "kyu_8" | "kyu_7" | "kyu_6" | "kyu_5" | "kyu_4" | "kyu_3" | "kyu_2" | "kyu_1" | "shodan" | "nidan" | "sandan" | "yondan" | "godan";
-        };
-        /** HTTPValidationError */
-        HTTPValidationError: {
-            /** Detail */
-            detail?: components["schemas"]["ValidationError"][];
-        };
-        /** KataCompletionCreate */
-        KataCompletionCreate: {
-            /** Kata Id */
-            kata_id: string;
-        };
-        /** KataCompletionPublic */
-        KataCompletionPublic: {
-            /** Kata Id */
-            kata_id: string;
-            /** User Id */
-            user_id: number;
-            /**
-             * Completed At
-             * Format: date-time
-             */
-            completed_at: string;
-            /** Verified */
-            verified: boolean;
-        };
-        /** KataPublic */
-        KataPublic: {
+        /** ClassKataInternal */
+        ClassKataInternal: {
+            /** Metadata */
+            metadata: {
+                [key: string]: unknown;
+            };
+            /** Solution Reference */
+            solution_reference: string;
             /** Id */
             id: string;
             /**
@@ -181,17 +255,184 @@ export interface components {
             statement: string;
             /** Signature */
             signature: string;
-            /** Tests */
-            tests: components["schemas"]["KataTest"][];
             /** Concepts Used */
             concepts_used: string[];
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kata_type: "class";
+            /** Tests */
+            tests: components["schemas"]["ClassKataTest"][];
+            /** Class Name */
+            class_name: string;
         };
-        /** KataTest */
-        KataTest: {
+        /** ClassKataPublic */
+        ClassKataPublic: {
+            /** Id */
+            id: string;
+            /**
+             * Rank
+             * @enum {string}
+             */
+            rank: "kyu_10" | "kyu_9" | "kyu_8" | "kyu_7" | "kyu_6" | "kyu_5" | "kyu_4" | "kyu_3" | "kyu_2" | "kyu_1" | "shodan" | "nidan" | "sandan" | "yondan" | "godan";
+            /** Discipline */
+            discipline: string;
+            /** Variant Of */
+            variant_of?: string | null;
+            /** Title */
+            title: string;
+            /** Statement */
+            statement: string;
+            /** Signature */
+            signature: string;
+            /** Concepts Used */
+            concepts_used: string[];
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kata_type: "class";
+            /** Tests */
+            tests: components["schemas"]["ClassKataTest"][];
+            /** Class Name */
+            class_name: string;
+        };
+        /** ClassKataTest */
+        ClassKataTest: {
+            /** Init */
+            init: unknown[];
+            /** Calls */
+            calls: components["schemas"]["MethodCall"][];
+            /** Expected State */
+            expected_state: {
+                [key: string]: unknown;
+            };
+        };
+        /** DisciplineProgressionPublic */
+        DisciplineProgressionPublic: {
+            /** Discipline */
+            discipline: string;
+            /**
+             * Highest Dan Practiced
+             * @enum {string}
+             */
+            highest_dan_practiced: "kyu_10" | "kyu_9" | "kyu_8" | "kyu_7" | "kyu_6" | "kyu_5" | "kyu_4" | "kyu_3" | "kyu_2" | "kyu_1" | "shodan" | "nidan" | "sandan" | "yondan" | "godan";
+        };
+        /** FunctionKataInternal */
+        FunctionKataInternal: {
+            /** Metadata */
+            metadata: {
+                [key: string]: unknown;
+            };
+            /** Solution Reference */
+            solution_reference: string;
+            /** Id */
+            id: string;
+            /**
+             * Rank
+             * @enum {string}
+             */
+            rank: "kyu_10" | "kyu_9" | "kyu_8" | "kyu_7" | "kyu_6" | "kyu_5" | "kyu_4" | "kyu_3" | "kyu_2" | "kyu_1" | "shodan" | "nidan" | "sandan" | "yondan" | "godan";
+            /** Discipline */
+            discipline: string;
+            /** Variant Of */
+            variant_of?: string | null;
+            /** Title */
+            title: string;
+            /** Statement */
+            statement: string;
+            /** Signature */
+            signature: string;
+            /** Concepts Used */
+            concepts_used: string[];
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kata_type: "function";
+            /** Tests */
+            tests: components["schemas"]["FunctionKataTest"][];
+        };
+        /** FunctionKataPublic */
+        FunctionKataPublic: {
+            /** Id */
+            id: string;
+            /**
+             * Rank
+             * @enum {string}
+             */
+            rank: "kyu_10" | "kyu_9" | "kyu_8" | "kyu_7" | "kyu_6" | "kyu_5" | "kyu_4" | "kyu_3" | "kyu_2" | "kyu_1" | "shodan" | "nidan" | "sandan" | "yondan" | "godan";
+            /** Discipline */
+            discipline: string;
+            /** Variant Of */
+            variant_of?: string | null;
+            /** Title */
+            title: string;
+            /** Statement */
+            statement: string;
+            /** Signature */
+            signature: string;
+            /** Concepts Used */
+            concepts_used: string[];
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kata_type: "function";
+            /** Tests */
+            tests: components["schemas"]["FunctionKataTest"][];
+        };
+        /** FunctionKataTest */
+        FunctionKataTest: {
             /** Input */
             input: unknown[];
             /** Output */
             output: unknown;
+        };
+        /** HTTPValidationError */
+        HTTPValidationError: {
+            /** Detail */
+            detail?: components["schemas"]["ValidationError"][];
+        };
+        /** KataCompletionCreate */
+        KataCompletionCreate: {
+            /** Kata Id */
+            kata_id: string;
+            /** Code */
+            code: string;
+        };
+        /** KataCompletionPublic */
+        KataCompletionPublic: {
+            /** Kata Id */
+            kata_id: string;
+            /** Code */
+            code: string;
+            /** User Id */
+            user_id: number;
+            /**
+             * Completed At
+             * Format: date-time
+             */
+            completed_at: string;
+            /** Verified */
+            verified: boolean;
+        };
+        /** KataStats */
+        KataStats: {
+            /** Katas Number */
+            katas_number: number;
+            /** Published Katas */
+            published_katas: number;
+        };
+        /** MethodCall */
+        MethodCall: {
+            /** Method */
+            method: string;
+            /** Args */
+            args: unknown[];
+            /** Expected Return */
+            expected_return: unknown;
         };
         /** ProgressionPublic */
         ProgressionPublic: {
@@ -215,6 +456,24 @@ export interface components {
              */
             token_type: string;
         };
+        /** UserAdmin */
+        UserAdmin: {
+            /** Username */
+            username: string;
+            /** Email */
+            email: string;
+            /** Role */
+            role: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Id */
+            id: number;
+            /** Is Active */
+            is_active: boolean;
+        };
         /** UserLogin */
         UserLogin: {
             /** Email */
@@ -228,6 +487,13 @@ export interface components {
             username: string;
             /** Email */
             email: string;
+            /** Role */
+            role: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
         };
         /** UserRegister */
         UserRegister: {
@@ -237,6 +503,13 @@ export interface components {
             email: string;
             /** Password */
             password: string;
+        };
+        /** UserStats */
+        UserStats: {
+            /** Total Users */
+            total_users: number;
+            /** Active Users */
+            active_users: number;
         };
         /** ValidationError */
         ValidationError: {
@@ -256,6 +529,148 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    get_katas_admin_katas_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": (components["schemas"]["FunctionKataInternal"] | components["schemas"]["ClassKataInternal"])[];
+                };
+            };
+        };
+    };
+    get_kata_stats_admin_katas_stats_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["KataStats"];
+                };
+            };
+        };
+    };
+    get_users_admin_users_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserAdmin"][];
+                };
+            };
+        };
+    };
+    get_users_stats_admin_users_stats_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserStats"];
+                };
+            };
+        };
+    };
+    get_user_admin_users__user_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserAdmin"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_kata_admin_katas__kata_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                kata_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FunctionKataInternal"] | components["schemas"]["ClassKataInternal"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     read_root_health_get: {
         parameters: {
             query?: never;
@@ -450,7 +865,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["KataPublic"][];
+                    "application/json": (components["schemas"]["FunctionKataPublic"] | components["schemas"]["ClassKataPublic"])[];
                 };
             };
         };
