@@ -213,3 +213,21 @@ class TestsProgressions(BaseEntityHelper):
             status.HTTP_401_UNAUTHORIZED,
             status.HTTP_403_FORBIDDEN,
         )
+
+    def test_add_completion_on_archived_kata_returns_404(
+        self, client: Client, session: Session
+    ):
+        kata = self._add_kata(
+            session=session,
+            meta={"status": "archive"},
+        )
+        self._add_user(session)
+
+        token = self._auth_user(client)
+
+        response = client.post(
+            "/completions",
+            json={"kata_id": kata.id, "code": "print('Hello')"},
+            headers={"Authorization": f"Bearer {token}"},
+        )
+        assert response.status_code == status.HTTP_404_NOT_FOUND

@@ -92,3 +92,28 @@ class TestsKatas(BaseEntityHelper):
         assert kata_class["kata_type"] == "class"
         assert "class_name" in kata_class
         assert "init" in kata_class["tests"][0]
+
+    def test_kata_get_only_published_katas(self, client: Client, session: Session):
+        self._add_kata(
+            session=session,
+            id="kyu_10_addition",
+            rank="kyu_10",
+            discipline="core",
+            meta={"status": "publie"},
+        )
+
+        self._add_kata(
+            session=session,
+            id="kyu_2_check_pair",
+            rank="kyu_2",
+            discipline="django",
+            meta={"status": "archive"},
+        )
+
+        response = client.get("/katas")
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        katas = {kata["id"]: kata for kata in data}
+        assert len(data) == 1
+        assert "kyu_10_addition" in katas
+        assert "kyu_2_check_pair" not in katas
