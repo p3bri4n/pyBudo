@@ -667,5 +667,1608 @@
       "status": "publie",
       "violations_detected": []
     }
+  },
+  {
+    "id": "shodan_compte_bancaire",
+    "kata_type": "class",
+    "rank": "shodan",
+    "discipline": "core",
+    "variant_of": null,
+    "title": "Compte bancaire",
+    "statement": "Implémentez la classe `CompteBancaire`, qui gère le solde d'un compte (nombre entier). Le constructeur accepte un solde initial, 0 par défaut, stocké dans l'attribut `solde`.\n\n- `deposer(montant)` : ajoute `montant` au solde et retourne `True`. Si `montant` n'est pas strictement positif, rien ne change et la méthode retourne `False`.\n- `retirer(montant)` : retire `montant` du solde et retourne `True`. Si `montant` n'est pas strictement positif, ou s'il est supérieur au solde, rien ne change et la méthode retourne `False`. Retirer exactement le solde est autorisé.",
+    "class_name": "CompteBancaire",
+    "signature": "class CompteBancaire:\n    def __init__(self, solde=0): ...\n    def deposer(self, montant): ...\n    def retirer(self, montant): ...",
+    "solution_reference": "class CompteBancaire:\n    def __init__(self, solde=0):\n        self.solde = solde\n\n    def deposer(self, montant):\n        if montant <= 0:\n            return False\n        self.solde += montant\n        return True\n\n    def retirer(self, montant):\n        if montant <= 0 or montant > self.solde:\n            return False\n        self.solde -= montant\n        return True\n",
+    "tests": [
+      {
+        "init": [],
+        "calls": [
+          {
+            "method": "deposer",
+            "args": [
+              100
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "retirer",
+            "args": [
+              30
+            ],
+            "expected_return": true
+          }
+        ],
+        "expected_state": {
+          "solde": 70
+        }
+      },
+      {
+        "init": [
+          50
+        ],
+        "calls": [
+          {
+            "method": "retirer",
+            "args": [
+              80
+            ],
+            "expected_return": false
+          },
+          {
+            "method": "deposer",
+            "args": [
+              0
+            ],
+            "expected_return": false
+          },
+          {
+            "method": "deposer",
+            "args": [
+              -5
+            ],
+            "expected_return": false
+          }
+        ],
+        "expected_state": {
+          "solde": 50
+        }
+      },
+      {
+        "init": [
+          100
+        ],
+        "calls": [
+          {
+            "method": "retirer",
+            "args": [
+              100
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "retirer",
+            "args": [
+              1
+            ],
+            "expected_return": false
+          }
+        ],
+        "expected_state": {
+          "solde": 0
+        }
+      },
+      {
+        "init": [
+          20
+        ],
+        "calls": [
+          {
+            "method": "deposer",
+            "args": [
+              30
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "retirer",
+            "args": [
+              50
+            ],
+            "expected_return": true
+          }
+        ],
+        "expected_state": {
+          "solde": 0
+        }
+      },
+      {
+        "init": [
+          10
+        ],
+        "calls": [
+          {
+            "method": "retirer",
+            "args": [
+              0
+            ],
+            "expected_return": false
+          },
+          {
+            "method": "retirer",
+            "args": [
+              -3
+            ],
+            "expected_return": false
+          }
+        ],
+        "expected_state": {
+          "solde": 10
+        }
+      }
+    ],
+    "concepts_used": [
+      "class definition with an __init__ constructor",
+      "instance attributes (self.attribute = ...)",
+      "instance methods that read and modify instance attributes",
+      "conditional statements (if / elif / else)"
+    ],
+    "metadata": {
+      "model": "claude",
+      "level_spec_version": "level_spec-v1-draft",
+      "attempts": 1,
+      "status": "publie",
+      "violations_detected": []
+    }
+  },
+  {
+    "id": "shodan_panier",
+    "kata_type": "class",
+    "rank": "shodan",
+    "discipline": "core",
+    "variant_of": null,
+    "title": "Panier d'achats",
+    "statement": "Implémentez la classe `Panier`. Les prix sont des entiers exprimés en centimes. L'attribut `articles` est un dictionnaire, vide au départ, qui associe le nom d'un article à un dictionnaire `{\"prix\": ..., \"quantite\": ...}`.\n\n- `ajouter(nom, prix, quantite=1)` : ajoute l'article et retourne `True`. Si l'article est déjà présent, sa quantité augmente de `quantite` et son prix d'origine est conservé. Si `quantite` n'est pas strictement positive ou si `prix` est négatif, rien ne change et la méthode retourne `False`.\n- `retirer(nom)` : supprime l'article du panier et retourne `True`, ou retourne `False` s'il n'y est pas.\n- `total()` : retourne la somme des `prix * quantite` de tous les articles (0 si le panier est vide).",
+    "class_name": "Panier",
+    "signature": "class Panier:\n    def __init__(self): ...\n    def ajouter(self, nom, prix, quantite=1): ...\n    def retirer(self, nom): ...\n    def total(self): ...",
+    "solution_reference": "class Panier:\n    def __init__(self):\n        self.articles = {}\n\n    def ajouter(self, nom, prix, quantite=1):\n        if quantite <= 0 or prix < 0:\n            return False\n        if nom in self.articles:\n            self.articles[nom][\"quantite\"] += quantite\n        else:\n            self.articles[nom] = {\"prix\": prix, \"quantite\": quantite}\n        return True\n\n    def retirer(self, nom):\n        return self.articles.pop(nom, None) is not None\n\n    def total(self):\n        somme = 0\n        for article in self.articles.values():\n            somme += article[\"prix\"] * article[\"quantite\"]\n        return somme\n",
+    "tests": [
+      {
+        "init": [],
+        "calls": [
+          {
+            "method": "ajouter",
+            "args": [
+              "pomme",
+              50,
+              3
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "ajouter",
+            "args": [
+              "pain",
+              120
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "total",
+            "args": [],
+            "expected_return": 270
+          }
+        ],
+        "expected_state": {
+          "articles": {
+            "pomme": {
+              "prix": 50,
+              "quantite": 3
+            },
+            "pain": {
+              "prix": 120,
+              "quantite": 1
+            }
+          }
+        }
+      },
+      {
+        "init": [],
+        "calls": [
+          {
+            "method": "ajouter",
+            "args": [
+              "pomme",
+              50,
+              2
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "ajouter",
+            "args": [
+              "pomme",
+              50,
+              3
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "total",
+            "args": [],
+            "expected_return": 250
+          }
+        ],
+        "expected_state": {
+          "articles": {
+            "pomme": {
+              "prix": 50,
+              "quantite": 5
+            }
+          }
+        }
+      },
+      {
+        "init": [],
+        "calls": [
+          {
+            "method": "ajouter",
+            "args": [
+              "lait",
+              90,
+              0
+            ],
+            "expected_return": false
+          },
+          {
+            "method": "ajouter",
+            "args": [
+              "lait",
+              -90,
+              1
+            ],
+            "expected_return": false
+          },
+          {
+            "method": "total",
+            "args": [],
+            "expected_return": 0
+          }
+        ],
+        "expected_state": {
+          "articles": {}
+        }
+      },
+      {
+        "init": [],
+        "calls": [
+          {
+            "method": "ajouter",
+            "args": [
+              "pain",
+              120
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "retirer",
+            "args": [
+              "pain"
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "retirer",
+            "args": [
+              "pain"
+            ],
+            "expected_return": false
+          },
+          {
+            "method": "total",
+            "args": [],
+            "expected_return": 0
+          }
+        ],
+        "expected_state": {
+          "articles": {}
+        }
+      },
+      {
+        "init": [],
+        "calls": [
+          {
+            "method": "ajouter",
+            "args": [
+              "a",
+              10,
+              2
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "ajouter",
+            "args": [
+              "a",
+              99
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "total",
+            "args": [],
+            "expected_return": 30
+          }
+        ],
+        "expected_state": {
+          "articles": {
+            "a": {
+              "prix": 10,
+              "quantite": 3
+            }
+          }
+        }
+      }
+    ],
+    "concepts_used": [
+      "class definition with an __init__ constructor",
+      "instance attributes (self.attribute = ...)",
+      "instance methods that read and modify instance attributes",
+      "dictionaries (literals, key access, .get, .keys, .values, .items)",
+      "loops (for / while)"
+    ],
+    "metadata": {
+      "model": "claude",
+      "level_spec_version": "level_spec-v1-draft",
+      "attempts": 1,
+      "status": "publie",
+      "violations_detected": []
+    }
+  },
+  {
+    "id": "shodan_compteur_borne",
+    "kata_type": "class",
+    "rank": "shodan",
+    "discipline": "core",
+    "variant_of": null,
+    "title": "Compteur borné",
+    "statement": "Implémentez la classe `CompteurBorne`, un compteur dont la valeur reste toujours comprise entre `minimum` et `maximum` inclus. Le constructeur accepte `minimum` (0 par défaut) et `maximum` (10 par défaut) ; la valeur de départ, stockée dans l'attribut `valeur`, est `minimum`.\n\n- `incrementer(pas=1)` : ajoute `pas` à la valeur sans dépasser `maximum`, et retourne la nouvelle valeur.\n- `decrementer(pas=1)` : retire `pas` à la valeur sans descendre sous `minimum`, et retourne la nouvelle valeur.\n- `reinitialiser()` : remet la valeur à `minimum` et ne retourne rien.",
+    "class_name": "CompteurBorne",
+    "signature": "class CompteurBorne:\n    def __init__(self, minimum=0, maximum=10): ...\n    def incrementer(self, pas=1): ...\n    def decrementer(self, pas=1): ...\n    def reinitialiser(self): ...",
+    "solution_reference": "class CompteurBorne:\n    def __init__(self, minimum=0, maximum=10):\n        self.minimum = minimum\n        self.maximum = maximum\n        self.valeur = minimum\n\n    def incrementer(self, pas=1):\n        self.valeur = min(self.valeur + pas, self.maximum)\n        return self.valeur\n\n    def decrementer(self, pas=1):\n        self.valeur = max(self.valeur - pas, self.minimum)\n        return self.valeur\n\n    def reinitialiser(self):\n        self.valeur = self.minimum\n",
+    "tests": [
+      {
+        "init": [],
+        "calls": [
+          {
+            "method": "incrementer",
+            "args": [],
+            "expected_return": 1
+          },
+          {
+            "method": "incrementer",
+            "args": [
+              4
+            ],
+            "expected_return": 5
+          },
+          {
+            "method": "decrementer",
+            "args": [],
+            "expected_return": 4
+          }
+        ],
+        "expected_state": {
+          "minimum": 0,
+          "maximum": 10,
+          "valeur": 4
+        }
+      },
+      {
+        "init": [
+          0,
+          3
+        ],
+        "calls": [
+          {
+            "method": "incrementer",
+            "args": [
+              5
+            ],
+            "expected_return": 3
+          },
+          {
+            "method": "incrementer",
+            "args": [],
+            "expected_return": 3
+          },
+          {
+            "method": "decrementer",
+            "args": [
+              1
+            ],
+            "expected_return": 2
+          }
+        ],
+        "expected_state": {
+          "minimum": 0,
+          "maximum": 3,
+          "valeur": 2
+        }
+      },
+      {
+        "init": [
+          -5,
+          5
+        ],
+        "calls": [
+          {
+            "method": "decrementer",
+            "args": [
+              3
+            ],
+            "expected_return": -5
+          },
+          {
+            "method": "decrementer",
+            "args": [],
+            "expected_return": -5
+          },
+          {
+            "method": "incrementer",
+            "args": [
+              7
+            ],
+            "expected_return": 2
+          }
+        ],
+        "expected_state": {
+          "minimum": -5,
+          "maximum": 5,
+          "valeur": 2
+        }
+      },
+      {
+        "init": [
+          0,
+          10
+        ],
+        "calls": [
+          {
+            "method": "incrementer",
+            "args": [
+              6
+            ],
+            "expected_return": 6
+          },
+          {
+            "method": "reinitialiser",
+            "args": [],
+            "expected_return": null
+          },
+          {
+            "method": "incrementer",
+            "args": [],
+            "expected_return": 1
+          }
+        ],
+        "expected_state": {
+          "minimum": 0,
+          "maximum": 10,
+          "valeur": 1
+        }
+      },
+      {
+        "init": [
+          5,
+          5
+        ],
+        "calls": [
+          {
+            "method": "incrementer",
+            "args": [],
+            "expected_return": 5
+          },
+          {
+            "method": "decrementer",
+            "args": [],
+            "expected_return": 5
+          }
+        ],
+        "expected_state": {
+          "minimum": 5,
+          "maximum": 5,
+          "valeur": 5
+        }
+      }
+    ],
+    "concepts_used": [
+      "class definition with an __init__ constructor",
+      "instance attributes (self.attribute = ...)",
+      "instance methods that read and modify instance attributes",
+      "function definition with parameters, including default parameter values",
+      "the built-in functions print, round, len, str, int, float, range, sum, min, max, abs"
+    ],
+    "metadata": {
+      "model": "claude",
+      "level_spec_version": "level_spec-v1-draft",
+      "attempts": 1,
+      "status": "publie",
+      "violations_detected": []
+    }
+  },
+  {
+    "id": "shodan_pile",
+    "kata_type": "class",
+    "rank": "shodan",
+    "discipline": "core",
+    "variant_of": null,
+    "title": "Pile à capacité limitée",
+    "statement": "Implémentez la classe `Pile`, une pile à capacité limitée. Le constructeur accepte `capacite` (3 par défaut). L'attribut `elements` est une liste, vide au départ ; le sommet de la pile est son dernier élément.\n\n- `empiler(element)` : ajoute l'élément au sommet et retourne `True`, ou retourne `False` sans rien modifier si la pile est pleine.\n- `depiler()` : retire et retourne l'élément au sommet, ou `None` si la pile est vide.\n- `sommet()` : retourne l'élément au sommet sans le retirer, ou `None` si la pile est vide.\n- `taille()` : retourne le nombre d'éléments.",
+    "class_name": "Pile",
+    "signature": "class Pile:\n    def __init__(self, capacite=3): ...\n    def empiler(self, element): ...\n    def depiler(self): ...\n    def sommet(self): ...\n    def taille(self): ...",
+    "solution_reference": "class Pile:\n    def __init__(self, capacite=3):\n        self.capacite = capacite\n        self.elements = []\n\n    def empiler(self, element):\n        if len(self.elements) >= self.capacite:\n            return False\n        self.elements.append(element)\n        return True\n\n    def depiler(self):\n        if not self.elements:\n            return None\n        return self.elements.pop()\n\n    def sommet(self):\n        if not self.elements:\n            return None\n        return self.elements[-1]\n\n    def taille(self):\n        return len(self.elements)\n",
+    "tests": [
+      {
+        "init": [],
+        "calls": [
+          {
+            "method": "empiler",
+            "args": [
+              1
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "empiler",
+            "args": [
+              2
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "empiler",
+            "args": [
+              3
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "empiler",
+            "args": [
+              4
+            ],
+            "expected_return": false
+          },
+          {
+            "method": "taille",
+            "args": [],
+            "expected_return": 3
+          },
+          {
+            "method": "sommet",
+            "args": [],
+            "expected_return": 3
+          }
+        ],
+        "expected_state": {
+          "capacite": 3,
+          "elements": [
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "init": [
+          2
+        ],
+        "calls": [
+          {
+            "method": "empiler",
+            "args": [
+              "a"
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "empiler",
+            "args": [
+              "b"
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "depiler",
+            "args": [],
+            "expected_return": "b"
+          },
+          {
+            "method": "depiler",
+            "args": [],
+            "expected_return": "a"
+          },
+          {
+            "method": "depiler",
+            "args": [],
+            "expected_return": null
+          },
+          {
+            "method": "sommet",
+            "args": [],
+            "expected_return": null
+          },
+          {
+            "method": "taille",
+            "args": [],
+            "expected_return": 0
+          }
+        ],
+        "expected_state": {
+          "capacite": 2,
+          "elements": []
+        }
+      },
+      {
+        "init": [
+          1
+        ],
+        "calls": [
+          {
+            "method": "empiler",
+            "args": [
+              7
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "sommet",
+            "args": [],
+            "expected_return": 7
+          },
+          {
+            "method": "empiler",
+            "args": [
+              8
+            ],
+            "expected_return": false
+          },
+          {
+            "method": "depiler",
+            "args": [],
+            "expected_return": 7
+          },
+          {
+            "method": "empiler",
+            "args": [
+              8
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "taille",
+            "args": [],
+            "expected_return": 1
+          }
+        ],
+        "expected_state": {
+          "capacite": 1,
+          "elements": [
+            8
+          ]
+        }
+      },
+      {
+        "init": [
+          0
+        ],
+        "calls": [
+          {
+            "method": "empiler",
+            "args": [
+              1
+            ],
+            "expected_return": false
+          },
+          {
+            "method": "taille",
+            "args": [],
+            "expected_return": 0
+          },
+          {
+            "method": "depiler",
+            "args": [],
+            "expected_return": null
+          }
+        ],
+        "expected_state": {
+          "capacite": 0,
+          "elements": []
+        }
+      }
+    ],
+    "concepts_used": [
+      "class definition with an __init__ constructor",
+      "instance attributes (self.attribute = ...)",
+      "instance methods that read and modify instance attributes",
+      "lists (literals, indexing, slicing, append, insert, pop, sort, index, count)",
+      "conditional statements (if / elif / else)"
+    ],
+    "metadata": {
+      "model": "claude",
+      "level_spec_version": "level_spec-v1-draft",
+      "attempts": 1,
+      "status": "publie",
+      "violations_detected": []
+    }
+  },
+  {
+    "id": "nidan_vehicule_electrique",
+    "kata_type": "class",
+    "rank": "nidan",
+    "discipline": "core",
+    "variant_of": null,
+    "title": "Véhicule électrique",
+    "statement": "Implémentez deux classes. `Vehicule` possède les attributs `marque` (donnée au constructeur) et `kilometrage` (0 au départ). Sa méthode `rouler(km)` ajoute `km` au kilométrage et retourne `True`, ou retourne `False` sans rien modifier si `km` n'est pas strictement positif.\n\n`VehiculeElectrique` hérite de `Vehicule`. Son constructeur accepte `marque` et `batterie` (100 par défaut, en pourcentage). Chaque kilomètre parcouru consomme 1 % de batterie. Elle redéfinit `rouler(km)` : si `km` dépasse la batterie restante, rien ne change et la méthode retourne `False` ; sinon elle délègue à `Vehicule.rouler` et, si le déplacement est accepté, retire `km` à la batterie et retourne `True`. Elle ajoute `recharger()`, qui remet la batterie à 100 et ne retourne rien.",
+    "class_name": "VehiculeElectrique",
+    "signature": "class Vehicule:\n    def __init__(self, marque): ...\n    def rouler(self, km): ...\n\nclass VehiculeElectrique(Vehicule):\n    def __init__(self, marque, batterie=100): ...\n    def rouler(self, km): ...\n    def recharger(self): ...",
+    "solution_reference": "class Vehicule:\n    def __init__(self, marque):\n        self.marque = marque\n        self.kilometrage = 0\n\n    def rouler(self, km):\n        if km <= 0:\n            return False\n        self.kilometrage += km\n        return True\n\n\nclass VehiculeElectrique(Vehicule):\n    def __init__(self, marque, batterie=100):\n        super().__init__(marque)\n        self.batterie = batterie\n\n    def rouler(self, km):\n        if km > self.batterie:\n            return False\n        if not super().rouler(km):\n            return False\n        self.batterie -= km\n        return True\n\n    def recharger(self):\n        self.batterie = 100\n",
+    "tests": [
+      {
+        "init": [
+          "Zoe"
+        ],
+        "calls": [
+          {
+            "method": "rouler",
+            "args": [
+              40
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "rouler",
+            "args": [
+              50
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "rouler",
+            "args": [
+              20
+            ],
+            "expected_return": false
+          }
+        ],
+        "expected_state": {
+          "marque": "Zoe",
+          "kilometrage": 90,
+          "batterie": 10
+        }
+      },
+      {
+        "init": [
+          "Leaf",
+          30
+        ],
+        "calls": [
+          {
+            "method": "rouler",
+            "args": [
+              0
+            ],
+            "expected_return": false
+          },
+          {
+            "method": "rouler",
+            "args": [
+              -5
+            ],
+            "expected_return": false
+          },
+          {
+            "method": "rouler",
+            "args": [
+              30
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "rouler",
+            "args": [
+              1
+            ],
+            "expected_return": false
+          }
+        ],
+        "expected_state": {
+          "marque": "Leaf",
+          "kilometrage": 30,
+          "batterie": 0
+        }
+      },
+      {
+        "init": [
+          "Zoe",
+          50
+        ],
+        "calls": [
+          {
+            "method": "rouler",
+            "args": [
+              50
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "recharger",
+            "args": [],
+            "expected_return": null
+          },
+          {
+            "method": "rouler",
+            "args": [
+              100
+            ],
+            "expected_return": true
+          }
+        ],
+        "expected_state": {
+          "marque": "Zoe",
+          "kilometrage": 150,
+          "batterie": 0
+        }
+      },
+      {
+        "init": [
+          "Tesla",
+          10
+        ],
+        "calls": [
+          {
+            "method": "rouler",
+            "args": [
+              11
+            ],
+            "expected_return": false
+          },
+          {
+            "method": "recharger",
+            "args": [],
+            "expected_return": null
+          },
+          {
+            "method": "rouler",
+            "args": [
+              11
+            ],
+            "expected_return": true
+          }
+        ],
+        "expected_state": {
+          "marque": "Tesla",
+          "kilometrage": 11,
+          "batterie": 89
+        }
+      },
+      {
+        "init": [
+          "Zoe",
+          100
+        ],
+        "calls": [
+          {
+            "method": "rouler",
+            "args": [
+              100
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "rouler",
+            "args": [
+              1
+            ],
+            "expected_return": false
+          },
+          {
+            "method": "recharger",
+            "args": [],
+            "expected_return": null
+          },
+          {
+            "method": "rouler",
+            "args": [
+              1
+            ],
+            "expected_return": true
+          }
+        ],
+        "expected_state": {
+          "marque": "Zoe",
+          "kilometrage": 101,
+          "batterie": 99
+        }
+      }
+    ],
+    "concepts_used": [
+      "single-level inheritance (a class deriving from exactly one base class)",
+      "calling the parent constructor via super().__init__(...)",
+      "method overriding (redefining a method inherited from the base class)",
+      "instance attributes (self.attribute = ...)"
+    ],
+    "metadata": {
+      "model": "claude",
+      "level_spec_version": "level_spec-v1-draft",
+      "attempts": 1,
+      "status": "publie",
+      "violations_detected": []
+    }
+  },
+  {
+    "id": "nidan_manager",
+    "kata_type": "class",
+    "rank": "nidan",
+    "discipline": "core",
+    "variant_of": null,
+    "title": "Employé et manager",
+    "statement": "Implémentez deux classes. `Employe` possède les attributs `nom` et `salaire_base` (entier), donnés au constructeur. `salaire()` retourne le salaire de base. `augmenter(pourcentage)` augmente le salaire de base du pourcentage donné (nouveau salaire de base = `salaire_base * (100 + pourcentage) // 100`) et retourne `True`, ou retourne `False` sans rien modifier si le pourcentage n'est pas strictement positif.\n\n`Manager` hérite de `Employe`. Son constructeur accepte `nom`, `salaire_base` et `prime` (100 par défaut) et crée l'attribut `equipe`, une liste de noms, vide au départ. `ajouter_membre(nom)` ajoute le nom à l'équipe et retourne `True`, ou retourne `False` s'il y est déjà. Il redéfinit `salaire()` : salaire de base plus `prime` par membre de l'équipe.",
+    "class_name": "Manager",
+    "signature": "class Employe:\n    def __init__(self, nom, salaire_base): ...\n    def salaire(self): ...\n    def augmenter(self, pourcentage): ...\n\nclass Manager(Employe):\n    def __init__(self, nom, salaire_base, prime=100): ...\n    def ajouter_membre(self, nom): ...\n    def salaire(self): ...",
+    "solution_reference": "class Employe:\n    def __init__(self, nom, salaire_base):\n        self.nom = nom\n        self.salaire_base = salaire_base\n\n    def salaire(self):\n        return self.salaire_base\n\n    def augmenter(self, pourcentage):\n        if pourcentage <= 0:\n            return False\n        self.salaire_base = self.salaire_base * (100 + pourcentage) // 100\n        return True\n\n\nclass Manager(Employe):\n    def __init__(self, nom, salaire_base, prime=100):\n        super().__init__(nom, salaire_base)\n        self.prime = prime\n        self.equipe = []\n\n    def ajouter_membre(self, nom):\n        if nom in self.equipe:\n            return False\n        self.equipe.append(nom)\n        return True\n\n    def salaire(self):\n        return super().salaire() + self.prime * len(self.equipe)\n",
+    "tests": [
+      {
+        "init": [
+          "Alice",
+          3000
+        ],
+        "calls": [
+          {
+            "method": "salaire",
+            "args": [],
+            "expected_return": 3000
+          },
+          {
+            "method": "ajouter_membre",
+            "args": [
+              "Bob"
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "ajouter_membre",
+            "args": [
+              "Chloé"
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "salaire",
+            "args": [],
+            "expected_return": 3200
+          }
+        ],
+        "expected_state": {
+          "nom": "Alice",
+          "salaire_base": 3000,
+          "prime": 100,
+          "equipe": [
+            "Bob",
+            "Chloé"
+          ]
+        }
+      },
+      {
+        "init": [
+          "Alice",
+          3000,
+          250
+        ],
+        "calls": [
+          {
+            "method": "ajouter_membre",
+            "args": [
+              "Bob"
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "ajouter_membre",
+            "args": [
+              "Bob"
+            ],
+            "expected_return": false
+          },
+          {
+            "method": "salaire",
+            "args": [],
+            "expected_return": 3250
+          }
+        ],
+        "expected_state": {
+          "nom": "Alice",
+          "salaire_base": 3000,
+          "prime": 250,
+          "equipe": [
+            "Bob"
+          ]
+        }
+      },
+      {
+        "init": [
+          "Dan",
+          2000
+        ],
+        "calls": [
+          {
+            "method": "augmenter",
+            "args": [
+              10
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "salaire",
+            "args": [],
+            "expected_return": 2200
+          },
+          {
+            "method": "augmenter",
+            "args": [
+              0
+            ],
+            "expected_return": false
+          },
+          {
+            "method": "augmenter",
+            "args": [
+              -5
+            ],
+            "expected_return": false
+          }
+        ],
+        "expected_state": {
+          "nom": "Dan",
+          "salaire_base": 2200,
+          "prime": 100,
+          "equipe": []
+        }
+      },
+      {
+        "init": [
+          "Eve",
+          1000,
+          50
+        ],
+        "calls": [
+          {
+            "method": "ajouter_membre",
+            "args": [
+              "X"
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "augmenter",
+            "args": [
+              50
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "salaire",
+            "args": [],
+            "expected_return": 1550
+          }
+        ],
+        "expected_state": {
+          "nom": "Eve",
+          "salaire_base": 1500,
+          "prime": 50,
+          "equipe": [
+            "X"
+          ]
+        }
+      },
+      {
+        "init": [
+          "Fred",
+          4000,
+          0
+        ],
+        "calls": [
+          {
+            "method": "ajouter_membre",
+            "args": [
+              "A"
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "salaire",
+            "args": [],
+            "expected_return": 4000
+          }
+        ],
+        "expected_state": {
+          "nom": "Fred",
+          "salaire_base": 4000,
+          "prime": 0,
+          "equipe": [
+            "A"
+          ]
+        }
+      }
+    ],
+    "concepts_used": [
+      "single-level inheritance (a class deriving from exactly one base class)",
+      "calling the parent constructor via super().__init__(...)",
+      "method overriding (redefining a method inherited from the base class)",
+      "methods calling other methods of the same instance (self.other_method())"
+    ],
+    "metadata": {
+      "model": "claude",
+      "level_spec_version": "level_spec-v1-draft",
+      "attempts": 1,
+      "status": "publie",
+      "violations_detected": []
+    }
+  },
+  {
+    "id": "sandan_playlist",
+    "kata_type": "class",
+    "rank": "sandan",
+    "discipline": "core",
+    "variant_of": null,
+    "title": "Playlist",
+    "statement": "Implémentez la classe `Playlist`. Le constructeur accepte `nom` (\"Ma playlist\" par défaut) ; l'attribut `titres` est une liste, vide au départ.\n\n- `ajouter(titre)` : ajoute le titre et retourne `True`, ou retourne `False` s'il est déjà présent.\n- `retirer(titre)` : retire le titre et retourne `True`, ou retourne `False` s'il est absent.\n- `__len__()` : retourne le nombre de titres.\n- `__contains__(titre)` : retourne `True` si le titre est dans la playlist.\n- `__str__()` : retourne une chaîne de la forme `Soirée (2 titre(s))`.\n- `__repr__()` : retourne une chaîne de la forme `Playlist('Soirée', ['A', 'B'])`, c'est-à-dire `Playlist(` suivi de la représentation du nom, d'une virgule et d'un espace, de la représentation de la liste des titres, puis de `)`.",
+    "class_name": "Playlist",
+    "signature": "class Playlist:\n    def __init__(self, nom=\"Ma playlist\"): ...\n    def ajouter(self, titre): ...\n    def retirer(self, titre): ...\n    def __len__(self): ...\n    def __contains__(self, titre): ...\n    def __str__(self): ...\n    def __repr__(self): ...",
+    "solution_reference": "class Playlist:\n    def __init__(self, nom=\"Ma playlist\"):\n        self.nom = nom\n        self.titres = []\n\n    def ajouter(self, titre):\n        if titre in self.titres:\n            return False\n        self.titres.append(titre)\n        return True\n\n    def retirer(self, titre):\n        if titre not in self.titres:\n            return False\n        self.titres.remove(titre)\n        return True\n\n    def __len__(self):\n        return len(self.titres)\n\n    def __contains__(self, titre):\n        return titre in self.titres\n\n    def __str__(self):\n        return f\"{self.nom} ({len(self)} titre(s))\"\n\n    def __repr__(self):\n        return f\"Playlist({self.nom!r}, {self.titres!r})\"\n",
+    "tests": [
+      {
+        "init": [],
+        "calls": [
+          {
+            "method": "__len__",
+            "args": [],
+            "expected_return": 0
+          },
+          {
+            "method": "ajouter",
+            "args": [
+              "A"
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "ajouter",
+            "args": [
+              "B"
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "ajouter",
+            "args": [
+              "A"
+            ],
+            "expected_return": false
+          },
+          {
+            "method": "__len__",
+            "args": [],
+            "expected_return": 2
+          },
+          {
+            "method": "__contains__",
+            "args": [
+              "A"
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "__contains__",
+            "args": [
+              "Z"
+            ],
+            "expected_return": false
+          }
+        ],
+        "expected_state": {
+          "nom": "Ma playlist",
+          "titres": [
+            "A",
+            "B"
+          ]
+        }
+      },
+      {
+        "init": [
+          "Road trip"
+        ],
+        "calls": [
+          {
+            "method": "ajouter",
+            "args": [
+              "X"
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "__str__",
+            "args": [],
+            "expected_return": "Road trip (1 titre(s))"
+          }
+        ],
+        "expected_state": {
+          "nom": "Road trip",
+          "titres": [
+            "X"
+          ]
+        }
+      },
+      {
+        "init": [
+          "Soirée"
+        ],
+        "calls": [
+          {
+            "method": "ajouter",
+            "args": [
+              "A"
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "ajouter",
+            "args": [
+              "B"
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "retirer",
+            "args": [
+              "A"
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "retirer",
+            "args": [
+              "A"
+            ],
+            "expected_return": false
+          },
+          {
+            "method": "__repr__",
+            "args": [],
+            "expected_return": "Playlist('Soirée', ['B'])"
+          },
+          {
+            "method": "__len__",
+            "args": [],
+            "expected_return": 1
+          }
+        ],
+        "expected_state": {
+          "nom": "Soirée",
+          "titres": [
+            "B"
+          ]
+        }
+      },
+      {
+        "init": [],
+        "calls": [
+          {
+            "method": "__str__",
+            "args": [],
+            "expected_return": "Ma playlist (0 titre(s))"
+          },
+          {
+            "method": "retirer",
+            "args": [
+              "Z"
+            ],
+            "expected_return": false
+          }
+        ],
+        "expected_state": {
+          "nom": "Ma playlist",
+          "titres": []
+        }
+      },
+      {
+        "init": [
+          "Mix"
+        ],
+        "calls": [
+          {
+            "method": "ajouter",
+            "args": [
+              "A"
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "__contains__",
+            "args": [
+              "A"
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "retirer",
+            "args": [
+              "A"
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "__contains__",
+            "args": [
+              "A"
+            ],
+            "expected_return": false
+          },
+          {
+            "method": "__repr__",
+            "args": [],
+            "expected_return": "Playlist('Mix', [])"
+          }
+        ],
+        "expected_state": {
+          "nom": "Mix",
+          "titres": []
+        }
+      }
+    ],
+    "concepts_used": [
+      "implementing common dunder methods (__repr__, __str__, __eq__, __lt__, __len__, __contains__) to customize built-in behaviors",
+      "instance attributes (self.attribute = ...)",
+      "lists (literals, indexing, slicing, append, insert, pop, sort, index, count)",
+      "string concatenation and f-strings"
+    ],
+    "metadata": {
+      "model": "claude",
+      "level_spec_version": "level_spec-v1-draft",
+      "attempts": 1,
+      "status": "publie",
+      "violations_detected": []
+    }
+  },
+  {
+    "id": "sandan_inventaire",
+    "kata_type": "class",
+    "rank": "sandan",
+    "discipline": "core",
+    "variant_of": null,
+    "title": "Inventaire de stock",
+    "statement": "Implémentez la classe `Inventaire`. L'attribut `stock` est un dictionnaire, vide au départ, qui associe un nom d'article à sa quantité (entier strictement positif).\n\n- `ajouter(nom, quantite=1)` : augmente la quantité de l'article (qu'il existe déjà ou non) et retourne `True`, ou retourne `False` sans rien modifier si `quantite` n'est pas strictement positive.\n- `retirer(nom, quantite=1)` : diminue la quantité de l'article et retourne `True`. Si la quantité tombe à 0, l'article est supprimé du stock. Retourne `False` sans rien modifier si `quantite` n'est pas strictement positive ou si le stock de l'article est insuffisant (article absent compris).\n- `__len__()` : retourne le nombre d'articles distincts.\n- `__contains__(nom)` : retourne `True` si l'article est en stock.\n- `__str__()` : retourne les articles triés par ordre alphabétique, au format `nom:quantité`, séparés par `, ` (chaîne vide si le stock est vide).",
+    "class_name": "Inventaire",
+    "signature": "class Inventaire:\n    def __init__(self): ...\n    def ajouter(self, nom, quantite=1): ...\n    def retirer(self, nom, quantite=1): ...\n    def __len__(self): ...\n    def __contains__(self, nom): ...\n    def __str__(self): ...",
+    "solution_reference": "class Inventaire:\n    def __init__(self):\n        self.stock = {}\n\n    def ajouter(self, nom, quantite=1):\n        if quantite <= 0:\n            return False\n        self.stock[nom] = self.stock.get(nom, 0) + quantite\n        return True\n\n    def retirer(self, nom, quantite=1):\n        if quantite <= 0 or self.stock.get(nom, 0) < quantite:\n            return False\n        self.stock[nom] -= quantite\n        if self.stock[nom] == 0:\n            del self.stock[nom]\n        return True\n\n    def __len__(self):\n        return len(self.stock)\n\n    def __contains__(self, nom):\n        return nom in self.stock\n\n    def __str__(self):\n        parties = []\n        for nom in sorted(self.stock):\n            parties.append(f\"{nom}:{self.stock[nom]}\")\n        return \", \".join(parties)\n",
+    "tests": [
+      {
+        "init": [],
+        "calls": [
+          {
+            "method": "ajouter",
+            "args": [
+              "pomme",
+              3
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "ajouter",
+            "args": [
+              "poire"
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "ajouter",
+            "args": [
+              "pomme",
+              2
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "__len__",
+            "args": [],
+            "expected_return": 2
+          },
+          {
+            "method": "__str__",
+            "args": [],
+            "expected_return": "poire:1, pomme:5"
+          }
+        ],
+        "expected_state": {
+          "stock": {
+            "pomme": 5,
+            "poire": 1
+          }
+        }
+      },
+      {
+        "init": [],
+        "calls": [
+          {
+            "method": "ajouter",
+            "args": [
+              "x",
+              0
+            ],
+            "expected_return": false
+          },
+          {
+            "method": "ajouter",
+            "args": [
+              "x",
+              -1
+            ],
+            "expected_return": false
+          },
+          {
+            "method": "__len__",
+            "args": [],
+            "expected_return": 0
+          },
+          {
+            "method": "__str__",
+            "args": [],
+            "expected_return": ""
+          },
+          {
+            "method": "__contains__",
+            "args": [
+              "x"
+            ],
+            "expected_return": false
+          }
+        ],
+        "expected_state": {
+          "stock": {}
+        }
+      },
+      {
+        "init": [],
+        "calls": [
+          {
+            "method": "ajouter",
+            "args": [
+              "kiwi",
+              2
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "retirer",
+            "args": [
+              "kiwi"
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "retirer",
+            "args": [
+              "kiwi",
+              5
+            ],
+            "expected_return": false
+          },
+          {
+            "method": "retirer",
+            "args": [
+              "kiwi",
+              1
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "__contains__",
+            "args": [
+              "kiwi"
+            ],
+            "expected_return": false
+          },
+          {
+            "method": "__len__",
+            "args": [],
+            "expected_return": 0
+          }
+        ],
+        "expected_state": {
+          "stock": {}
+        }
+      },
+      {
+        "init": [],
+        "calls": [
+          {
+            "method": "ajouter",
+            "args": [
+              "a",
+              2
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "retirer",
+            "args": [
+              "a",
+              0
+            ],
+            "expected_return": false
+          },
+          {
+            "method": "retirer",
+            "args": [
+              "b"
+            ],
+            "expected_return": false
+          },
+          {
+            "method": "__str__",
+            "args": [],
+            "expected_return": "a:2"
+          }
+        ],
+        "expected_state": {
+          "stock": {
+            "a": 2
+          }
+        }
+      },
+      {
+        "init": [],
+        "calls": [
+          {
+            "method": "ajouter",
+            "args": [
+              "zèbre"
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "ajouter",
+            "args": [
+              "abeille"
+            ],
+            "expected_return": true
+          },
+          {
+            "method": "__str__",
+            "args": [],
+            "expected_return": "abeille:1, zèbre:1"
+          }
+        ],
+        "expected_state": {
+          "stock": {
+            "zèbre": 1,
+            "abeille": 1
+          }
+        }
+      }
+    ],
+    "concepts_used": [
+      "implementing common dunder methods (__repr__, __str__, __eq__, __lt__, __len__, __contains__) to customize built-in behaviors",
+      "dictionaries (literals, key access, .get, .keys, .values, .items)",
+      "loops (for / while)",
+      "string methods (split, join, lower, upper, strip, replace)"
+    ],
+    "metadata": {
+      "model": "claude",
+      "level_spec_version": "level_spec-v1-draft",
+      "attempts": 1,
+      "status": "publie",
+      "violations_detected": []
+    }
   }
 ]

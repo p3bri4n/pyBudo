@@ -2,7 +2,6 @@ from sqlmodel import Session, select
 
 from app.model import DisciplineProgression, Kata, KataCompletion, Progression
 from app.rank import RANK_ORDER
-from app.services.katas import get_kata
 
 
 # Trouve le rank le plus elevé parmi la liste donnée
@@ -19,7 +18,7 @@ def recalculate_progression(user_id: int, session: Session):
 
     # Prends tous les katas depuis la liste des completions en utilisant kata_id
     # Juste avant, retire les completions dont on ne trouve pas le kata
-    katas: list[Kata] = [k for c in completions if (k := get_kata(c.kata_id, session))]
+    katas: list[Kata] = [k for c in completions if (k := session.get(Kata, c.kata_id))]
 
     # Récupère tous les ranks de la discipline "core" (le tronc commun)
     core_ranks = [k.rank for k in katas if k.discipline == "core"]
