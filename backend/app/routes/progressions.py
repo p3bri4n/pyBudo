@@ -6,7 +6,7 @@ from sqlmodel import Session, select
 from app.dependencies import get_current_user, get_session
 from app.model import KataCompletion, User
 from app.schemas import KataCompletionCreate, KataCompletionPublic, ProgressionPublic
-from app.services.katas import get_kata
+from app.services.katas import get_published_kata
 from app.services.recalculate import recalculate_progression
 
 router = APIRouter()
@@ -37,7 +37,7 @@ def add_completions(
     user: Annotated[User, Depends(get_current_user)],
     session: Annotated[Session, Depends(get_session)],
 ):
-    kata = get_kata(completion.kata_id, session)
+    kata = get_published_kata(completion.kata_id, session)
     if kata is None:
         raise HTTPException(status_code=404, detail="kata not found")
 

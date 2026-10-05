@@ -213,3 +213,33 @@ class TestRecalculateProgression(BaseEntityHelper):
         ).first()
 
         assert dp is None
+
+    def test_archived_kata_still_counted_progression(self, session: Session):
+        user_id = 1
+
+        progression = self._add_progression(session, user_id)
+
+        self._add_completed_kata(
+            session,
+            user_id,
+            kata_id="kyu_10_addition",
+            rank="kyu_10",
+            discipline="core",
+        )
+
+        self._add_completed_kata(
+            session,
+            user_id,
+            kata_id="kyu_2_check_pair",
+            rank="kyu_2",
+            discipline="core",
+            meta={"status": "archive"},
+        )
+
+        recalculate_progression(user_id, session)
+
+        progression: Progression = session.exec(
+            select(Progression).where(Progression.user_id == user_id)
+        ).one()
+
+        assert progression.core_dan == "kyu_2"

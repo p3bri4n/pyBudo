@@ -95,8 +95,11 @@ class BaseEntityHelper:
         rank="kyu_10",
         discipline="core",
         code="def perimetre(a, b):\n    return 2 * (a + b)",
+        meta=None,
     ):
-        self._add_kata(session=session, id=kata_id, rank=rank, discipline=discipline)
+        self._add_kata(
+            session=session, id=kata_id, rank=rank, discipline=discipline, meta=meta
+        )
 
         completion = KataCompletion(user_id=user_id, kata_id=kata_id, code=code)
 
