@@ -1,8 +1,9 @@
 import json
+import sys
 from pathlib import Path
 
 from pydantic import TypeAdapter
-from sqlmodel import Session
+from sqlmodel import Session, select
 
 from app.db import engine
 from app.model import Kata
@@ -11,9 +12,9 @@ from app.schemas import KataInternal, KataPublic
 KATAS_PATH = Path(__file__).resolve().parents[1] / "data" / "katas.json"
 
 
-def load_katas():
+def load_katas(path: Path = KATAS_PATH):
     # Récupère tous les katas depuis le json
-    with KATAS_PATH.open(encoding="utf-8") as file:
+    with path.open(encoding="utf-8") as file:
         return json.load(file)
 
 
@@ -34,14 +35,22 @@ def validate_kata(kata):
         raise ValueError(f"This kata has no status {kata['id']}")
 
 
-def seed_katas():
+def ingest_katas(katas, session: Session):
+    validate_catalog(katas)
+    ids = [kata["id"] for kata in katas]
+    existing = session.exec(select(Kata.id).where(Kata.id.in_(ids))).all()
+    if existing:
+        raise ValueError(f"Katas with IDs {existing} already exist")
+    for kata in katas:
+        session.add(Kata(**kata, meta=kata["metadata"]))
+    session.commit()
+
+
+def seed_katas(path: Path):
+    katas = load_katas(path)
     with Session(engine) as session:
-        katas = load_katas()
-        validate_catalog(katas)
-        for kata in katas:
-            session.merge(Kata(**kata, meta=kata["metadata"]))
-        session.commit()
+        ingest_katas(katas, session)
 
 
 if __name__ == "__main__":
-    seed_katas()
+    seed_katas(Path(sys.argv[1])) if len(sys.argv) > 1 else seed_katas(KATAS_PATH)
