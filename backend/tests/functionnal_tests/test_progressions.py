@@ -2,6 +2,7 @@ from fastapi import status
 from httpx import Client
 from sqlmodel import Session
 
+from app.schemas import MAX_CODE_LENGTH
 from tests.data.base_entity_helper import BaseEntityHelper
 
 
@@ -63,6 +64,42 @@ class TestsProgressions(BaseEntityHelper):
         data = response.json()
         assert data["kata_id"] == "kyu_10_addition"
         assert data["user_id"] == user.id
+
+        kata2 = self._add_kata(
+            session=session,
+            id="kyu_9_substraction",
+            rank="kyu_9",
+            discipline="core",
+            title="core 2",
+        )
+
+        code = "x" * (MAX_CODE_LENGTH + 1)
+
+        response2 = client.post(
+            "/completions",
+            json={"kata_id": kata2.id, "code": code},
+            headers={"Authorization": f"Bearer {token}"},
+        )
+
+        assert response2.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+
+        kata3 = self._add_kata(
+            session=session,
+            id="kyu_8_division",
+            rank="kyu_8",
+            discipline="core",
+            title="core 3",
+        )
+
+        code = "x" * MAX_CODE_LENGTH
+
+        response3 = client.post(
+            "/completions",
+            json={"kata_id": kata3.id, "code": code},
+            headers={"Authorization": f"Bearer {token}"},
+        )
+
+        assert response3.status_code == status.HTTP_200_OK
 
     def test_add_completion_with_unknown_kata_returns_404(
         self, client: Client, session: Session
