@@ -1,6 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import type {PyodideInterface} from "pyodide";
 import { getPyodide } from "./pyodideRuntime";
 import { runWorkerTask } from "./PyodideWorker";
+import type {FunctionKata} from "../../interfaces/interfaces.ts";
 
 const mockDestroy = vi.fn();
 
@@ -10,7 +12,18 @@ const mockRunKataTests = Object.assign(
         destroy: mockDestroy,
     },
 );
-
+const createTestKata = (overrides: Partial<FunctionKata> = {}): FunctionKata => ({
+    id: "test-kata",
+    rank: "kyu_10",
+    title: "Test kata",
+    discipline: "core",
+    statement: "Test statement",
+    signature: "def test():",
+    concepts_used: [],
+    kata_type: "function",
+    tests: [],
+    ...overrides,
+});
 const mockRunPython = vi.fn();
 const mockSetStdout = vi.fn();
 const mockSetStderr = vi.fn();
@@ -30,16 +43,15 @@ describe("runWorkerTask", () => {
             globals: {
                 get: vi.fn(() => mockRunKataTests),
             },
-        } as any);
+        } as unknown as PyodideInterface);
     });
 
     it("Returns an error for an invalid kata signature", async () => {
+        const kata = createTestKata({
+            signature: "invalid signature",
+        });
         const report = await runWorkerTask(
-            "print('hello')",
-            {
-                signature: "invalid signature",
-                tests: [],
-            } as any,
+            "print('hello')", kata
         );
 
         expect(report).toEqual({
@@ -68,16 +80,15 @@ describe("runWorkerTask", () => {
         mockRunKataTests.mockReturnValue(
             JSON.stringify(pythonReport),
         );
-
-        const kata = {
+        const kata = createTestKata({
             signature: "def perimetre(a, b):",
             tests: [
                 {
                     input: [3, 4],
-                    expected: 14,
+                    output: 14,
                 },
             ],
-        } as any;
+        });
 
         const code = `
 def perimetre(a, b):
@@ -104,11 +115,10 @@ def perimetre(a, b):
         mockRunKataTests.mockImplementation(() => {
             throw new Error("Python execution failed");
         });
-
-        const kata = {
+        const kata = createTestKata({
             signature: "def test():",
             tests: [],
-        } as any;
+        });
 
         await expect(
             runWorkerTask("raise Exception('test')", kata),
