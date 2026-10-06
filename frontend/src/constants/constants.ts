@@ -6,3 +6,5 @@ export const RANKS = [
     "kyu_5", "kyu_4", "kyu_3", "kyu_2", "kyu_1",
     "shodan", "nidan", "sandan", "yondan", "godan",
 ] as const;
+
+export const EXECUTION_TIMEOUT_MS = 2000;

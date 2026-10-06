@@ -14,6 +14,17 @@
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
+
+    .no-kata-result {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: black;
+        color: #abb2bf;
+        width: 100%;
+        padding: 0.5rem;
+        border-radius: 5px;
+    }
 }
 
 .codeEditor {
