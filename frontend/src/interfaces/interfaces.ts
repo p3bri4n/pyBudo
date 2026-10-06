@@ -43,6 +43,9 @@ export interface KataTestReport {
 export type WorkerRequest = | { type: "execute"; code: string; } | { type: "kata"; code: string; kata: Kata; };
 export type WorkerResponse =
     | {
+    type: "ready";
+}
+    | {
     type: "execute-result";
     result: ExecutionResult;
 }
@@ -54,3 +57,11 @@ export type WorkerResponse =
     type: "error";
     error: string;
 };
+
+export type WorkerResult =
+    Exclude<WorkerResponse, { type: "ready" }>;
+
+export type WorkerError = Extract<
+    WorkerResponse,
+    { type: "error" }
+>;

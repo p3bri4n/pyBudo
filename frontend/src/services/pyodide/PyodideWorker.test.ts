@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type {PyodideInterface} from "pyodide";
 import { getPyodide } from "./pyodideRuntime";
-import { runWorkerTask } from "./PyodideWorker";
+import { runWorkerTask } from "./runWorkerTask";
 import type {FunctionKata} from "../../interfaces/interfaces.ts";
 
 const mockDestroy = vi.fn();

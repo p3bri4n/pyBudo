@@ -1,10 +1,10 @@
 import { useState } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { python } from "@codemirror/lang-python";
-import { executePython, isKataPassed, runKataTests } from "../services/pyodide/PyodideService";
-import type {ExecutionResult, Kata, KataTestReport} from "../interfaces/interfaces.ts";
-import "./python-editor.css"
-import {useTranslation} from "react-i18next";
+import {isKataPassed, runKataTests, executePython} from "../services/pyodide/PyodideService";
+import type {ExecutionResult, Kata, KataTestReport,} from "../interfaces/interfaces.ts";
+import "./python-editor.css";
+import { useTranslation } from "react-i18next";
 import { TAB_SIZE, tabBehavior } from "./tabBehavior";
 
 const extensions = [python(), tabBehavior];
@@ -12,26 +12,36 @@ const extensions = [python(), tabBehavior];
 const DEFAULT_CODE = "print('Hello pyBudo!')";
 
 type PythonRunnerProps = {
-    initialCode?: string
-    kata?: Kata
-    onKataPassed?: (kata: Kata, code: string) => void
-}
+    initialCode?: string;
+    kata?: Kata;
+    onKataPassed?: (kata: Kata, code: string) => void;
+};
 
 function formatValue(value: unknown): string {
     return JSON.stringify(value);
 }
 
-export function PythonRunner({initialCode = DEFAULT_CODE, kata, onKataPassed}: PythonRunnerProps) {
+export function PythonRunner({
+                                 initialCode = DEFAULT_CODE,
+                                 kata,
+                                 onKataPassed,
+                             }: PythonRunnerProps) {
     const [code, setCode] = useState(initialCode);
     const [output, setOutput] = useState("");
     const [loading, setLoading] = useState(false);
     const [report, setReport] = useState<KataTestReport | null>(null);
-    const {t} = useTranslation();
+    const { t } = useTranslation();
 
     async function runCode(): Promise<void> {
         setLoading(true);
+
         try {
             const result: ExecutionResult = await executePython(code);
+
+            if (result.error === "TIMEOUT") {
+                setOutput("⏱️ Temps d'exécution dépassé.");
+                return;
+            }
 
             if (result.error) {
                 setOutput(result.error);
@@ -48,21 +58,29 @@ export function PythonRunner({initialCode = DEFAULT_CODE, kata, onKataPassed}: P
 
     async function testKata(kata: Kata): Promise<void> {
         setLoading(true);
+
         try {
             const testReport = await runKataTests(code, kata);
+
             setOutput(testReport.stdout ?? "");
             setReport(testReport);
+
             if (isKataPassed(testReport)) {
                 onKataPassed?.(kata, code);
             }
         } catch (error) {
-            setReport({error: String(error), results: []});
+            setReport({
+                error: String(error),
+                results: [],
+                stdout: "",
+            });
         } finally {
             setLoading(false);
         }
     }
 
-    const passedCount = report?.results.filter((result) => result.passed).length ?? 0;
+    const passedCount =
+        report?.results.filter((result) => result.passed).length ?? 0;
 
     return (
         <div className={"pythonEditor"}>
@@ -77,9 +95,15 @@ export function PythonRunner({initialCode = DEFAULT_CODE, kata, onKataPassed}: P
                     indentWithTab={false}
                     basicSetup={{ tabSize: TAB_SIZE }}
                 />
-                {/* Avec un kata sélectionné, Exécuter lance aussi les tests du kata */}
-                <button className={"btn-dojo"} onClick={() => kata ? testKata(kata) : runCode()} disabled={loading}>
-                    {loading ? `${t("python-runner.execution")}` : `${t("python-runner.execute")}`}
+
+                <button
+                    className={"btn-dojo"}
+                    onClick={() => kata ? testKata(kata) : runCode()}
+                    disabled={loading}
+                >
+                    {loading
+                        ? `${t("python-runner.execution")}`
+                        : `${t("python-runner.execute")}`}
                 </button>
 
                 <pre>{output}</pre>
@@ -88,24 +112,83 @@ export function PythonRunner({initialCode = DEFAULT_CODE, kata, onKataPassed}: P
             {report && (
                 <div className={"testReport"}>
                     {report.error ? (
-                        <p className={"testFailed"}>{report.error}</p>
+                        <p className={"testFailed"}>
+                            {report.error === "TIMEOUT"
+                                ? "⏱️ Temps d'exécution dépassé."
+                                : report.error}
+                        </p>
                     ) : (
                         <>
-                            <p className={isKataPassed(report) ? "testPassed" : "testFailed"}>
+                            <p
+                                className={
+                                    isKataPassed(report)
+                                        ? "testPassed"
+                                        : "testFailed"
+                                }
+                            >
                                 {isKataPassed(report)
                                     ? t("python-runner.kata-passed")
-                                    : t("python-runner.tests-summary", {passed: passedCount, total: report.results.length})}
+                                    : t(
+                                        "python-runner.tests-summary",
+                                        {
+                                            passed: passedCount,
+                                            total: report.results.length,
+                                        },
+                                    )}
                             </p>
+
                             <ul className={"testResults"}>
                                 {report.results.map((result, index) => (
-                                    <li key={index} className={result.passed ? "testPassed" : "testFailed"}>
-                                        <span>{result.passed ? "✅" : "❌"} </span>
-                                        <code>({result.input.map(formatValue).join(", ")})</code>
-                                        {" "}{t("python-runner.expected")} <code>{formatValue(result.expected)}</code>
+                                    <li
+                                        key={index}
+                                        className={
+                                            result.passed
+                                                ? "testPassed"
+                                                : "testFailed"
+                                        }
+                                    >
+                                        <span>
+                                            {result.passed ? "✅" : "❌"}{" "}
+                                        </span>
+
+                                        <code>
+                                            ({result.input
+                                            .map(formatValue)
+                                            .join(", ")})
+                                        </code>
+
+                                        {" "}
+                                        {t("python-runner.expected")}{" "}
+                                        <code>
+                                            {formatValue(result.expected)}
+                                        </code>
+
                                         {!result.passed && (
                                             result.error
-                                                ? <> — {t("python-runner.error")} <code>{result.error}</code></>
-                                                : <> — {t("python-runner.got")} <code>{formatValue(result.got)}</code></>
+                                                ? (
+                                                    <>
+                                                        {" — "}
+                                                        {t(
+                                                            "python-runner.error",
+                                                        )}{" "}
+                                                        <code>
+                                                            {result.error}
+                                                        </code>
+                                                    </>
+                                                )
+                                                : (
+                                                    <>
+                                                        {" — "}
+                                                        {t(
+                                                            "python-runner.got",
+                                                        )}{" "}
+                                                        <code>
+                                                            {formatValue(
+                                                                result.got,
+                                                            )}
+                                                        </code>
+                                                    </>
+                                                )
                                         )}
                                     </li>
                                 ))}

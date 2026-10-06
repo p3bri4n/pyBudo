@@ -1,133 +1,285 @@
-import {EXECUTION_TIMEOUT_MS} from "../../constants/constants.ts";
-import type {ExecutionResult, Kata, KataTestReport, WorkerRequest, WorkerResponse} from "../../interfaces/interfaces";
+import { EXECUTION_TIMEOUT_MS } from "../../constants/constants.ts";
+import type {
+    ExecutionResult,
+    Kata,
+    KataTestReport,
+    WorkerRequest,
+    WorkerResponse,
+    WorkerResult
+} from "../../interfaces/interfaces.ts";
 
-export function getKataFunctionName(signature: string): string | null {
+export function getKataFunctionName(
+    signature: string,
+): string | null {
     return signature.match(/^\s*def\s+(\w+)/)?.[1] ?? null;
 }
 
-export function isKataPassed(report: KataTestReport): boolean {
+export function isKataPassed(
+    report: KataTestReport,
+): boolean {
     return report.error === null
         && report.results.length > 0
         && report.results.every((result) => result.passed);
 }
 
-export function runWorker(
-    request: WorkerRequest,
-    timeout: number,
-): Promise<WorkerResponse> {
-    return new Promise((resolve) => {
-        const worker = new Worker(
-            new URL("./PyodideWorker.ts", import.meta.url),
-            {type: "module"},
+let worker: Worker | null = null;
+let readyPromise: Promise<void> | null = null;
+let requestInProgress = false;
+
+function createWorker(): Worker {
+    return new Worker(
+        new URL("./PyodideWorker.ts", import.meta.url),
+        { type: "module" },
+    );
+}
+
+function getWorker(): Worker {
+    if (worker) {
+        return worker;
+    }
+
+    worker = createWorker();
+
+    readyPromise = new Promise<void>((resolve, reject) => {
+        const currentWorker = worker;
+
+        if (!currentWorker) {
+            reject(new Error("Worker was not created"));
+            return;
+        }
+
+        const handleMessage = (
+            event: MessageEvent<WorkerResponse>,
+        ): void => {
+            if (event.data.type === "ready") {
+                currentWorker.removeEventListener(
+                    "message",
+                    handleMessage,
+                );
+
+                currentWorker.removeEventListener(
+                    "error",
+                    handleError,
+                );
+
+                resolve();
+                return;
+            }
+
+            if (event.data.type === "error") {
+                currentWorker.removeEventListener(
+                    "message",
+                    handleMessage,
+                );
+
+                currentWorker.removeEventListener(
+                    "error",
+                    handleError,
+                );
+
+                reject(new Error(event.data.error));
+            }
+        };
+
+        const handleError = (): void => {
+            currentWorker.removeEventListener(
+                "message",
+                handleMessage,
+            );
+
+            currentWorker.removeEventListener(
+                "error",
+                handleError,
+            );
+
+            reject(new Error("Worker initialization failed"));
+        };
+
+        currentWorker.addEventListener(
+            "message",
+            handleMessage,
         );
 
-        let finished = false;
-        const cleanup = () => {
-            window.clearTimeout(timeoutId);
-            worker.terminate();
-        };
-        const timeoutId = window.setTimeout(() => {
-            if (finished) {
-                return;
-            }
-            finished = true;
-            cleanup();
-            resolve({
-                type: "error",
-                error: "TIMEOUT",
-            });
-        }, timeout);
+        currentWorker.addEventListener(
+            "error",
+            handleError,
+        );
+    });
 
-        worker.onmessage = (event: MessageEvent) => {
-            if (finished) {
+    return worker;
+}
+
+function resetWorker(): void {
+    worker?.terminate();
+
+    worker = null;
+    readyPromise = null;
+}
+
+
+export function runWorker(
+    request: WorkerRequest,
+): Promise<WorkerResult> {
+    if (requestInProgress) {
+        return Promise.resolve({
+            type: "error",
+            error: "EXECUTION_IN_PROGRESS",
+        });
+    }
+    return new Promise((resolve) => {
+        const currentWorker = getWorker();
+
+        const handleMessage = (
+            event: MessageEvent<WorkerResponse>,
+        ): void => {
+            if (event.data.type === "ready") {
                 return;
             }
-            finished = true;
-            cleanup();
+
+            window.clearTimeout(timeoutId);
+
+            currentWorker.removeEventListener(
+                "message",
+                handleMessage,
+            );
+
+            currentWorker.removeEventListener(
+                "error",
+                handleError,
+            );
+
+            requestInProgress = false;
+
             resolve(event.data);
         };
 
-        worker.onerror = (event) => {
-            if (finished) {
-                return;
-            }
-            finished = true;
-            cleanup();
+        const handleError = (event: ErrorEvent): void => {
+            window.clearTimeout(timeoutId);
+
+            currentWorker.removeEventListener(
+                "message",
+                handleMessage,
+            );
+
+            currentWorker.removeEventListener(
+                "error",
+                handleError,
+            );
+
+            requestInProgress = false;
 
             resolve({
                 type: "error",
                 error: event.message || "Worker error",
             });
         };
-        worker.postMessage(request);
+
+        let timeoutId: number | undefined;
+
+        void readyPromise
+            ?.then(() => {
+                if (worker !== currentWorker) {
+                    return;
+                }
+
+                requestInProgress = true;
+
+                currentWorker.addEventListener(
+                    "message",
+                    handleMessage,
+                );
+
+                currentWorker.addEventListener(
+                    "error",
+                    handleError,
+                );
+
+                // Le timeout commence ICI.
+                timeoutId = window.setTimeout(() => {
+                    currentWorker.removeEventListener(
+                        "message",
+                        handleMessage,
+                    );
+
+                    currentWorker.removeEventListener(
+                        "error",
+                        handleError,
+                    );
+
+                    requestInProgress = false;
+
+                    resetWorker();
+
+                    resolve({
+                        type: "error",
+                        error: "TIMEOUT",
+                    });
+                }, EXECUTION_TIMEOUT_MS);
+
+                currentWorker.postMessage(request);
+            })
+            .catch((error: unknown) => {
+                requestInProgress = false;
+
+                resolve({
+                    type: "error",
+                    error: error instanceof Error
+                        ? error.message
+                        : String(error),
+                });
+            });
     });
 }
 
-export async function executePython(code: string): Promise<ExecutionResult> {
-    const response = await runWorker(
-        {
-            type: "execute",
-            code,
-        },
-        EXECUTION_TIMEOUT_MS,
-    );
+export async function executePython(
+    code: string,
+): Promise<ExecutionResult> {
+    const response = await runWorker({
+        type: "execute",
+        code,
+    });
 
-    if (
-        typeof response === "object"
-        && response !== null
-        && "type" in response
-        && response.type === "execute-result"
-    ) {
-        return response.result as ExecutionResult;
+    if (response.type === "execute-result") {
+        return response.result;
     }
 
-    const error =
-        typeof response === "object"
-        && response !== null
-        && "error" in response
-            ? String(response.error)
-            : "Unknown error";
+    if (response.type === "error") {
+        return {
+            result: undefined,
+            stdout: "",
+            stderr: "",
+            error: response.error,
+        };
+    }
 
-    return {
-        result: undefined,
-        stdout: "",
-        stderr: "",
-        error,
-    };
+    throw new Error(
+        `Unexpected worker response: ${response.type}`,
+    );
 }
 
 export async function runKataTests(
     code: string,
     kata: Kata,
 ): Promise<KataTestReport> {
-    const response = await runWorker(
-        {
-            type: "kata",
-            code,
-            kata,
-        },
-        EXECUTION_TIMEOUT_MS,
-    );
+    const response = await runWorker({
+        type: "kata",
+        code,
+        kata,
+    });
 
-    if (
-        typeof response === "object"
-        && response !== null
-        && "type" in response
-        && response.type === "kata-result"
-    ) {
-        return response.report as KataTestReport;
+    if (response.type === "kata-result") {
+        return response.report;
     }
 
-    const error =
-        typeof response === "object"
-        && response !== null
-        && "error" in response
-            ? String(response.error)
-            : "Unknown error";
+    if (response.type === "error") {
+        return {
+            error: response.error,
+            results: [],
+            stdout: "",
+        };
+    }
 
-    return {
-        error,
-        results: [],
-        stdout: "",
-    };
+    throw new Error(
+        `Unexpected worker response: ${response.type}`,
+    );
 }
