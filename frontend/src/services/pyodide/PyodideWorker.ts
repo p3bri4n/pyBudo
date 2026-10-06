@@ -1,7 +1,47 @@
-import type {WorkerRequest, WorkerResponse} from "../../interfaces/interfaces.ts";
+import type {ExecutionResult, WorkerRequest, WorkerResponse} from "../../interfaces/interfaces.ts";
 import { getPyodide } from "./pyodideRuntime";
 import { runWorkerTask } from "./runWorkerTask";
-import {executePython} from "./PyodideService.ts";
+
+async function executePythonInWorker(
+    code: string,
+): Promise<ExecutionResult> {
+    const runtime = await getPyodide();
+
+    let stdout = "";
+    let stderr = "";
+
+    runtime.setStdout({
+        batched: (text: string): void => {
+            stdout += text;
+        },
+    });
+
+    runtime.setStderr({
+        batched: (text: string): void => {
+            stderr += text;
+        },
+    });
+
+    try {
+        const result = await runtime.runPythonAsync(code);
+
+        return {
+            result,
+            stdout,
+            stderr,
+            error: null,
+        };
+    } catch (error) {
+        return {
+            result: undefined,
+            stdout,
+            stderr,
+            error: error instanceof Error
+                ? error.message
+                : String(error),
+        };
+    }
+}
 
 async function initializeWorker(): Promise<void> {
     try {
@@ -25,8 +65,9 @@ self.onmessage = async (
 ): Promise<void> => {
     try {
         if (event.data.type === "execute") {
-            const result = await executePython(event.data.code);
-
+            const result = await executePythonInWorker(
+                event.data.code,
+            );
             self.postMessage({
                 type: "execute-result",
                 result,

@@ -39,7 +39,7 @@ export function PythonRunner({
             const result: ExecutionResult = await executePython(code);
 
             if (result.error === "TIMEOUT") {
-                setOutput("⏱️ Temps d'exécution dépassé.");
+                setOutput("Temps d'exécution dépassé.");
                 return;
             }
 
@@ -114,7 +114,7 @@ export function PythonRunner({
                     {report.error ? (
                         <p className={"testFailed"}>
                             {report.error === "TIMEOUT"
-                                ? "⏱️ Temps d'exécution dépassé."
+                                ? "Temps d'exécution dépassé."
                                 : report.error}
                         </p>
                     ) : (
