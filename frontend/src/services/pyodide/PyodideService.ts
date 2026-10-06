@@ -183,8 +183,6 @@ export function runWorker(
                     return;
                 }
 
-                requestInProgress = true;
-
                 currentWorker.addEventListener(
                     "message",
                     handleMessage,
