@@ -130,6 +130,114 @@ class TestsAdminKatas(BaseEntityHelper):
 
         assert response3.status_code == status.HTTP_404_NOT_FOUND
 
+    def test_add_variant(self, client: Client, session: Session):
+        self._add_user(session, role="admin")
+        self._add_kata(
+            session,
+            id="kyu_10_addition",
+        )
+        token = self._auth_user(client)
+        response1 = client.get(
+            "/admin/katas/kyu_10_addition", headers={"Authorization": f"Bearer {token}"}
+        )
+
+        assert response1.status_code == status.HTTP_200_OK
+
+        kata = response1.json()
+        kata["id"] = "kyu_9_substraction"
+        response2 = client.post(
+            "/admin/katas/kyu_10_addition/variants",
+            json={"kata": kata},
+            headers={"Authorization": f"Bearer {token}"},
+        )
+
+        assert response2.status_code == status.HTTP_201_CREATED
+        kata2 = response2.json()
+
+        assert kata2["variant_of"] == "kyu_10_addition"
+
+        response3 = client.get("/katas", headers={"Authorization": f"Bearer {token}"})
+        assert response3.status_code == status.HTTP_200_OK
+        data = response3.json()
+        kata_ids = [kata["id"] for kata in data]
+        assert "kyu_10_addition" in kata_ids
+        assert "kyu_9_substraction" in kata_ids
+
+    def test_replace_variant(self, client: Client, session: Session):
+        self._add_user(session, role="admin")
+        self._add_kata(
+            session,
+            id="kyu_10_addition",
+        )
+        token = self._auth_user(client)
+        response1 = client.get(
+            "/admin/katas/kyu_10_addition", headers={"Authorization": f"Bearer {token}"}
+        )
+
+        assert response1.status_code == status.HTTP_200_OK
+
+        kata = response1.json()
+        kata["id"] = "kyu_9_substraction"
+        response2 = client.post(
+            "/admin/katas/kyu_10_addition/variants",
+            json={"kata": kata, "replace": True},
+            headers={"Authorization": f"Bearer {token}"},
+        )
+
+        assert response2.status_code == status.HTTP_201_CREATED
+        kata2 = response2.json()
+
+        assert kata2["variant_of"] == "kyu_10_addition"
+
+        response3 = client.get("/katas", headers={"Authorization": f"Bearer {token}"})
+        assert response3.status_code == status.HTTP_200_OK
+        data = response3.json()
+        kata_ids = [kata["id"] for kata in data]
+        assert "kyu_10_addition" not in kata_ids
+        assert "kyu_9_substraction" in kata_ids
+
+    def test_add_variant_unknown_kata_base(self, client: Client, session: Session):
+        self._add_user(session, role="admin")
+        self._add_kata(
+            session,
+            id="kyu_10_addition",
+        )
+        token = self._auth_user(client)
+        response1 = client.get(
+            "/admin/katas/kyu_10_addition", headers={"Authorization": f"Bearer {token}"}
+        )
+        assert response1.status_code == status.HTTP_200_OK
+
+        kata = response1.json()
+        kata["id"] = "kyu_9_substraction"
+        response2 = client.post(
+            "/admin/katas/kyu_9_addition/variants",
+            json={"kata": kata},
+            headers={"Authorization": f"Bearer {token}"},
+        )
+
+        assert response2.status_code == status.HTTP_404_NOT_FOUND
+
+    def test_add_variant_duplicate_id(self, client: Client, session: Session):
+        self._add_user(session, role="admin")
+        self._add_kata(
+            session,
+            id="kyu_10_addition",
+        )
+        token = self._auth_user(client)
+        response1 = client.get(
+            "/admin/katas/kyu_10_addition", headers={"Authorization": f"Bearer {token}"}
+        )
+        assert response1.status_code == status.HTTP_200_OK
+        kata = response1.json()
+        response2 = client.post(
+            "/admin/katas/kyu_10_addition/variants",
+            json={"kata": kata},
+            headers={"Authorization": f"Bearer {token}"},
+        )
+
+        assert response2.status_code == status.HTTP_409_CONFLICT
+
 
 class TestsAdminUsers(BaseEntityHelper):
     def test_admin_users_no_hashed_password(self, client: Client, session: Session):
