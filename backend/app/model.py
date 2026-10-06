@@ -37,7 +37,7 @@ class Kata(SQLModel, table=True):
     kata_type: str = Field(default="function")
     rank: str = Field(index=True)
     discipline: str = Field(index=True)
-    variant_of: str | None = Field(default=None)
+    variant_of: str | None = Field(foreign_key="kata.id", default=None)
     title: str
     statement: str
     signature: str
