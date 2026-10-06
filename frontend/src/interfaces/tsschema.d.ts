@@ -72,6 +72,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/admin/katas/{kata_id}/variants": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Add Variant */
+        post: operations["add_variant_admin_katas__kata_id__variants_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/admin/katas/{kata_id}/archive": {
         parameters: {
             query?: never;
@@ -236,7 +253,44 @@ export interface components {
             katas: components["schemas"]["KataStats"];
         };
         /** ClassKataInternal */
-        ClassKataInternal: {
+        "ClassKataInternal-Input": {
+            /** Meta */
+            meta: {
+                [key: string]: unknown;
+            };
+            /** Solution Reference */
+            solution_reference: string;
+            /** Id */
+            id: string;
+            /**
+             * Rank
+             * @enum {string}
+             */
+            rank: "kyu_10" | "kyu_9" | "kyu_8" | "kyu_7" | "kyu_6" | "kyu_5" | "kyu_4" | "kyu_3" | "kyu_2" | "kyu_1" | "shodan" | "nidan" | "sandan" | "yondan" | "godan";
+            /** Discipline */
+            discipline: string;
+            /** Variant Of */
+            variant_of?: string | null;
+            /** Title */
+            title: string;
+            /** Statement */
+            statement: string;
+            /** Signature */
+            signature: string;
+            /** Concepts Used */
+            concepts_used: string[];
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kata_type: "class";
+            /** Tests */
+            tests: components["schemas"]["ClassKataTest"][];
+            /** Class Name */
+            class_name: string;
+        };
+        /** ClassKataInternal */
+        "ClassKataInternal-Output": {
             /** Metadata */
             metadata: {
                 [key: string]: unknown;
@@ -325,7 +379,42 @@ export interface components {
             highest_dan_practiced: "kyu_10" | "kyu_9" | "kyu_8" | "kyu_7" | "kyu_6" | "kyu_5" | "kyu_4" | "kyu_3" | "kyu_2" | "kyu_1" | "shodan" | "nidan" | "sandan" | "yondan" | "godan";
         };
         /** FunctionKataInternal */
-        FunctionKataInternal: {
+        "FunctionKataInternal-Input": {
+            /** Meta */
+            meta: {
+                [key: string]: unknown;
+            };
+            /** Solution Reference */
+            solution_reference: string;
+            /** Id */
+            id: string;
+            /**
+             * Rank
+             * @enum {string}
+             */
+            rank: "kyu_10" | "kyu_9" | "kyu_8" | "kyu_7" | "kyu_6" | "kyu_5" | "kyu_4" | "kyu_3" | "kyu_2" | "kyu_1" | "shodan" | "nidan" | "sandan" | "yondan" | "godan";
+            /** Discipline */
+            discipline: string;
+            /** Variant Of */
+            variant_of?: string | null;
+            /** Title */
+            title: string;
+            /** Statement */
+            statement: string;
+            /** Signature */
+            signature: string;
+            /** Concepts Used */
+            concepts_used: string[];
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kata_type: "function";
+            /** Tests */
+            tests: components["schemas"]["FunctionKataTest"][];
+        };
+        /** FunctionKataInternal */
+        "FunctionKataInternal-Output": {
             /** Metadata */
             metadata: {
                 [key: string]: unknown;
@@ -429,6 +518,16 @@ export interface components {
             katas_number: number;
             /** Published Katas */
             published_katas: number;
+        };
+        /** KataVariantCreate */
+        KataVariantCreate: {
+            /** Kata */
+            kata: components["schemas"]["FunctionKataInternal-Input"] | components["schemas"]["ClassKataInternal-Input"];
+            /**
+             * Replace
+             * @default false
+             */
+            replace: boolean;
         };
         /** MethodCall */
         MethodCall: {
@@ -549,7 +648,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": (components["schemas"]["FunctionKataInternal"] | components["schemas"]["ClassKataInternal"])[];
+                    "application/json": (components["schemas"]["FunctionKataInternal-Output"] | components["schemas"]["ClassKataInternal-Output"])[];
                 };
             };
         };
@@ -622,7 +721,42 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["FunctionKataInternal"] | components["schemas"]["ClassKataInternal"];
+                    "application/json": components["schemas"]["FunctionKataInternal-Output"] | components["schemas"]["ClassKataInternal-Output"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_variant_admin_katas__kata_id__variants_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                kata_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["KataVariantCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FunctionKataInternal-Output"] | components["schemas"]["ClassKataInternal-Output"];
                 };
             };
             /** @description Validation Error */
@@ -653,7 +787,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["FunctionKataInternal"] | components["schemas"]["ClassKataInternal"];
+                    "application/json": components["schemas"]["FunctionKataInternal-Output"] | components["schemas"]["ClassKataInternal-Output"];
                 };
             };
             /** @description Validation Error */
