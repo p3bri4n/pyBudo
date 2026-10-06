@@ -145,3 +145,8 @@ KataInternal = Annotated[
     FunctionKataInternal | ClassKataInternal,
     Field(discriminator="kata_type"),
 ]
+
+
+class KataVariantCreate(BaseModel):
+    kata: KataInternal
+    replace: bool = False

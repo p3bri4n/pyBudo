@@ -5,7 +5,7 @@ from sqlmodel import Session, func, select
 
 from app.dependencies import get_session, require_admin
 from app.model import Kata, User
-from app.schemas import AdminStats, KataInternal, UserAdmin
+from app.schemas import AdminStats, KataInternal, KataVariantCreate, UserAdmin
 
 router = APIRouter(prefix="/admin", dependencies=[Depends(require_admin)])
 
@@ -37,6 +37,42 @@ def get_kata(kata_id: str, session: Annotated[Session, Depends(get_session)]):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Kata not found"
         )
+    return kata
+
+
+@router.post("/katas/{kata_id}/variants", response_model=KataInternal, status_code=201)
+def add_variant(
+    kata_id: str,
+    body: KataVariantCreate,
+    session: Annotated[Session, Depends(get_session)],
+):
+    kata_base = session.get(Kata, kata_id)
+    if not kata_base:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Kata not found"
+        )
+    existing_id = session.get(Kata, body.kata.id)
+    if existing_id:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=f"{body.kata.id} already exist",
+        )
+
+    kata_dict = body.kata.model_dump()
+
+    meta = kata_dict["metadata"]
+    meta["status"] = "publie"
+
+    if body.replace:
+        kata_base.meta = {**kata_base.meta, "status": "archive"}
+        session.add(kata_base)
+
+    kata = Kata(**kata_dict, meta=meta)
+    kata.variant_of = kata_base.id
+
+    session.add(kata)
+
+    session.commit()
     return kata
 
 
