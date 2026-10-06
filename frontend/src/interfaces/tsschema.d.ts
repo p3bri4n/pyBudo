@@ -72,6 +72,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/admin/katas/{kata_id}/archive": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Archive Kata */
+        patch: operations["archive_kata_admin_katas__kata_id__archive_patch"];
+        trace?: never;
+    };
     "/admin/stats": {
         parameters: {
             query?: never;
@@ -589,6 +606,37 @@ export interface operations {
         };
     };
     get_kata_admin_katas__kata_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                kata_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FunctionKataInternal"] | components["schemas"]["ClassKataInternal"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    archive_kata_admin_katas__kata_id__archive_patch: {
         parameters: {
             query?: never;
             header?: never;
