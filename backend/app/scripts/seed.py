@@ -38,10 +38,22 @@ def validate_kata(kata):
 def ingest_katas(katas, session: Session):
     validate_catalog(katas)
     ids = [kata["id"] for kata in katas]
+    katas_base = [kata for kata in katas if kata.get("variant_of") is None]
+    katas_variant = [kata for kata in katas if kata.get("variant_of") is not None]
+    kata_ids = session.exec(select(Kata.id)).all()
+    missing = [
+        kata["variant_of"]
+        for kata in katas_variant
+        if kata["variant_of"] not in kata_ids and kata["variant_of"] not in ids
+    ]
+    if missing:
+        raise ValueError(f"Katas not found for the variant : {missing}")
     existing = session.exec(select(Kata.id).where(Kata.id.in_(ids))).all()
     if existing:
         raise ValueError(f"Katas with IDs {existing} already exist")
-    for kata in katas:
+    # Ajouter les Kata sans variant puis ceux avec
+    kata_total = katas_base + katas_variant
+    for kata in kata_total:
         session.add(Kata(**kata, meta=kata["metadata"]))
     session.commit()
 

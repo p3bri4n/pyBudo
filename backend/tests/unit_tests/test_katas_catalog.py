@@ -51,3 +51,29 @@ class TestsKatasCatalog(BaseEntityHelper):
             ingest_katas(katas2, session)
 
         assert session.get(Kata, katas2[1]["id"]) is None
+
+    def test_unknow_variant(self, session: Session):
+        katas = load_katas()
+        katas[0]["variant_of"] = "unknown"
+        with pytest.raises(ValueError, match="not found for the variant"):
+            ingest_katas(katas, session)
+
+        assert session.get(Kata, katas[1]["id"]) is None
+
+    def test_base_is_set_before_variant(self, session: Session):
+        katas = load_katas()
+        kata_a = katas[1]
+        kata_b = katas[2]
+        kata_b["variant_of"] = kata_a["id"]
+
+        katas_to_set = [kata_b, kata_a]
+
+        ingest_katas(katas_to_set, session)
+
+        assert session.get(Kata, kata_a["id"]) is not None
+
+        kata_b_bdd = session.get(Kata, kata_b["id"])
+
+        assert kata_b_bdd is not None
+
+        assert kata_b_bdd.variant_of == kata_a["id"]
