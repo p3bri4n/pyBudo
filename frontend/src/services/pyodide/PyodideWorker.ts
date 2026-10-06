@@ -10,17 +10,8 @@ async function executePythonInWorker(
     let stdout = "";
     let stderr = "";
 
-    runtime.setStdout({
-        batched: (text: string): void => {
-            stdout += text;
-        },
-    });
-
-    runtime.setStderr({
-        batched: (text: string): void => {
-            stderr += text;
-        },
-    });
+    runtime.setStdout({batched: (text: string): void => {stdout += text  + "\n"}});
+    runtime.setStderr({batched: (text: string): void => {stderr += text  + "\n"}});
 
     try {
         const result = await runtime.runPythonAsync(code);
