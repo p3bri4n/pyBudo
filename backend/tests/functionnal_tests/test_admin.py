@@ -67,6 +67,69 @@ class TestsAdminKatas(BaseEntityHelper):
         )
         assert response_not_found.status_code == status.HTTP_404_NOT_FOUND
 
+    def test_kata_become_archived(self, client: Client, session: Session):
+        self._add_user(session, role="admin")
+        self._add_kata(session, id="kyu_10_addition")
+        self._add_kata(session, id="kyu_8_division")
+        token = self._auth_user(client)
+
+        response1 = client.get(
+            "/admin/katas/kyu_10_addition", headers={"Authorization": f"Bearer {token}"}
+        )
+
+        assert response1.status_code == status.HTTP_200_OK
+
+        response2 = client.patch(
+            "/admin/katas/kyu_10_addition/archive",
+            headers={"Authorization": f"Bearer {token}"},
+        )
+
+        assert response2.status_code == status.HTTP_200_OK
+        data2 = response2.json()
+        assert data2["metadata"]["status"] == "archive"
+
+        response3 = client.get("/katas", headers={"Authorization": f"Bearer {token}"})
+
+        assert response3.status_code == status.HTTP_200_OK
+        data3 = response3.json()
+        katas = {kata["id"]: kata for kata in data3}
+        assert "kyu_10_addition" not in katas
+        assert "kyu_8_division" in katas
+
+    def test_completion_archived_kata_returns_404(
+        self, client: Client, session: Session
+    ):
+        self._add_user(session, role="admin")
+        self._add_kata(
+            session,
+            id="kyu_10_addition",
+        )
+
+        token = self._auth_user(client)
+
+        response1 = client.patch(
+            "/admin/katas/kyu_10_addition/archive",
+            headers={"Authorization": f"Bearer {token}"},
+        )
+
+        assert response1.status_code == status.HTTP_200_OK
+
+        code = "my-code"
+        response2 = client.post(
+            "/completions",
+            json={"kata_id": "kyu_10_addition", "code": code},
+            headers={"Authorization": f"Bearer {token}"},
+        )
+
+        assert response2.status_code == status.HTTP_404_NOT_FOUND
+
+        response3 = client.patch(
+            "/admin/katas/kyu_8_division/archive",
+            headers={"Authorization": f"Bearer {token}"},
+        )
+
+        assert response3.status_code == status.HTTP_404_NOT_FOUND
+
 
 class TestsAdminUsers(BaseEntityHelper):
     def test_admin_users_no_hashed_password(self, client: Client, session: Session):

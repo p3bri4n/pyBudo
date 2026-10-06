@@ -40,6 +40,18 @@ def get_kata(kata_id: str, session: Annotated[Session, Depends(get_session)]):
     return kata
 
 
+@router.patch("/katas/{kata_id}/archive", response_model=KataInternal)
+def archive_kata(kata_id: str, session: Annotated[Session, Depends(get_session)]):
+    kata = session.get(Kata, kata_id)
+    if not kata:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Kata not found"
+        )
+    kata.meta = {**kata.meta, "status": "archive"}
+    session.commit()
+    return kata
+
+
 @router.get("/stats", response_model=AdminStats)
 def get_admin_stats(session: Annotated[Session, Depends(get_session)]):
     total_users = session.exec(select(func.count()).select_from(User)).one()
