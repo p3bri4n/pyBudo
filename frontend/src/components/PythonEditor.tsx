@@ -106,7 +106,7 @@ export function PythonRunner({
                         : `${t("python-runner.execute")}`}
                 </button>
 
-                <pre>{output}</pre>
+                {output && (<pre className={"no-kata-result"}>{output}</pre>)}
             </div>
 
             {report && (
