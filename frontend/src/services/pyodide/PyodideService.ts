@@ -126,6 +126,7 @@ export function runWorker(
             error: "EXECUTION_IN_PROGRESS",
         });
     }
+    requestInProgress = true;
     return new Promise((resolve) => {
         const currentWorker = getWorker();
 
@@ -207,7 +208,6 @@ export function runWorker(
                     );
 
                     requestInProgress = false;
-
                     resetWorker();
 
                     resolve({
@@ -220,7 +220,7 @@ export function runWorker(
             })
             .catch((error: unknown) => {
                 requestInProgress = false;
-
+                resetWorker()
                 resolve({
                     type: "error",
                     error: error instanceof Error
