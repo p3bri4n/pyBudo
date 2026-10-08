@@ -1,8 +1,7 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
+import {Navigate, Outlet} from 'react-router-dom';
 import { useAuth } from "../../contexts/useAuth.ts"
 
-const AuthGuard = ({ children }: { children: React.ReactNode }) => {
+const AuthGuard = () => {
     const { user, loading } = useAuth();
 
     if (loading) {
@@ -12,7 +11,7 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
         return <Navigate to="/" replace />;
     }
 
-    return <>{children}</>;
+    return <Outlet />;
 };
 
 export default AuthGuard;

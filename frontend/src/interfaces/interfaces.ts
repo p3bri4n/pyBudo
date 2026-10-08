@@ -15,7 +15,7 @@ export type Rank = Kata["rank"]
 export interface AuthContextType {
     user: User | null;
     loading: boolean;
-    signIn: (token: string) => Promise<void>;
+    signIn: (token: string) => Promise<User>;
     signOut: () => void;
 }
 

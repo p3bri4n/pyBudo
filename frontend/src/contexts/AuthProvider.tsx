@@ -33,6 +33,7 @@ export function AuthProvider({ children }: {children: ReactNode}) {
         localStorage.setItem("access_token", token)
         const data = await getMyInfos()
         setUser(data)
+        return data;
     }
 
     function signOut() {
@@ -45,7 +46,7 @@ export function AuthProvider({ children }: {children: ReactNode}) {
             value={{
                 user,
                 loading,
-                
+
                 signIn,
                 signOut
             }}
