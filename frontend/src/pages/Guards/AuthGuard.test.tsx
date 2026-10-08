@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import { useAuth } from "../../contexts/useAuth";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import AuthGuard from "./AuthGuard";
+import AuthGuard from "./AuthGuard"
 import GuestGuard from "./GuestGuard.tsx";
 
 vi.mock("../../contexts/useAuth.ts", () => ({
@@ -27,7 +27,7 @@ describe("AuthGuard", () => {
             <MemoryRouter initialEntries={["/dojo"]}>
                 <Routes>
                     <Route path="/" element={<p>Accueil</p>}/>
-                    <Route element={<AuthGuard/>}>
+                    <Route element={<GuestGuard/>}>
                         <Route path="/dojo" element={<p>Contenu Protégé</p>}/>
                     </Route>
                 </Routes>

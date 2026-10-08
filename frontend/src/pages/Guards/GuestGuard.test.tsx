@@ -4,6 +4,7 @@ import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import GuestGuard from "./GuestGuard";
 import AuthGuard from "./AuthGuard.tsx";
+import AdminGuard from "./AdminGuard.tsx";
 
 vi.mock("../../contexts/useAuth.ts", () => ({
     useAuth: vi.fn()
@@ -28,6 +29,9 @@ const renderHome = () => render(
             </Route>
             <Route element={<AuthGuard/>}>
                 <Route path="/dojo" element={<p>Dojo</p>}/>
+            </Route>
+            <Route element={<AdminGuard/>}>
+                <Route path="/back-office" element={<p>Back-office</p>}/>
             </Route>
         </Routes>
     </MemoryRouter>
@@ -56,5 +60,10 @@ describe("GuestGuard", () => {
         renderHome()
         expect(screen.getByText("Dojo")).toBeInTheDocument()
         expect(screen.queryByText("Accueil")).not.toBeInTheDocument()
+    })
+    it("redirige un admin vers /back-office", () => {
+        vi.mocked(useAuth).mockReturnValue({user: {role: "admin"}, loading: false,} as ReturnType<typeof useAuth>);
+        renderHome()
+        expect(screen.getByText("Back-office")).toBeInTheDocument();
     })
 })
