@@ -77,7 +77,7 @@
       "katas": "Katas"
     },
     "dashboard": {
-      "unkown-error": "Unknow Error",
+      "unknown-error": "Unknown Error",
       "dashboard": "Dashboard",
       "users": "Users",
       "active-users": "Active users",

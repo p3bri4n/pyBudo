@@ -5,25 +5,27 @@ import "./admin-dashboard.css"
 import {useTranslation} from "react-i18next";
 import {Loading} from "../../components/ui/Loading.tsx";
 
+type StatCardProps = {
+    label: string;
+    value: number | string;
+};
+
+
+function StatCard({ label, value }: StatCardProps) {
+    return (
+        <article className="stat-card">
+            <span>{label}</span>
+            <strong>{value}</strong>
+        </article>
+    );
+}
+
+
 function AdminDashboard() {
     const {t} = useTranslation();
     const [stats, setStats] = useState<AdminStats | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-
-    type StatCardProps = {
-        label: string;
-        value: number | string;
-    };
-
-    function StatCard({ label, value }: StatCardProps) {
-        return (
-            <article className="stat-card">
-                <span>{label}</span>
-                <strong>{value}</strong>
-            </article>
-        );
-    }
 
     useEffect(() => {
         async function loadStats() {
@@ -34,7 +36,7 @@ function AdminDashboard() {
                 setError(
                     error instanceof Error
                         ? error.message
-                        : t("admin.dashboard.unkown-error"),
+                        : t("admin.dashboard.unknown-error"),
                 );
             } finally {
                 setLoading(false);
@@ -42,7 +44,7 @@ function AdminDashboard() {
         }
 
         void loadStats();
-    }, []);
+    }, [t]);
 
     if (loading) {
         return <Loading/>;
