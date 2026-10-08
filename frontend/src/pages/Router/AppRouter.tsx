@@ -7,8 +7,11 @@ import AuthGuard from "../Guards/AuthGuard";
 import GuestGuard from "../Guards/GuestGuard";
 import Register from "../Layout/Register/Register";
 import LandingPage from "../Layout/LandingPage/LandingPage.tsx";
-import Admin from "../Layout/Admin/Admin.tsx";
 import AdminGuard from "../Guards/AdminGuard.tsx";
+import AdminLayout from "../../components/admin/AdminLayout.tsx";
+import AdminDashboard from "../admin/AdminDashboard.tsx";
+import AdminUsers from "../admin/AdminUsers.tsx";
+import AdminKatas from "../admin/AdminKatas.tsx";
 
 
 const AppRouter = () => {
@@ -26,7 +29,13 @@ const AppRouter = () => {
                 <Route element={<AuthGuard />}>
                     <Route path="/dojo" element={<Dojo />} />
                     <Route element={<AdminGuard />}>
-                        <Route path="/back-office" element={<Admin />} />
+                        <Route element={<AdminGuard />}>
+                            <Route path="/back-office" element={<AdminLayout />}>
+                                <Route index element={<AdminDashboard />} />
+                                <Route path="users" element={<AdminUsers />} />
+                                <Route path="katas" element={<AdminKatas />} />
+                            </Route>
+                        </Route>
                     </Route>
                 </Route>
             </Route>
