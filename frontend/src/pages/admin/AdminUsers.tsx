@@ -2,8 +2,12 @@ import { useEffect, useState } from "react";
 import { getAdminUsers } from "../../api/adminApi";
 import type { AdminUser } from "../../interfaces/interfaces";
 import "./admin-users.css"
+import {useTranslation} from "react-i18next";
+import {Loading} from "../../components/ui/Loading.tsx";
+import {formatDate} from "../../utils/utils.ts";
 
 function AdminUsers() {
+    const {t} = useTranslation();
     const [users, setUsers] = useState<AdminUser[]>([]);
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(true);
@@ -31,12 +35,12 @@ function AdminUsers() {
     });
 
     if (loading) {
-        return <p>Chargement...</p>;
+        return <Loading/>;
     }
 
     return (
         <div className={"AdminUsers"}>
-            <h1>Utilisateurs</h1>
+            <h1>{t("admin.users.users")}</h1>
 
             <input
                 type="search"
@@ -48,11 +52,11 @@ function AdminUsers() {
             <table>
                 <thead>
                 <tr>
-                    <th>Email</th>
-                    <th>Username</th>
-                    <th>Inscription</th>
-                    <th>Statut</th>
-                    <th>Rôle</th>
+                    <th>{t("admin.users.email")}</th>
+                    <th>{t("admin.users.username")}</th>
+                    <th>{t("admin.users.registration")}</th>
+                    <th>{t("admin.users.status")}</th>
+                    <th>{t("admin.users.role")}</th>
                 </tr>
                 </thead>
 
@@ -61,11 +65,11 @@ function AdminUsers() {
                     <tr key={user.id}>
                         <td>{user.email}</td>
                         <td>{user.username}</td>
-                        <td>{user.created_at}</td>
+                        <td>{formatDate(user.created_at)}</td>
                         <td>
                             {user.is_active
-                                ? "Actif"
-                                : "Désactivé"}
+                                ? t("admin.users.active")
+                                : t("admin.users.inactive")}
                         </td>
                         <td>{user.role}</td>
                     </tr>

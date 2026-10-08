@@ -2,11 +2,28 @@ import { useEffect, useState } from "react";
 import { getAdminStats } from "../../api/adminApi.ts";
 import type { AdminStats } from "../../interfaces/interfaces.ts";
 import "./admin-dashboard.css"
+import {useTranslation} from "react-i18next";
+import {Loading} from "../../components/ui/Loading.tsx";
 
 function AdminDashboard() {
+    const {t} = useTranslation();
     const [stats, setStats] = useState<AdminStats | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+
+    type StatCardProps = {
+        label: string;
+        value: number | string;
+    };
+
+    function StatCard({ label, value }: StatCardProps) {
+        return (
+            <article className="stat-card">
+                <span>{label}</span>
+                <strong>{value}</strong>
+            </article>
+        );
+    }
 
     useEffect(() => {
         async function loadStats() {
@@ -17,7 +34,7 @@ function AdminDashboard() {
                 setError(
                     error instanceof Error
                         ? error.message
-                        : "Erreur inconnue",
+                        : t("admin.dashboard.unkown-error"),
                 );
             } finally {
                 setLoading(false);
@@ -28,7 +45,7 @@ function AdminDashboard() {
     }, []);
 
     if (loading) {
-        return <p>Chargement...</p>;
+        return <Loading/>;
     }
 
     if (error) {
@@ -41,44 +58,30 @@ function AdminDashboard() {
 
     return (
         <div className={"AdminDashboard"}>
-            <h1>Dashboard</h1>
+            <h1>{t("admin.dashboard.dashboard")}</h1>
 
             <div className="admin-stats-grid">
                 <StatCard
-                    label="Utilisateurs"
+                    label={t("admin.dashboard.users")}
                     value={stats.users.total_users}
                 />
 
                 <StatCard
-                    label="Utilisateurs actifs"
+                    label={t("admin.dashboard.active-users")}
                     value={stats.users.active_users}
                 />
 
                 <StatCard
-                    label="Katas"
+                    label={t("admin.dashboard.katas")}
                     value={stats.katas.katas_number}
                 />
 
                 <StatCard
-                    label="Katas publiés"
+                    label={t("admin.dashboard.published-katas")}
                     value={stats.katas.published_katas}
                 />
             </div>
         </div>
-    );
-}
-
-type StatCardProps = {
-    label: string;
-    value: number | string;
-};
-
-function StatCard({ label, value }: StatCardProps) {
-    return (
-        <article className="stat-card">
-            <span>{label}</span>
-            <strong>{value}</strong>
-        </article>
     );
 }
 

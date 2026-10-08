@@ -3,6 +3,9 @@
     "english": "Anglais",
     "french": "Français"
   },
+  "loading": {
+    "loading" : "Chargement..."
+  },
   "layout": {
     "pybudo": "pyBudo",
     "pybudo-tm": "© PyBudo",
@@ -66,5 +69,36 @@
     "expected": "attendu",
     "got": "obtenu",
     "error": "erreur"
+  },
+  "admin": {
+    "layout": {
+      "dashboard": "Dashboard",
+      "users": "Utilisateurs",
+      "katas": "Katas"
+    },
+    "dashboard": {
+      "unknown-error": "Erreur inconnue",
+      "dashboard": "Dashboard",
+      "users" : "Utilisateurs",
+      "active-users": "Utilisateurs actifs",
+      "katas": "Katas",
+      "published-katas": "Katas publiés"
+    },
+    "users": {
+      "users": "Utilisateurs",
+      "email": "Email",
+      "username": "Nom d'utilisateur",
+      "registration": "Inscription",
+      "status": "Statut",
+      "role": "Rôle",
+      "active": "Actif",
+      "inactive": "Désactivé"
+    },
+    "katas": {
+      "id": "ID",
+      "title": "Titre",
+      "type": "Type",
+      "rank": "Rang",
+      "discipline": "Discipline"}
   }
 }

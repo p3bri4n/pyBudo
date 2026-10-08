@@ -1,22 +1,24 @@
 import { NavLink, Outlet } from "react-router-dom";
 import "./admin-layout.css"
+import {useTranslation} from "react-i18next";
 
 function AdminLayout() {
+    const {t} = useTranslation();
     return (
         <div className="admin-layout">
             <aside className="admin-sidebar">
 
                 <nav>
                     <NavLink to="/back-office" end>
-                        Dashboard
+                        {t("admin.layout.dashboard")}
                     </NavLink>
 
                     <NavLink to="/back-office/users">
-                        Utilisateurs
+                        {t("admin.layout.users")}
                     </NavLink>
 
                     <NavLink to="/back-office/katas">
-                        Katas
+                        {t("admin.layout.katas")}
                     </NavLink>
                 </nav>
             </aside>

@@ -2,8 +2,11 @@ import { useEffect, useState } from "react";
 import { getAdminKatas } from "../../api/adminApi";
 import type {AdminKata} from "../../interfaces/interfaces";
 import "./admin-katas.css"
+import {Loading} from "../../components/ui/Loading.tsx";
+import {useTranslation} from "react-i18next";
 
 function AdminKatas() {
+    const {t} = useTranslation();
     const [katas, setKatas] = useState<AdminKata[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -21,7 +24,7 @@ function AdminKatas() {
     }, []);
 
     if (loading) {
-        return <p>Chargement...</p>;
+        return <Loading/>;
     }
 
     return (
@@ -31,11 +34,11 @@ function AdminKatas() {
             <table>
                 <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Type</th>
-                    <th>Rank</th>
-                    <th>Discipline</th>
+                    <th>{t("admin.katas.id")}</th>
+                    <th>{t("admin.katas.title")}</th>
+                    <th>{t("admin.katas.type")}</th>
+                    <th>{t("admin.katas.rank")}</th>
+                    <th>{t("admin.katas.discipline")}</th>
                 </tr>
                 </thead>
 
