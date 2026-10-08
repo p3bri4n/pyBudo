@@ -3,16 +3,32 @@ import { useAuth } from "../../contexts/useAuth";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import GuestGuard from "./GuestGuard";
+import AuthGuard from "./AuthGuard.tsx";
 
 vi.mock("../../contexts/useAuth.ts", () => ({
     useAuth: vi.fn()
 }))
+vi.mock("react-i18next", () => ({
+    useTranslation: () => ({
+        t: (key: string) => {
+            if (key === "loading.loading") {
+                return "Chargement...";
+            }
+
+            return key;
+        },
+    }),
+}));
 
 const renderHome = () => render(
     <MemoryRouter initialEntries={["/"]}>
         <Routes>
-            <Route path="/" element={<GuestGuard><p>Accueil</p></GuestGuard>}/>
-            <Route path="/dojo" element={<p>Dojo</p>}/>
+            <Route element={<GuestGuard/>}>
+                <Route path="/" element={<p>Accueil</p>}/>
+            </Route>
+            <Route element={<AuthGuard/>}>
+                <Route path="/dojo" element={<p>Dojo</p>}/>
+            </Route>
         </Routes>
     </MemoryRouter>
 )

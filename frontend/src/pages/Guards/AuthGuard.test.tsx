@@ -3,10 +3,22 @@ import { useAuth } from "../../contexts/useAuth";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import AuthGuard from "./AuthGuard";
+import GuestGuard from "./GuestGuard.tsx";
 
 vi.mock("../../contexts/useAuth.ts", () => ({
     useAuth: vi.fn()
 }))
+vi.mock("react-i18next", () => ({
+    useTranslation: () => ({
+        t: (key: string) => {
+            if (key === "loading.loading") {
+                return "Chargement...";
+            }
+
+            return key;
+        },
+    }),
+}));
 
 describe("AuthGuard", () => {
     it("Check loading", () => {
@@ -15,7 +27,9 @@ describe("AuthGuard", () => {
             <MemoryRouter initialEntries={["/dojo"]}>
                 <Routes>
                     <Route path="/" element={<p>Accueil</p>}/>
-                    <Route path="/dojo" element={<AuthGuard><p>Contenu Protégé</p></AuthGuard>}/>
+                    <Route element={<AuthGuard/>}>
+                        <Route path="/dojo" element={<p>Contenu Protégé</p>}/>
+                    </Route>
                 </Routes>
             </MemoryRouter>
         )
@@ -28,7 +42,9 @@ describe("AuthGuard", () => {
             <MemoryRouter initialEntries={["/dojo"]}>
                 <Routes>
                     <Route path="/" element={<p>Accueil</p>}/>
-                    <Route path="/dojo" element={<AuthGuard><p>Contenu Protégé</p></AuthGuard>}/>
+                    <Route element={<AuthGuard/>}>
+                        <Route path="/dojo" element={<p>Contenu Protégé</p>}/>
+                    </Route>
                 </Routes>
             </MemoryRouter>
         )
@@ -46,7 +62,9 @@ describe("AuthGuard", () => {
             <MemoryRouter initialEntries={["/dojo"]}>
                 <Routes>
                     <Route path="/" element={<p>Accueil</p>}/>
-                    <Route path="/dojo" element={<AuthGuard><p>Contenu Protégé</p></AuthGuard>}/>
+                    <Route element={<AuthGuard/>}>
+                        <Route path="/dojo" element={<p>Contenu Protégé</p>}/>
+                    </Route>
                 </Routes>
             </MemoryRouter>
         )
