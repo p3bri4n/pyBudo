@@ -8,6 +8,7 @@ import {
 } from "../../api/adminApi";
 import type { AdminKata } from "../../interfaces/interfaces";
 import { Loading } from "../../components/ui/Loading";
+import {AdminKataVariantForm} from "./AdminKataVariantForm.tsx";
 
 function AdminKataDetail() {
     const { kataId } = useParams<{ kataId: string }>();
@@ -126,7 +127,7 @@ function AdminKataDetail() {
                 <dt>{t("admin.katas.discipline")}</dt>
                 <dd>{kata.discipline}</dd>
             </dl>
-
+            <AdminKataVariantForm kata={kata} />
             <div className="admin-kata-actions">
                 <button
                     type="button"

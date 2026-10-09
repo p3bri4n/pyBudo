@@ -12,6 +12,11 @@ export type KataCompletion = components["schemas"]["KataCompletionPublic"]
 export type AdminStats = components["schemas"]["AdminStats"]
 export type AdminUser = components["schemas"]["UserAdmin"]
 export type AdminKata = components["schemas"]["ClassKataInternal-Output"] | components["schemas"]["FunctionKataInternal-Output"]
+export type KataVariantCreate = components["schemas"]["KataVariantCreate"]
+export type FunctionKataInput = components["schemas"]["FunctionKataInternal-Input"];
+export type ClassKataInput = components["schemas"]["ClassKataInternal-Input"];
+export type FunctionKataTest = components["schemas"]["FunctionKataTest"];
+export type ClassKataTest = components["schemas"]["ClassKataTest"];
 
 export type Rank = Kata["rank"]
 

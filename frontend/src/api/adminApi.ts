@@ -1,4 +1,4 @@
-import type {AdminKata, AdminStats, AdminUser} from "../interfaces/interfaces.ts";
+import type {AdminKata, AdminStats, AdminUser, KataVariantCreate} from "../interfaces/interfaces.ts";
 import {apiClient, authHeaders} from "./apiClient.ts";
 import {token} from "./authApi.ts";
 
@@ -37,6 +37,13 @@ export const getAdminKata = async (kataId: string): Promise<AdminKata> => {
     return response.data;
 }
 
+export const addAdminKataVariant = async (kataId: string, body: KataVariantCreate): Promise<AdminKata> => {
+    const response = await apiClient.post(
+        `/admin/katas/${kataId}/variants`,
+        body,
+        authHeaders(token()))
+    return response.data;
+}
 
 export const archiveAdminKata = async (kataId: string): Promise<AdminKata> => {
     const response = await apiClient.patch(
