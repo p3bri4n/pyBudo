@@ -9,7 +9,7 @@ export function Loading({ message }: LoadingProps) {
 
     return (
         <div className="loading">
-            <p>{message ?? t("loading.loading")}</p>
+            <p>{message ?? t("common.loading")}</p>
         </div>
     );
 }

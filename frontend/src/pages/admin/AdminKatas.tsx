@@ -4,9 +4,11 @@ import type {AdminKata} from "../../interfaces/interfaces";
 import "./admin-katas.css"
 import {Loading} from "../../components/ui/Loading.tsx";
 import {useTranslation} from "react-i18next";
+import {useNavigate} from "react-router-dom";
 
 function AdminKatas() {
     const {t} = useTranslation();
+    const navigate = useNavigate();
     const [katas, setKatas] = useState<AdminKata[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -39,17 +41,27 @@ function AdminKatas() {
                     <th>{t("admin.katas.type")}</th>
                     <th>{t("admin.katas.rank")}</th>
                     <th>{t("admin.katas.discipline")}</th>
+                    <th>{t("admin.katas.status")}</th>
                 </tr>
                 </thead>
 
                 <tbody>
-                {katas.map((kata) => (
-                    <tr key={kata.id}>
+                {katas.map((kata: AdminKata) => (
+                    <tr className={"kata-row"}
+                        key={kata.id}
+                        onClick={() =>
+                            navigate(`/back-office/katas/${encodeURIComponent(kata.id)}`)
+                        }>
                         <td>{kata.id}</td>
                         <td>{kata.title}</td>
                         <td>{kata.kata_type}</td>
                         <td>{kata.rank}</td>
                         <td>{kata.discipline}</td>
+                        <td>
+                            {typeof kata.metadata.status === "string"
+                                ? kata.metadata.status
+                                : "—"}
+                        </td>
                     </tr>
                 ))}
                 </tbody>

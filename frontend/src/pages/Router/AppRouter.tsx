@@ -12,6 +12,7 @@ import AdminLayout from "../../components/admin/AdminLayout.tsx";
 import AdminDashboard from "../admin/AdminDashboard.tsx";
 import AdminUsers from "../admin/AdminUsers.tsx";
 import AdminKatas from "../admin/AdminKatas.tsx";
+import AdminKataDetail from "../admin/AdminKataDetail.tsx";
 
 
 const AppRouter = () => {
@@ -34,6 +35,7 @@ const AppRouter = () => {
                                 <Route index element={<AdminDashboard />} />
                                 <Route path="users" element={<AdminUsers />} />
                                 <Route path="katas" element={<AdminKatas />} />
+                                <Route path="katas/:kataId" element={<AdminKataDetail />} />
                             </Route>
                         </Route>
                     </Route>

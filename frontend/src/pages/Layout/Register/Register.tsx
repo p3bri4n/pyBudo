@@ -114,7 +114,7 @@ function Register() {
                     <button className={"btn-dojo"} type="submit">
                         {t("register.register")}
                     </button>
-                    <Link className={"link-dojo link-dojo--muted"} to="/">{t("register.back")}</Link>
+                    <Link className={"link-dojo link-dojo--muted"} to="/">{t("common.back")}</Link>
                 </form>
             </div>
         </LandingPage>

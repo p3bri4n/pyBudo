@@ -5,4 +5,12 @@
     width: 100%;
     height: 100%;
     text-align: center;
+
+    .kata-row {
+        cursor: pointer;
+    }
+
+    .kata-row:hover {
+        background-color: #f3f4f6;
+    }
 }

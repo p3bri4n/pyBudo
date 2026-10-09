@@ -11,7 +11,7 @@ vi.mock("../../contexts/useAuth.ts", () => ({
 vi.mock("react-i18next", () => ({
     useTranslation: () => ({
         t: (key: string) => {
-            if (key === "loading.loading") {
+            if (key === "common.loading") {
                 return "Chargement...";
             }
 

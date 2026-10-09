@@ -3,7 +3,8 @@
     "english": "English",
     "french": "French"
   },
-  "loading": {
+  "common": {
+    "back": "Back",
     "loading": "Loading..."
   },
   "layout": {
@@ -28,14 +29,12 @@
     "pybudo": "Login to PyBudo",
     "email": "Email",
     "password": "Password",
-    "invalid-credentials": "Incorrect email or password",
-    "back": "Back"
+    "invalid-credentials": "Incorrect email or password"
   },
   "register": {
     "create-account": "Create an account",
     "not-matching-passwords": "Passwords do not match",
     "register-error": "An error occurred during registration",
-    "back": "Back",
     "username": "Username",
     "email": "Email",
     "password": "Password",
@@ -99,6 +98,9 @@
       "title": "Title",
       "type": "Type",
       "rank": "Rank",
-      "discipline": "Discipline"}
+      "discipline": "Discipline",
+      "status":  "Status",
+      "archive": "Archive"
+    }
   }
 }

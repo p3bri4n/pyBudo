@@ -36,3 +36,11 @@ export const getAdminKata = async (kataId: string): Promise<AdminKata> => {
         authHeaders(token()))
     return response.data;
 }
+
+
+export const archiveAdminKata = async (kataId: string): Promise<AdminKata> => {
+    const response = await apiClient.patch(
+        `/admin/katas/${kataId}/archive`,
+        authHeaders(token()))
+    return response.data;
+}
