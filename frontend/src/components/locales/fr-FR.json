@@ -100,7 +100,11 @@
       "rank": "Rang",
       "discipline": "Discipline",
       "status":  "Statut",
-      "archive": "Archiver"
+      "archive": "Archiver",
+      "missing-id": "ID manquant",
+      "load-error": "erreur de chargement",
+      "confirm-archive": "Voulez-vous vraiment archiver ?",
+      "archive-error": "Erreur d'archivage"
     }
   }
 }
