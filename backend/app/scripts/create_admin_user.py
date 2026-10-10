@@ -3,7 +3,7 @@ from getpass import getpass
 from sqlmodel import Session, select
 
 from app.db import engine
-from app.model import Progression, User
+from app.model import User
 from app.routes.auth import password_hash
 
 
