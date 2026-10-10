@@ -268,10 +268,10 @@ export function AdminKataVariantForm({
             <label className="variant-form__checkbox">
                 <input
                     type="checkbox"
-                    checked={replace}
+                    checked={true}
                     onChange={(event) => setReplace(event.target.checked)}
                 />
-                Archiver le kata de base après la création
+                {t("admin.katas.form.archive-base-kata")}
             </label>
 
             <div className="variant-form__actions">

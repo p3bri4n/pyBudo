@@ -124,7 +124,8 @@
         "tests": "Tests (JSON)",
         "metadata": "Métadonnées (JSON)",
         "cancel": "Annuler",
-        "creation": "Création…"
+        "creation": "Création…",
+        "archive-base-kata": "Archiver le kata de base après la création"
       }
     }
   }
