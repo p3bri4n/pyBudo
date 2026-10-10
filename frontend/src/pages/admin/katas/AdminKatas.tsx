@@ -44,6 +44,7 @@ function AdminKatas() {
         <div className={"AdminKatas"}>
             <h1>Katas</h1>
             <input
+                className={"input-dojo"}
                 type="search"
                 placeholder={t("admin.katas.search")}
                 value={search}

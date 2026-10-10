@@ -155,6 +155,7 @@ export function AdminKataVariantForm({
             <label>
                 {t("admin.katas.form.new-id")}
                 <input
+                    className={"input-dojo"}
                     value={id}
                     onChange={(event) => setId(event.target.value)}
                     required
@@ -164,6 +165,7 @@ export function AdminKataVariantForm({
             <label>
                 {t("admin.katas.form.title")}
                 <input
+                    className={"input-dojo"}
                     value={title}
                     onChange={(event) => setTitle(event.target.value)}
                     required
@@ -193,6 +195,7 @@ export function AdminKataVariantForm({
             <label>
                 {t("admin.katas.form.discipline")}
                 <input
+                    className={"input-dojo"}
                     value={discipline}
                     onChange={(event) => setDiscipline(event.target.value)}
                     required
@@ -218,6 +221,7 @@ export function AdminKataVariantForm({
             <label>
                 {t("admin.katas.form.concepts")}
                 <input
+                    className={"input-dojo"}
                     value={concepts}
                     onChange={(event) => setConcepts(event.target.value)}
                 />
@@ -226,6 +230,7 @@ export function AdminKataVariantForm({
             <label>
                 {t("admin.katas.form.solution-reference")}
                 <input
+                    className={"input-dojo"}
                     value={solutionReference}
                     onChange={(event) =>
                         setSolutionReference(event.target.value)
@@ -238,6 +243,7 @@ export function AdminKataVariantForm({
                 <label>
                     {t("admin.katas.form.class-name")}
                     <input
+                        className={"input-dojo"}
                         value={className}
                         onChange={(event) => setClassName(event.target.value)}
                         required
@@ -267,6 +273,7 @@ export function AdminKataVariantForm({
 
             <label className="variant-form__checkbox">
                 <input
+                    className={"input-dojo"}
                     type="checkbox"
                     checked={true}
                     onChange={(event) => setReplace(event.target.checked)}

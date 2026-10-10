@@ -45,6 +45,7 @@ function AdminUsers() {
             <h1>{t("admin.users.users")}</h1>
 
             <input
+                className={"input-dojo"}
                 type="search"
                 placeholder={t("admin.users.search")}
                 value={search}

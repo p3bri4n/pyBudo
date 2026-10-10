@@ -32,8 +32,8 @@ function Login() {
         <LandingPage>
             {error && <div className="error-msg">{error}</div>}
             <div className={"login-container"}>
-                <input type="email" placeholder={t("login.email")}  value={email}    onChange={e => setEmail(e.target.value)} />
-                <input type="password" placeholder={t("login.password")}  value={password} onChange={e => setPassword(e.target.value)} />
+                <input className={"input-dojo"} type="email" placeholder={t("login.email")}  value={email}    onChange={e => setEmail(e.target.value)} />
+                <input className={"input-dojo"} type="password" placeholder={t("login.password")}  value={password} onChange={e => setPassword(e.target.value)} />
                 <button className={"btn-dojo"} onClick={handleLogin}>{t("login.login")}</button>
                 <Link className={"link-dojo link-dojo--muted"} to="/">{t("common.back")}</Link>
             </div>
