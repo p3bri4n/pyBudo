@@ -31,6 +31,36 @@ body {
     --text-secondary: #4a3820;
     --text-muted: #5a4a30;
 
+    --paper-light: #f6ebcd;
+    --paper: #ecd9a8;
+    --paper-shade: #c9a968;
+    --paper-edge: #8a6a3a;
+    --rod-light: #a8743f;
+    --rod: #6b4423;
+    --rod-dark: #3f2612;
+
+    --seal: #a8321f;
+
+    --ink-red: #a8321f;
+
+    --parchment: #f3e6c4;
+    --parchment-edge: #c9a968;
+    --parchment-border: #6b4a28;
+
+    --paper-shadow: rgba(40, 25, 10, 0.15);
+    --torn-edge: polygon(
+            2% 8%, 9% 0%, 18% 6%, 27% 1%, 38% 7%, 49% 0%, 60% 5%, 71% 0%, 82% 6%, 91% 1%, 98% 7%,
+            100% 30%, 97% 52%, 100% 74%, 98% 93%,
+            90% 100%, 79% 94%, 68% 100%, 57% 95%, 46% 100%, 35% 94%, 24% 100%, 13% 95%, 4% 100%,
+            0% 78%, 3% 55%, 0% 32%
+    );
+
+    --ink: #6b3a1a;
+    --ink-hover: #a8321f;
+
+    --wood-dark: #3f2612;
+    --wood: #6b4423;
+    --wood-light: #a8743f;
 }
 
 /* ==========================================================================
@@ -39,18 +69,9 @@ body {
    ========================================================================== */
 
 .btn-dojo {
-    --paper-light: #f6ebcd;
-    --paper: #ecd9a8;
-    --paper-shade: #c9a968;
-    --paper-edge: #8a6a3a;
-    --rod-light: #a8743f;
-    --rod: #6b4423;
-    --rod-dark: #3f2612;
-    --text-color: #3a2a15;
-
     position: relative;
     display: inline-block;
-    font-family: var(--font-button);
+    font-family: var(--font-button), serif;
     /* Shojumaru n'existe qu'en graisse normale : évite un faux gras flou */
     font-weight: 400;
     font-size: 1rem;
@@ -155,16 +176,6 @@ body {
 }
 
 .input-dojo {
-    --paper-light: #f6ebcd;
-    --paper: #ecd9a8;
-    --paper-shade: #c9a968;
-    --paper-edge: #8a6a3a;
-    --rod-light: #a8743f;
-    --rod: #6b4423;
-    --rod-dark: #3f2612;
-    --text-color: #3a2a15;
-    --ink-red: #a8321f;
-
     position: relative;
     display: block;
     width: 100%;
@@ -281,10 +292,6 @@ select.input-dojo {
    (ex. la carte "Défi du dōjō"), assorti au reste du thème.
    ========================================================================== */
 .panel-parchment {
-    --parchment: #f3e6c4;
-    --parchment-edge: #c9a968;
-    --parchment-border: #6b4a28;
-
     background: var(--parchment);
     background-image: radial-gradient(
             rgba(107, 74, 40, 0.05) 1px,
@@ -317,15 +324,6 @@ select.input-dojo {
    de la même forme décalée vers le bas.
    ========================================================================== */
 h2 {
-    --paper: #ecd9a8;
-    --paper-shadow: rgba(40, 25, 10, 0.15);
-    --torn-edge: polygon(
-            2% 8%, 9% 0%, 18% 6%, 27% 1%, 38% 7%, 49% 0%, 60% 5%, 71% 0%, 82% 6%, 91% 1%, 98% 7%,
-            100% 30%, 97% 52%, 100% 74%, 98% 93%,
-            90% 100%, 79% 94%, 68% 100%, 57% 95%, 46% 100%, 35% 94%, 24% 100%, 13% 95%, 4% 100%,
-            0% 78%, 3% 55%, 0% 32%
-    );
-
     position: relative;
     /* Garde le papier et l'ombre derrière le texte, sans passer sous le fond de la page */
     isolation: isolate;
@@ -366,19 +364,15 @@ h2::after {
    ========================================================================== */
 
 .link-dojo {
-    --ink: #6b3a1a;
-    --ink-hover: #a8321f;
-    --seal: #a8321f;
-
     color: var(--ink);
-    font-family: var(--font-body);
+    font-family: var(--font-body), serif;
     font-weight: 700;
     text-decoration: none;
     position: relative;
     padding-bottom: 2px;
 
     background-image: linear-gradient(var(--seal), var(--seal));
-    background-size: 0% 2px;
+    background-size: 0 2px;
     background-position: left bottom;
     background-repeat: no-repeat;
 
@@ -446,14 +440,6 @@ h2::after {
    ========================================================================== */
 
 .nav-dojo {
-    --wood-dark: #3f2612;
-    --wood: #6b4423;
-    --wood-light: #a8743f;
-    --paper: #ecd9a8;
-    --paper-light: #f6ebcd;
-    --ink: #3a2a15;
-    --seal: #a8321f;
-
     width: 10dvw;
     position: fixed;
     align-items: center;
