@@ -103,7 +103,6 @@
       "discipline": "Discipline",
       "status":  "Status",
       "archive": "Archive",
-      "missing-id": "ID missing",
       "load-error": "Loading error",
       "confirm-archive": "Do you really want to archive ?",
       "archive-error": "Archive error",

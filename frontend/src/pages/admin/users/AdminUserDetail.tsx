@@ -16,40 +16,24 @@ function AdminUserDetail() {
 
     useEffect(() => {
         if (!userId) {
-            setError(t("admin.users.missing-id"));
-            setLoading(false);
             return;
         }
 
-        let cancelled = false;
-
-        async function loadUser() {
+        const loadUser = async () => {
             try {
-                const data = await getAdminUser(userId!);
+                setLoading(true);
+                setError(null);
 
-                if (!cancelled) {
-                    setUser(data);
-                }
-            } catch (error) {
-                if (!cancelled) {
-                    setError(
-                        error instanceof Error
-                            ? error.message
-                            : t("admin.users.load-error"),
-                    );
-                }
+                const user = await getAdminUser(userId);
+                setUser(user);
+            } catch {
+                setError(t("admin.users.load-error"));
             } finally {
-                if (!cancelled) {
-                    setLoading(false);
-                }
+                setLoading(false);
             }
-        }
+        };
 
         void loadUser();
-
-        return () => {
-            cancelled = true;
-        };
     }, [userId, t]);
 
     if (loading) {

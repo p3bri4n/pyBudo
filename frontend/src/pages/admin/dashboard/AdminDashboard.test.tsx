@@ -3,7 +3,7 @@ import { describe, expect, it, vi, beforeEach } from "vitest";
 import AdminDashboard from "./AdminDashboard.tsx";
 import { getAdminStats } from "../../../api/adminApi.ts";
 
-vi.mock("../../api/adminApi.ts", () => ({
+vi.mock("../../../api/adminApi.ts", () => ({
     getAdminStats: vi.fn(),
 }));
 
@@ -17,6 +17,7 @@ vi.mock("react-i18next", () => ({
                 "admin.dashboard.katas": "Katas",
                 "admin.dashboard.published-katas": "Katas publiés",
                 "admin.dashboard.unknown-error": "Une erreur est survenue",
+                "common.loading": "Chargement..."
             };
 
             return translations[key] ?? key;

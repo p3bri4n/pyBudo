@@ -22,40 +22,24 @@ function AdminKataDetail() {
 
     useEffect(() => {
         if (!kataId) {
-            setError(t("admin.katas.missing-id"));
-            setLoading(false);
             return;
         }
 
-        let cancelled = false;
-
-        async function loadKata() {
+        const loadKata = async () => {
             try {
-                const data = await getAdminKata(kataId!);
+                setLoading(true);
+                setError(null);
 
-                if (!cancelled) {
-                    setKata(data);
-                }
-            } catch (error) {
-                if (!cancelled) {
-                    setError(
-                        error instanceof Error
-                            ? error.message
-                            : t("admin.katas.load-error"),
-                    );
-                }
+                const kata = await getAdminKata(kataId);
+                setKata(kata);
+            } catch {
+                setError(t("admin.katas.load-error"));
             } finally {
-                if (!cancelled) {
-                    setLoading(false);
-                }
+                setLoading(false);
             }
-        }
+        };
 
         void loadKata();
-
-        return () => {
-            cancelled = true;
-        };
     }, [kataId, t]);
 
     async function handleArchive() {
