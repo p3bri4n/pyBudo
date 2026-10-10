@@ -454,9 +454,8 @@ h2::after {
     --ink: #3a2a15;
     --seal: #a8321f;
 
-    height: 100dvh;
     width: 10dvw;
-    display: flex;
+    position: fixed;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
