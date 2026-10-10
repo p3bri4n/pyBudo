@@ -8,7 +8,7 @@ function AdminLayout() {
         <div className="admin-layout">
             <aside className="admin-sidebar">
 
-                <nav>
+                <nav className="nav-dojo">
                     <NavLink to="/back-office" end>
                         {t("admin.layout.dashboard")}
                     </NavLink>
