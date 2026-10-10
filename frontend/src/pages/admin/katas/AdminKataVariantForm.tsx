@@ -175,6 +175,7 @@ export function AdminKataVariantForm({
             <label>
                 Énoncé
                 <textarea
+                    className={"input-dojo"}
                     value={statement}
                     onChange={(event) => setStatement(event.target.value)}
                     required
@@ -185,6 +186,7 @@ export function AdminKataVariantForm({
             <label>
                 {t("admin.katas.form.signature")}
                 <textarea
+                    className={"input-dojo"}
                     value={signature}
                     onChange={(event) => setSignature(event.target.value)}
                     required
@@ -205,6 +207,7 @@ export function AdminKataVariantForm({
             <label>
                 {t("admin.katas.form.rank")}
                 <select
+                    className={"input-dojo"}
                     value={rank}
                     onChange={(event) =>
                         setRank(rankValue(event.target.value))
@@ -254,6 +257,7 @@ export function AdminKataVariantForm({
             <label>
                 {t("admin.katas.form.tests")}
                 <textarea
+                    className={"input-dojo"}
                     value={tests}
                     onChange={(event) => setTests(event.target.value)}
                     required
@@ -264,6 +268,7 @@ export function AdminKataVariantForm({
             <label>
                 {t("admin.katas.form.metadata")}
                 <textarea
+                    className={"input-dojo"}
                     value={metadata}
                     onChange={(event) => setMetadata(event.target.value)}
                     required
