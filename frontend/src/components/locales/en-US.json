@@ -92,7 +92,8 @@
       "status": "Status",
       "role": "Role",
       "active": "Active",
-      "inactive": "Inactive"
+      "inactive": "Inactive",
+      "search": "Search..."
     },
     "katas": {
       "id": "ID",
@@ -106,6 +107,7 @@
       "load-error": "Loading error",
       "confirm-archive": "Do you really want to archive ?",
       "archive-error": "Archive error",
+      "search": "Search...",
       "form": {
         "mandatory-id" : "Id is mandatory.",
         "different-id": "The variant must have a different ID than the base kata.",

@@ -45,7 +45,7 @@ function AdminKatas() {
             <h1>Katas</h1>
             <input
                 type="search"
-                placeholder="Rechercher..."
+                placeholder={t("admin.katas.search")}
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
             />

@@ -46,7 +46,7 @@ function AdminUsers() {
 
             <input
                 type="search"
-                placeholder="Rechercher..."
+                placeholder={t("admin.users.search")}
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
             />

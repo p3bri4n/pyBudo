@@ -92,7 +92,8 @@
       "status": "Statut",
       "role": "Rôle",
       "active": "Actif",
-      "inactive": "Désactivé"
+      "inactive": "Désactivé",
+      "search": "Rechercher..."
     },
     "katas": {
       "id": "ID",
@@ -106,6 +107,7 @@
       "load-error": "erreur de chargement",
       "confirm-archive": "Voulez-vous vraiment archiver ?",
       "archive-error": "Erreur d'archivage",
+      "search": "Rechercher...",
       "form": {
         "mandatory-id" : "L’identifiant est obligatoire.",
         "different-id": "La variante doit avoir un identifiant différent du kata de base.",
