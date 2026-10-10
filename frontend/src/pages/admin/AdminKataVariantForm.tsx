@@ -275,11 +275,15 @@ export function AdminKataVariantForm({
             </label>
 
             <div className="variant-form__actions">
-                <button type="submit" disabled={saving}>
+                <button
+                    className={"btn-dojo"}
+                    type="submit"
+                    disabled={saving}>
                     {saving ? t("admin.katas.form.creation") : t("admin.katas.form.create-variant")}
                 </button>
 
                 <button
+                    className={"btn-dojo"}
                     type="button"
                     disabled={saving}
                     onClick={() => navigate(-1)}

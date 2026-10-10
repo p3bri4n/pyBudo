@@ -104,6 +104,7 @@ function AdminKataDetail() {
     return (
         <section className="admin-kata-detail">
             <button
+                className={"btn-dojo"}
                 type="button"
                 onClick={() => navigate("/back-office/katas")}
             >
@@ -130,6 +131,7 @@ function AdminKataDetail() {
             <AdminKataVariantForm kata={kata} />
             <div className="admin-kata-actions">
                 <button
+                    className={"btn-dojo"}
                     type="button"
                     onClick={handleArchive}
                     disabled={saving || kata.metadata.status === "archive"}
