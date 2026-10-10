@@ -24,9 +24,7 @@ def create_admin() -> None:
         return
 
     with Session(engine) as session:
-        existing_email = session.exec(
-            select(User).where(User.email == email)
-        ).first()
+        existing_email = session.exec(select(User).where(User.email == email)).first()
 
         if existing_email:
             print(f"Erreur : l'email '{email}' existe déjà.")
