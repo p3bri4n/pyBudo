@@ -9,10 +9,11 @@ import Register from "../Layout/Register/Register";
 import LandingPage from "../Layout/LandingPage/LandingPage.tsx";
 import AdminGuard from "../Guards/AdminGuard.tsx";
 import AdminLayout from "../../components/admin/AdminLayout.tsx";
-import AdminDashboard from "../admin/AdminDashboard.tsx";
-import AdminUsers from "../admin/AdminUsers.tsx";
-import AdminKatas from "../admin/AdminKatas.tsx";
-import AdminKataDetail from "../admin/AdminKataDetail.tsx";
+import AdminDashboard from "../admin/dashboard/AdminDashboard.tsx";
+import AdminUsers from "../admin/users/AdminUsers.tsx";
+import AdminKatas from "../admin/katas/AdminKatas.tsx";
+import AdminKataDetail from "../admin/katas/AdminKataDetail.tsx";
+import AdminUserDetail from "../admin/users/AdminUserDetail.tsx";
 
 
 const AppRouter = () => {
@@ -34,6 +35,7 @@ const AppRouter = () => {
                             <Route path="/back-office" element={<AdminLayout />}>
                                 <Route index element={<AdminDashboard />} />
                                 <Route path="users" element={<AdminUsers />} />
+                                <Route path="users/:userId" element={<AdminUserDetail />} />
                                 <Route path="katas" element={<AdminKatas />} />
                                 <Route path="katas/:kataId" element={<AdminKataDetail />} />
                             </Route>

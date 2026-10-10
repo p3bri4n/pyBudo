@@ -5,9 +5,9 @@ import { useTranslation } from "react-i18next";
 import {
     archiveAdminKata,
     getAdminKata,
-} from "../../api/adminApi";
-import type { AdminKata } from "../../interfaces/interfaces";
-import { Loading } from "../../components/ui/Loading";
+} from "../../../api/adminApi.ts";
+import type { AdminKata } from "../../../interfaces/interfaces.ts";
+import { Loading } from "../../../components/ui/Loading.tsx";
 import {AdminKataVariantForm} from "./AdminKataVariantForm.tsx";
 
 function AdminKataDetail() {

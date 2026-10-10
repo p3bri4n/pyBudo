@@ -85,6 +85,7 @@
     },
     "users": {
       "users": "Utilisateurs",
+      "id": "ID",
       "email": "Email",
       "username": "Nom d'utilisateur",
       "registration": "Inscription",

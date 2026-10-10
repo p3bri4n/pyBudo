@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { getAdminKatas } from "../../api/adminApi";
-import type {AdminKata} from "../../interfaces/interfaces";
+import { getAdminKatas } from "../../../api/adminApi.ts";
+import type {AdminKata} from "../../../interfaces/interfaces.ts";
 import "./admin-katas.css"
-import {Loading} from "../../components/ui/Loading.tsx";
+import {Loading} from "../../../components/ui/Loading.tsx";
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
 
@@ -11,6 +11,7 @@ function AdminKatas() {
     const navigate = useNavigate();
     const [katas, setKatas] = useState<AdminKata[]>([]);
     const [loading, setLoading] = useState(true);
+    const [search, setSearch] = useState("");
 
     useEffect(() => {
         async function loadKatas() {
@@ -25,6 +26,16 @@ function AdminKatas() {
         void loadKatas();
     }, []);
 
+    const filteredKatas = katas.filter((kata) => {
+        const query = search.toLowerCase();
+
+        return (
+            kata.title.toLowerCase().includes(query) ||
+            kata.rank.toLowerCase().includes(query) ||
+            kata.discipline.toLowerCase().includes(query)
+        );
+    });
+
     if (loading) {
         return <Loading/>;
     }
@@ -32,7 +43,12 @@ function AdminKatas() {
     return (
         <div className={"AdminKatas"}>
             <h1>Katas</h1>
-
+            <input
+                type="search"
+                placeholder="Rechercher..."
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+            />
             <table>
                 <thead>
                 <tr>
@@ -46,7 +62,7 @@ function AdminKatas() {
                 </thead>
 
                 <tbody>
-                {katas.map((kata: AdminKata) => (
+                {filteredKatas.map((kata: AdminKata) => (
                     <tr className={"kata-row"}
                         key={kata.id}
                         onClick={() =>

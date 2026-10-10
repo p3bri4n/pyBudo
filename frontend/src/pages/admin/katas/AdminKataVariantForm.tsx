@@ -6,17 +6,17 @@ import { useTranslation } from "react-i18next";
 
 import {
     addAdminKataVariant,
-} from "../../api/adminApi";
+} from "../../../api/adminApi.ts";
 import type {
     AdminKata,
     ClassKataInput,
     ClassKataTest,
     FunctionKataInput,
     FunctionKataTest
-} from "../../interfaces/interfaces";
+} from "../../../interfaces/interfaces.ts";
 
 import "./admin-katas.css";
-import {RANKS} from "../../constants/constants.ts";
+import {RANKS} from "../../../constants/constants.ts";
 
 interface AdminKataVariantFormProps {
     kata: AdminKata;

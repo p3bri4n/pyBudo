@@ -5,4 +5,12 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+
+    .user-row {
+        cursor: pointer;
+    }
+
+    .user-row:hover {
+        background-color: #f3f4f6;
+    }
 }

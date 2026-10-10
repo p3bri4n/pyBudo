@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { getAdminStats } from "../../api/adminApi.ts";
-import type { AdminStats } from "../../interfaces/interfaces.ts";
+import { getAdminStats } from "../../../api/adminApi.ts";
+import type { AdminStats } from "../../../interfaces/interfaces.ts";
 import "./admin-dashboard.css"
 import {useTranslation} from "react-i18next";
-import {Loading} from "../../components/ui/Loading.tsx";
+import {Loading} from "../../../components/ui/Loading.tsx";
 
 type StatCardProps = {
     label: string;

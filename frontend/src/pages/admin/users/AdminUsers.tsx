@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
-import { getAdminUsers } from "../../api/adminApi";
-import type { AdminUser } from "../../interfaces/interfaces";
+import { getAdminUsers } from "../../../api/adminApi.ts";
+import type { AdminUser } from "../../../interfaces/interfaces.ts";
 import "./admin-users.css"
 import {useTranslation} from "react-i18next";
-import {Loading} from "../../components/ui/Loading.tsx";
-import {formatDate} from "../../utils/utils.ts";
+import {Loading} from "../../../components/ui/Loading.tsx";
+import {useNavigate} from "react-router-dom";
+import {formatDate} from "../../../utils/utils.ts";
 
 function AdminUsers() {
     const {t} = useTranslation();
+    const navigate = useNavigate();
     const [users, setUsers] = useState<AdminUser[]>([]);
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(true);
@@ -62,7 +64,11 @@ function AdminUsers() {
 
                 <tbody>
                 {filteredUsers.map((user) => (
-                    <tr key={user.id}>
+                    <tr className={"user-row"}
+                        key={user.id}
+                        onClick={() =>
+                            navigate(`/back-office/users/${encodeURIComponent(user.id)}`)
+                    }>
                         <td>{user.email}</td>
                         <td>{user.username}</td>
                         <td>{formatDate(user.created_at)}</td>

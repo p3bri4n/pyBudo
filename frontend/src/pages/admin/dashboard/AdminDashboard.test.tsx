@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi, beforeEach } from "vitest";
-import AdminDashboard from "./AdminDashboard";
-import { getAdminStats } from "../../api/adminApi.ts";
+import AdminDashboard from "./AdminDashboard.tsx";
+import { getAdminStats } from "../../../api/adminApi.ts";
 
 vi.mock("../../api/adminApi.ts", () => ({
     getAdminStats: vi.fn(),

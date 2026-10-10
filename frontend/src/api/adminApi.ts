@@ -16,7 +16,7 @@ export const getAdminUsers = async (): Promise<AdminUser[]>=> {
     return response.data;
 }
 
-export const getAdminUser = async (userId: number): Promise<AdminUser>=> {
+export const getAdminUser = async (userId: string): Promise<AdminUser>=> {
     const response = await apiClient.get(
         `/admin/users/${userId}`,
         authHeaders(token()))
