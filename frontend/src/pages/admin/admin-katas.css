@@ -17,11 +17,10 @@
 
 .variant-form {
     width: 100%;
-    height: 100%;
+    height: 50%;
     text-align: center;
     display: grid;
     gap: 1rem;
-    max-width: 800px;
     margin-top: 2rem;
     padding: 1.5rem;
     border: 1px solid #ddd;
