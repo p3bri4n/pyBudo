@@ -54,14 +54,12 @@ export function AdminKataVariantForm({
         setError(null);
 
         if (!id.trim()) {
-            setError("L’identifiant est obligatoire.");
+            setError(t("admin.katas.form.mandatory-id"));
             return;
         }
 
         if (id.trim() === kata.id) {
-            setError(
-                "La variante doit avoir un identifiant différent du kata de base.",
-            );
+            setError(t("admin.katas.form.different-id"));
             return;
         }
 
@@ -75,21 +73,21 @@ export function AdminKataVariantForm({
                 Array.isArray(parsedMetadata) ||
                 typeof parsedMetadata !== "object"
             ) {
-                throw new Error("Les métadonnées doivent être un objet JSON.");
+                throw new Error();
             }
         } catch {
-            setError("Les métadonnées doivent être un JSON valide.");
+            setError(t("admin.katas.form.meta-valid-json"));
             return;
         }
 
         try {
             const value: unknown = JSON.parse(tests);
             if (!Array.isArray(value)) {
-                throw new Error("Les tests doivent être un tableau JSON.");
+                throw new Error(t("admin.katas.form.tests-json"));
             }
             parsedTests = value;
         } catch {
-            setError("Les tests doivent être un tableau JSON valide.");
+            setError(t("admin.katas.form.tests-valid-json"));
             return;
         }
 
@@ -138,9 +136,7 @@ export function AdminKataVariantForm({
             }
             navigate(`/back-office/katas/${encodeURIComponent(created.id)}`);
         } catch {
-            setError(
-                "Impossible de créer la variante. Vérifie l’identifiant et les données saisies.",
-            );
+            setError(t("admin.katas.form.variant-general-error"));
         } finally {
             setSaving(false);
         }
@@ -148,7 +144,7 @@ export function AdminKataVariantForm({
 
     return (
         <form className="variant-form" onSubmit={handleSubmit}>
-            <h2>Créer une variante</h2>
+            <h2>{t("admin.katas.form.create-variant")}</h2>
 
             {error && (
                 <p className="variant-form__error" role="alert">
@@ -157,7 +153,7 @@ export function AdminKataVariantForm({
             )}
 
             <label>
-                Nouvel identifiant
+                {t("admin.katas.form.new-id")}
                 <input
                     value={id}
                     onChange={(event) => setId(event.target.value)}
@@ -166,7 +162,7 @@ export function AdminKataVariantForm({
             </label>
 
             <label>
-                Titre
+                {t("admin.katas.form.title")}
                 <input
                     value={title}
                     onChange={(event) => setTitle(event.target.value)}
@@ -185,7 +181,7 @@ export function AdminKataVariantForm({
             </label>
 
             <label>
-                Signature
+                {t("admin.katas.form.signature")}
                 <textarea
                     value={signature}
                     onChange={(event) => setSignature(event.target.value)}
@@ -195,7 +191,7 @@ export function AdminKataVariantForm({
             </label>
 
             <label>
-                Discipline
+                {t("admin.katas.form.discipline")}
                 <input
                     value={discipline}
                     onChange={(event) => setDiscipline(event.target.value)}
@@ -204,7 +200,7 @@ export function AdminKataVariantForm({
             </label>
 
             <label>
-                Rang
+                {t("admin.katas.form.rank")}
                 <select
                     value={rank}
                     onChange={(event) =>
@@ -220,7 +216,7 @@ export function AdminKataVariantForm({
             </label>
 
             <label>
-                Concepts (séparés par des virgules)
+                {t("admin.katas.form.concepts")}
                 <input
                     value={concepts}
                     onChange={(event) => setConcepts(event.target.value)}
@@ -228,7 +224,7 @@ export function AdminKataVariantForm({
             </label>
 
             <label>
-                Référence de solution
+                {t("admin.katas.form.solution-reference")}
                 <input
                     value={solutionReference}
                     onChange={(event) =>
@@ -240,7 +236,7 @@ export function AdminKataVariantForm({
 
             {kata.kata_type === "class" && (
                 <label>
-                    Nom de la classe
+                    {t("admin.katas.form.class-name")}
                     <input
                         value={className}
                         onChange={(event) => setClassName(event.target.value)}
@@ -250,7 +246,7 @@ export function AdminKataVariantForm({
             )}
 
             <label>
-                Tests (JSON)
+                {t("admin.katas.form.tests")}
                 <textarea
                     value={tests}
                     onChange={(event) => setTests(event.target.value)}
@@ -260,7 +256,7 @@ export function AdminKataVariantForm({
             </label>
 
             <label>
-                Métadonnées (JSON)
+                {t("admin.katas.form.metadata")}
                 <textarea
                     value={metadata}
                     onChange={(event) => setMetadata(event.target.value)}
@@ -280,7 +276,7 @@ export function AdminKataVariantForm({
 
             <div className="variant-form__actions">
                 <button type="submit" disabled={saving}>
-                    {saving ? "Création…" : "Créer la variante"}
+                    {saving ? t("admin.katas.form.creation") : t("admin.katas.form.create-variant")}
                 </button>
 
                 <button
@@ -288,7 +284,7 @@ export function AdminKataVariantForm({
                     disabled={saving}
                     onClick={() => navigate(-1)}
                 >
-                    Annuler
+                    {t("admin.katas.form.cancel")}
                 </button>
             </div>
         </form>

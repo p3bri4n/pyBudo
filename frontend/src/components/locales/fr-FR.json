@@ -104,7 +104,28 @@
       "missing-id": "ID manquant",
       "load-error": "erreur de chargement",
       "confirm-archive": "Voulez-vous vraiment archiver ?",
-      "archive-error": "Erreur d'archivage"
+      "archive-error": "Erreur d'archivage",
+      "form": {
+        "mandatory-id" : "L’identifiant est obligatoire.",
+        "different-id": "La variante doit avoir un identifiant différent du kata de base.",
+        "meta-json": "Les métadonnées doivent être un objet JSON.",
+        "tests-json": "Les tests doivent être un tableau JSON.",
+        "tests-valid-json": "Les tests doivent être un tableau JSON valide.",
+        "variant-general-error": "Impossible de créer la variante. Vérifie l’identifiant et les données saisies.",
+        "create-variant": "Créer une variante",
+        "new-id": "Nouvel identifiant",
+        "title": "Titre",
+        "signature": "Signature",
+        "discipline": "Discipline",
+        "rank": "Rang",
+        "concepts": "Concepts (séparés par des virgules)",
+        "solution-reference": "Référence de solution",
+        "class-name" : "Nom de la classe",
+        "tests": "Tests (JSON)",
+        "metadata": "Métadonnées (JSON)",
+        "cancel": "Annuler",
+        "creation": "Création…"
+      }
     }
   }
 }

@@ -104,7 +104,28 @@
       "missing-id": "ID missing",
       "load-error": "Loading error",
       "confirm-archive": "Do you really want to archive ?",
-      "archive-error": "Archive error"
+      "archive-error": "Archive error",
+      "form": {
+        "mandatory-id" : "Id is mandatory.",
+        "different-id": "The variant must have a different ID than the base kata.",
+        "meta-json": "The metadata must be a JSON object.",
+        "tests-json": "The tests must be a JSON table.",
+        "tests-valid-json": "The tests must be a valid JSON table.",
+        "variant-general-error": "Creation of the variant impossible. Check the ID and data entered.",
+        "create-variant": "Create a variant",
+        "new-id": "New ID",
+        "title": "Title",
+        "signature": "Signature",
+        "discipline": "Discipline",
+        "rank": "Rank",
+        "concepts": "Concepts (separated by commas)",
+        "solution-reference": "Solution reference",
+        "class-name" : "Class nema",
+        "tests": "Tests (JSON)",
+        "metadata": "Metadata (JSON)",
+        "cancel": "Cancel",
+        "creation": "Creation…"
+      }
     }
   }
 }
