@@ -30,17 +30,15 @@ const AppRouter = () => {
                 {/* Pages connectées : un visiteur est redirigé vers l'accueil */}
                 <Route element={<AuthGuard />}>
                     <Route path="/dojo" element={<Dojo />} />
-                    <Route element={<AdminGuard />}>
                         <Route element={<AdminGuard />}>
-                            <Route path="/back-office" element={<AdminLayout />}>
-                                <Route index element={<AdminDashboard />} />
-                                <Route path="users" element={<AdminUsers />} />
-                                <Route path="users/:userId" element={<AdminUserDetail />} />
-                                <Route path="katas" element={<AdminKatas />} />
-                                <Route path="katas/:kataId" element={<AdminKataDetail />} />
+                            <Route path="/back-office" element={<AdminLayout/>}>
+                                <Route index element={<AdminDashboard/>}/>
+                                <Route path="users" element={<AdminUsers/>}/>
+                                <Route path="users/:userId" element={<AdminUserDetail/>}/>
+                                <Route path="katas" element={<AdminKatas/>}/>
+                                <Route path="katas/:kataId" element={<AdminKataDetail/>}/>
                             </Route>
                         </Route>
-                    </Route>
                 </Route>
             </Route>
         </Routes>

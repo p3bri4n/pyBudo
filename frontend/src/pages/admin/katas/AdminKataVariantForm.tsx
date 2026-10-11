@@ -43,7 +43,7 @@ export function AdminKataVariantForm({
     const [metadata, setMetadata] = useState(JSON.stringify(kata.metadata, null, 2));
     const [tests, setTests] = useState(JSON.stringify(kata.tests, null, 2));
     const [className, setClassName] = useState(kata.kata_type === "class" ? kata.class_name : "");
-    const [replace, setReplace] = useState(false);
+    const [replace, setReplace] = useState(true);
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -280,7 +280,7 @@ export function AdminKataVariantForm({
                 <input
                     className={"input-dojo"}
                     type="checkbox"
-                    checked={true}
+                    checked={replace}
                     onChange={(event) => setReplace(event.target.checked)}
                 />
                 {t("admin.katas.form.archive-base-kata")}
