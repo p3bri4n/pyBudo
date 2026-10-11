@@ -7,7 +7,7 @@
     "back": "Back",
     "loading": "Loading...",
     "error": "An error has occurred",
-    "saving": "Saving"
+    "saving": "Saving..."
   },
   "layout": {
     "pybudo": "pyBudo",
@@ -95,7 +95,8 @@
       "role": "Role",
       "active": "Active",
       "inactive": "Inactive",
-      "search": "Search..."
+      "search": "Search...",
+      "load-error": "Loading error"
     },
     "katas": {
       "id": "ID",

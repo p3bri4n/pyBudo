@@ -7,7 +7,7 @@
     "back": "Retour",
     "loading" : "Chargement...",
     "error": "Une erreur est survenue",
-    "saving": "Sauvegarde"
+    "saving": "Sauvegarde..."
   },
   "layout": {
     "pybudo": "pyBudo",
@@ -95,7 +95,8 @@
       "role": "Rôle",
       "active": "Actif",
       "inactive": "Désactivé",
-      "search": "Rechercher..."
+      "search": "Rechercher...",
+      "load-error": "Erreur de chargement"
     },
     "katas": {
       "id": "ID",
@@ -105,7 +106,7 @@
       "discipline": "Discipline",
       "status":  "Statut",
       "archive": "Archiver",
-      "load-error": "erreur de chargement",
+      "load-error": "Erreur de chargement",
       "confirm-archive": "Voulez-vous vraiment archiver ?",
       "archive-error": "Erreur d'archivage",
       "search": "Rechercher...",
