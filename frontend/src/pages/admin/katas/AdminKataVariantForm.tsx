@@ -173,7 +173,7 @@ export function AdminKataVariantForm({
             </label>
 
             <label>
-                Énoncé
+                {t("admin.katas.form.statement")}
                 <textarea
                     className={"input-dojo"}
                     value={statement}
