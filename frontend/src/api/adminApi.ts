@@ -48,6 +48,7 @@ export const addAdminKataVariant = async (kataId: string, body: KataVariantCreat
 export const archiveAdminKata = async (kataId: string): Promise<AdminKata> => {
     const response = await apiClient.patch(
         `/admin/katas/${kataId}/archive`,
+        null,
         authHeaders(token()))
     return response.data;
 }
