@@ -12,19 +12,22 @@ function AdminKatas() {
     const [katas, setKatas] = useState<AdminKata[]>([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState("");
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         async function loadKatas() {
             try {
                 const data = await getAdminKatas();
                 setKatas(data);
+            } catch (error) {
+            setError(error instanceof Error ? error.message : t("common.error"))
             } finally {
                 setLoading(false);
             }
         }
 
         void loadKatas();
-    }, []);
+    }, [t]);
 
     const filteredKatas = katas.filter((kata) => {
         const query = search.toLowerCase();
@@ -50,6 +53,7 @@ function AdminKatas() {
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
             />
+            {error && <p role="alert">{error}</p>}
             <table>
                 <thead>
                 <tr>

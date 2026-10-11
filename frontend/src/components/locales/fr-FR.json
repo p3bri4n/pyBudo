@@ -5,7 +5,8 @@
   },
   "common": {
     "back": "Retour",
-    "loading" : "Chargement..."
+    "loading" : "Chargement...",
+    "error": "Une erreur est survenue"
   },
   "layout": {
     "pybudo": "pyBudo",

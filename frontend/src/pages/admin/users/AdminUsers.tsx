@@ -13,19 +13,22 @@ function AdminUsers() {
     const [users, setUsers] = useState<AdminUser[]>([]);
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         async function loadUsers() {
             try {
                 const data = await getAdminUsers();
                 setUsers(data);
+            } catch (error) {
+                setError(error instanceof Error ? error.message : t("common.error"))
             } finally {
                 setLoading(false);
             }
         }
 
         void loadUsers();
-    }, []);
+    }, [t]);
 
     const filteredUsers = users.filter((user) => {
         const query = search.toLowerCase();
@@ -51,7 +54,7 @@ function AdminUsers() {
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
             />
-
+            {error && <p role="alert">{error}</p>}
             <table>
                 <thead>
                 <tr>
