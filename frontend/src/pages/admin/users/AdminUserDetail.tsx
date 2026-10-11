@@ -39,6 +39,16 @@ function AdminUserDetail() {
     if (loading) {
         return <Loading />;
     }
+    if (error && !user) {
+        return (
+            <section>
+                <p role="alert">{error}</p>
+                <button onClick={() => navigate("/back-office/users")}>
+                    {t("common.back")}
+                </button>
+            </section>
+        );
+    }
 
     if (!user) return null;
 
