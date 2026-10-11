@@ -1,18 +1,18 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
+import {Navigate, Outlet} from 'react-router-dom';
 import { useAuth } from "../../contexts/useAuth.ts"
+import {Loading} from "../../components/ui/Loading.tsx";
 
-const AuthGuard = ({ children }: { children: React.ReactNode }) => {
+const AuthGuard = () => {
     const { user, loading } = useAuth();
 
     if (loading) {
-        return <p>Chargement...</p>;
+        return <Loading/>;
     }
     if (!user) {
         return <Navigate to="/" replace />;
     }
 
-    return <>{children}</>;
+    return <Outlet />;
 };
 
 export default AuthGuard;

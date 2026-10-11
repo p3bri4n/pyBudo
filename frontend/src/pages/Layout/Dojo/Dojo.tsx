@@ -9,6 +9,7 @@ import {useProgression} from "../../../hooks/useProgression.ts";
 import {useKataProgression} from "../../../hooks/useKataProgression.ts";
 import type {Kata, Rank} from "../../../interfaces/interfaces.ts";
 import {RANKS} from "../../../constants/constants.ts";
+import {Loading} from "../../../components/ui/Loading.tsx";
 
 function Dojo() {
     const {t} = useTranslation();
@@ -45,7 +46,7 @@ function Dojo() {
     };
 
     if (loading) {
-        return <p>{t("dojo.welcome-visitor")}</p>;
+        return <Loading/>;
     }
     return (
         <div>
@@ -65,7 +66,7 @@ function Dojo() {
                         </select>
                     </label>
                 )}
-                {katasLoading && <p>{t("dojo.katas-loading")}</p>}
+                {katasLoading && <Loading message={t("dojo.katas-loading")}/>}
                 {katasError && <p>{t("dojo.katas-error")}</p>}
                 {completionError && <p>{t("dojo.completion-error")}</p>}
                 <ul className="kata-list">

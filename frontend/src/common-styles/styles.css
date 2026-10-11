@@ -1,5 +1,6 @@
 @import "fonts.css";
 
+
 /* ==========================================================================
    Reset pour que l'application occupe toute la hauteur/largeur de l'écran,
    sans marges parasites ni scroll indésirable.
@@ -31,6 +32,36 @@ body {
     --text-secondary: #4a3820;
     --text-muted: #5a4a30;
 
+    --paper-light: #f6ebcd;
+    --paper: #ecd9a8;
+    --paper-shade: #c9a968;
+    --paper-edge: #8a6a3a;
+    --rod-light: #a8743f;
+    --rod: #6b4423;
+    --rod-dark: #3f2612;
+
+    --seal: #a8321f;
+
+    --ink-red: #a8321f;
+
+    --parchment: #f3e6c4;
+    --parchment-edge: #c9a968;
+    --parchment-border: #6b4a28;
+
+    --paper-shadow: rgba(40, 25, 10, 0.15);
+    --torn-edge: polygon(
+            2% 8%, 9% 0%, 18% 6%, 27% 1%, 38% 7%, 49% 0%, 60% 5%, 71% 0%, 82% 6%, 91% 1%, 98% 7%,
+            100% 30%, 97% 52%, 100% 74%, 98% 93%,
+            90% 100%, 79% 94%, 68% 100%, 57% 95%, 46% 100%, 35% 94%, 24% 100%, 13% 95%, 4% 100%,
+            0% 78%, 3% 55%, 0% 32%
+    );
+
+    --ink: #6b3a1a;
+    --ink-hover: #a8321f;
+
+    --wood-dark: #3f2612;
+    --wood: #6b4423;
+    --wood-light: #a8743f;
 }
 
 /* ==========================================================================
@@ -39,18 +70,9 @@ body {
    ========================================================================== */
 
 .btn-dojo {
-    --paper-light: #f6ebcd;
-    --paper: #ecd9a8;
-    --paper-shade: #c9a968;
-    --paper-edge: #8a6a3a;
-    --rod-light: #a8743f;
-    --rod: #6b4423;
-    --rod-dark: #3f2612;
-    --text-color: #3a2a15;
-
     position: relative;
     display: inline-block;
-    font-family: var(--font-button);
+    font-family: var(--font-button), serif;
     /* Shojumaru n'existe qu'en graisse normale : évite un faux gras flou */
     font-weight: 400;
     font-size: 1rem;
@@ -154,15 +176,123 @@ body {
     background-position: 0 0, 1px 2px;
 }
 
+.input-dojo {
+    position: relative;
+    display: block;
+    width: 100%;
+    min-width: 0;
+
+    padding: 0.7em 0.9em;
+    margin-block: 0.4em;
+
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--text-color);
+
+    background:
+            linear-gradient(
+                    180deg,
+                    rgba(255, 255, 255, 0.35),
+                    transparent 40%,
+                    rgba(120, 80, 30, 0.10)
+            ),
+            linear-gradient(
+                    90deg,
+                    var(--paper-shade),
+                    var(--paper) 5%,
+                    var(--paper-light) 50%,
+                    var(--paper) 95%,
+                    var(--paper-shade)
+            );
+
+    border: 1px solid var(--paper-edge);
+    border-radius: 2px;
+
+    box-shadow:
+            inset 0 1px 3px rgba(63, 38, 18, 0.12),
+            0 2px 4px rgba(40, 25, 10, 0.15);
+
+    outline: none;
+    transition:
+            border-color 0.15s ease,
+            box-shadow 0.15s ease,
+            filter 0.15s ease;
+}
+
+.input-dojo::placeholder {
+    color: #8a7656;
+    opacity: 0.85;
+    font-style: italic;
+}
+
+.input-dojo:focus {
+    border-color: var(--ink-red);
+
+    box-shadow:
+            inset 0 1px 3px rgba(63, 38, 18, 0.10),
+            0 0 0 2px rgba(168, 50, 31, 0.15),
+            0 3px 6px rgba(40, 25, 10, 0.18);
+}
+
+.input-dojo:focus-visible {
+    outline: 2px dashed var(--ink-red);
+    outline-offset: 3px;
+}
+
+.input-dojo:disabled {
+    filter: grayscale(0.55) brightness(0.9);
+    cursor: not-allowed;
+    opacity: 0.75;
+}
+
+.input-dojo:read-only {
+    background:
+            linear-gradient(
+                    180deg,
+                    rgba(120, 80, 30, 0.08),
+                    rgba(120, 80, 30, 0.02)
+            ),
+            #e8d8b5;
+}
+
+.input-dojo[aria-invalid="true"] {
+    border-color: var(--ink-red);
+
+    box-shadow:
+            inset 0 0 0 1px rgba(168, 50, 31, 0.15);
+}
+
+.input-dojo--compact {
+    padding: 0.45em 0.7em;
+    font-size: 0.9rem;
+}
+
+.input-dojo--large {
+    padding: 0.9em 1em;
+    font-size: 1.05rem;
+}
+
+textarea.input-dojo {
+    min-height: 120px;
+    resize: vertical;
+}
+
+select.input-dojo {
+    cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .input-dojo {
+        transition: none;
+    }
+}
+
 /* ==========================================================================
    Panneau "parchemin" — pour les cartes/encadrés posés sur le fond
    (ex. la carte "Défi du dōjō"), assorti au reste du thème.
    ========================================================================== */
 .panel-parchment {
-    --parchment: #f3e6c4;
-    --parchment-edge: #c9a968;
-    --parchment-border: #6b4a28;
-
     background: var(--parchment);
     background-image: radial-gradient(
             rgba(107, 74, 40, 0.05) 1px,
@@ -195,15 +325,6 @@ body {
    de la même forme décalée vers le bas.
    ========================================================================== */
 h2 {
-    --paper: #ecd9a8;
-    --paper-shadow: rgba(40, 25, 10, 0.15);
-    --torn-edge: polygon(
-            2% 8%, 9% 0%, 18% 6%, 27% 1%, 38% 7%, 49% 0%, 60% 5%, 71% 0%, 82% 6%, 91% 1%, 98% 7%,
-            100% 30%, 97% 52%, 100% 74%, 98% 93%,
-            90% 100%, 79% 94%, 68% 100%, 57% 95%, 46% 100%, 35% 94%, 24% 100%, 13% 95%, 4% 100%,
-            0% 78%, 3% 55%, 0% 32%
-    );
-
     position: relative;
     /* Garde le papier et l'ombre derrière le texte, sans passer sous le fond de la page */
     isolation: isolate;
@@ -244,19 +365,15 @@ h2::after {
    ========================================================================== */
 
 .link-dojo {
-    --ink: #6b3a1a;
-    --ink-hover: #a8321f;
-    --seal: #a8321f;
-
     color: var(--ink);
-    font-family: var(--font-body);
+    font-family: var(--font-body), serif;
     font-weight: 700;
     text-decoration: none;
     position: relative;
     padding-bottom: 2px;
 
     background-image: linear-gradient(var(--seal), var(--seal));
-    background-size: 0% 2px;
+    background-size: 0 2px;
     background-position: left bottom;
     background-repeat: no-repeat;
 
@@ -318,3 +435,132 @@ h2::after {
    <a href="#" class="link-dojo link-dojo--seal">En savoir plus</a>
    <a href="#" class="link-dojo link-dojo--muted">Mentions légales</a>
    -------------------------------------------------------------------------- */
+
+/* ==========================================================================
+   Navigation du back-office — panneau en bois et onglets parchemin
+   ========================================================================== */
+
+.nav-dojo {
+    width: 10dvw;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    padding: 0.75rem 1rem;
+    margin: 1rem auto;
+
+    background:
+            linear-gradient(
+                    180deg,
+                    var(--wood-light),
+                    var(--wood) 45%,
+                    var(--wood-dark)
+            );
+
+    border: 2px solid var(--wood-dark);
+    border-radius: 8px;
+
+    box-shadow:
+            inset 0 1px 0 rgba(255, 230, 180, 0.25),
+            0 4px 8px rgba(40, 25, 10, 0.25);
+}
+
+.nav-dojo a {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0.65rem 1.2rem;
+
+    color: var(--ink);
+    font-weight: 400;
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    white-space: nowrap;
+
+    background:
+            linear-gradient(
+                    180deg,
+                    rgba(255, 255, 255, 0.3),
+                    transparent 45%,
+                    rgba(120, 80, 30, 0.1)
+            ),
+            linear-gradient(
+                    90deg,
+                    #c9a968,
+                    var(--paper) 15%,
+                    var(--paper-light) 50%,
+                    var(--paper) 85%,
+                    #c9a968
+            );
+
+    border: 1px solid #8a6a3a;
+    box-shadow: 0 2px 3px rgba(30, 18, 8, 0.25);
+
+    transition:
+            transform 0.15s ease,
+            filter 0.15s ease,
+            box-shadow 0.15s ease;
+}
+
+.nav-dojo a:hover {
+    filter: brightness(1.08);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(30, 18, 8, 0.3);
+}
+
+.nav-dojo a[aria-current="page"] {
+    border: 2px solid var(--seal);
+    padding: calc(0.65rem - 1px) calc(1.2rem - 1px);
+
+    background:
+            linear-gradient(
+                    180deg,
+                    #f9edcf,
+                    #e4c98c
+            );
+
+    box-shadow:
+            inset 0 0 0 2px rgba(168, 50, 31, 0.12),
+            0 2px 5px rgba(30, 18, 8, 0.3);
+}
+
+.nav-dojo a[aria-current="page"]::after {
+    content: "";
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    width: 22px;
+    height: 2px;
+
+    background: var(--seal);
+    transform: translateX(-50%);
+}
+
+.nav-dojo a:focus-visible {
+    outline: 2px dashed #f6ebcd;
+    outline-offset: 4px;
+}
+
+@media (max-width: 600px) {
+    .nav-dojo {
+        gap: 0.4rem;
+        padding: 0.6rem;
+    }
+
+    .nav-dojo a {
+        flex: 1 1 auto;
+        padding: 0.6rem 0.8rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nav-dojo a {
+        transition: none;
+    }
+}

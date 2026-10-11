@@ -58,6 +58,7 @@ function Register() {
                     <div className={"form-input"}>
                         <label htmlFor="username">{t("register.username")}</label>
                         <input
+                            className={"input-dojo"}
                             id="username"
                             placeholder={t("register.username")}
                             name="username"
@@ -71,6 +72,7 @@ function Register() {
                     <div className={"form-input"}>
                         <label htmlFor="email">{t("register.email")}</label>
                         <input
+                            className={"input-dojo"}
                             id="email"
                             name="email"
                             type="email"
@@ -84,6 +86,7 @@ function Register() {
                     <div className={"form-input"}>
                         <label htmlFor="password">{t("register.password")}</label>
                         <input
+                            className={"input-dojo"}
                             id="password"
                             name="password"
                             type="password"
@@ -99,6 +102,7 @@ function Register() {
                             {t("register.password-verification")}
                         </label>
                         <input
+                            className={"input-dojo"}
                             id="passwordVerification"
                             name="passwordVerification"
                             type="password"
@@ -114,7 +118,7 @@ function Register() {
                     <button className={"btn-dojo"} type="submit">
                         {t("register.register")}
                     </button>
-                    <Link className={"link-dojo link-dojo--muted"} to="/">{t("register.back")}</Link>
+                    <Link className={"link-dojo link-dojo--muted"} to="/">{t("common.back")}</Link>
                 </form>
             </div>
         </LandingPage>

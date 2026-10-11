@@ -12,11 +12,11 @@
 }
 
 body {
-    font-family: var(--font-body);
+    font-family: var(--font-body), serif;
 }
 
 p {
-    font-family: var(--font-paragraph);
+    font-family: var(--font-paragraph), serif;
 }
 
 /* Les deux polices n'existent qu'en graisse normale : évite un faux gras flou */

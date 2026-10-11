@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {login} from "../../../api/authApi.ts";
-import type {TokenResponse} from "../../../interfaces/interfaces.ts";
+import type {TokenResponse, User} from "../../../interfaces/interfaces.ts";
 import {useTranslation} from "react-i18next";
 import LandingPage from "../LandingPage/LandingPage.tsx";
 import "./login.css"
@@ -18,9 +18,10 @@ function Login() {
     const handleLogin = async () => {
         try {
             const data: TokenResponse = await login({email, password});
-            const token = data.access_token;
-            await signIn(token)
-            navigate("/dojo");
+            const token: string = data.access_token;
+            const user: User = await signIn(token)
+            console.log(user)
+            navigate(user?.role === "admin" ? "/back-office" : "/dojo");
         } catch {
             setError(`${t("login.invalid-credentials")}`);
         }
@@ -31,10 +32,10 @@ function Login() {
         <LandingPage>
             {error && <div className="error-msg">{error}</div>}
             <div className={"login-container"}>
-                <input type="email" placeholder={t("login.email")}  value={email}    onChange={e => setEmail(e.target.value)} />
-                <input type="password" placeholder={t("login.password")}  value={password} onChange={e => setPassword(e.target.value)} />
+                <input className={"input-dojo"} type="email" placeholder={t("login.email")}  value={email}    onChange={e => setEmail(e.target.value)} />
+                <input className={"input-dojo"} type="password" placeholder={t("login.password")}  value={password} onChange={e => setPassword(e.target.value)} />
                 <button className={"btn-dojo"} onClick={handleLogin}>{t("login.login")}</button>
-                <Link className={"link-dojo link-dojo--muted"} to="/">{t("login.back")}</Link>
+                <Link className={"link-dojo link-dojo--muted"} to="/">{t("common.back")}</Link>
             </div>
         </LandingPage>
     );

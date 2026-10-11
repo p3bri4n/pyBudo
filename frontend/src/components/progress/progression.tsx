@@ -1,5 +1,6 @@
 import {useTranslation} from "react-i18next";
 import type {UserProgression} from "../../interfaces/interfaces.ts";
+import {Loading} from "../ui/Loading.tsx";
 
 type ProgressionProps = {
     progression: UserProgression | null
@@ -11,7 +12,7 @@ export function Progression({progression, loading, error}: ProgressionProps) {
     const {t} = useTranslation();
 
     if (loading) {
-        return <p>{t("progression.loading")}</p>;
+        return <Loading message={t("progression.loading")}/>;
     }
     if (error || !progression) {
         return <p>{t("progression.error")}</p>;

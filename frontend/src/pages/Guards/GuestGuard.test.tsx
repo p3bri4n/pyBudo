@@ -3,16 +3,36 @@ import { useAuth } from "../../contexts/useAuth";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import GuestGuard from "./GuestGuard";
+import AuthGuard from "./AuthGuard.tsx";
+import AdminGuard from "./AdminGuard.tsx";
 
 vi.mock("../../contexts/useAuth.ts", () => ({
     useAuth: vi.fn()
 }))
+vi.mock("react-i18next", () => ({
+    useTranslation: () => ({
+        t: (key: string) => {
+            if (key === "common.loading") {
+                return "Chargement...";
+            }
+
+            return key;
+        },
+    }),
+}));
 
 const renderHome = () => render(
     <MemoryRouter initialEntries={["/"]}>
         <Routes>
-            <Route path="/" element={<GuestGuard><p>Accueil</p></GuestGuard>}/>
-            <Route path="/dojo" element={<p>Dojo</p>}/>
+            <Route element={<GuestGuard/>}>
+                <Route path="/" element={<p>Accueil</p>}/>
+            </Route>
+            <Route element={<AuthGuard/>}>
+                <Route path="/dojo" element={<p>Dojo</p>}/>
+            </Route>
+            <Route element={<AdminGuard/>}>
+                <Route path="/back-office" element={<p>Back-office</p>}/>
+            </Route>
         </Routes>
     </MemoryRouter>
 )
@@ -40,5 +60,10 @@ describe("GuestGuard", () => {
         renderHome()
         expect(screen.getByText("Dojo")).toBeInTheDocument()
         expect(screen.queryByText("Accueil")).not.toBeInTheDocument()
+    })
+    it("redirige un admin vers /back-office", () => {
+        vi.mocked(useAuth).mockReturnValue({user: {role: "admin"}, loading: false,} as ReturnType<typeof useAuth>);
+        renderHome()
+        expect(screen.getByText("Back-office")).toBeInTheDocument();
     })
 })

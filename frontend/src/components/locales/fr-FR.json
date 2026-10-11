@@ -3,6 +3,12 @@
     "english": "Anglais",
     "french": "Français"
   },
+  "common": {
+    "back": "Retour",
+    "loading" : "Chargement...",
+    "error": "Une erreur est survenue",
+    "saving": "Sauvegarde..."
+  },
   "layout": {
     "pybudo": "pyBudo",
     "pybudo-tm": "© PyBudo",
@@ -25,14 +31,12 @@
     "pybudo": "Connexion à PyBudo",
     "email": "Email",
     "password": "Mot de passe",
-    "invalid-credentials": "Email ou mot de passe incorrect",
-    "back": "Retour"
+    "invalid-credentials": "Email ou mot de passe incorrect"
   },
   "register": {
     "create-account": "Créer un compte",
     "not-matching-passwords": "Les mots de passe ne correspondent pas",
     "register-error": "Une erreur est survenue lors de l'inscription",
-    "back": "Retour",
     "username": "Nom d'utilisateur",
     "email": "Email",
     "password": "Mot de passe",
@@ -66,5 +70,70 @@
     "expected": "attendu",
     "got": "obtenu",
     "error": "erreur"
+  },
+  "admin": {
+    "layout": {
+      "dashboard": "Dashboard",
+      "users": "Utilisateurs",
+      "katas": "Katas"
+    },
+    "dashboard": {
+      "unknown-error": "Erreur inconnue",
+      "dashboard": "Dashboard",
+      "users" : "Utilisateurs",
+      "active-users": "Utilisateurs actifs",
+      "katas": "Katas",
+      "published-katas": "Katas publiés"
+    },
+    "users": {
+      "users": "Utilisateurs",
+      "id": "ID",
+      "email": "Email",
+      "username": "Nom d'utilisateur",
+      "registration": "Inscription",
+      "status": "Statut",
+      "role": "Rôle",
+      "active": "Actif",
+      "inactive": "Désactivé",
+      "search": "Rechercher...",
+      "load-error": "Erreur de chargement"
+    },
+    "katas": {
+      "id": "ID",
+      "title": "Titre",
+      "type": "Type",
+      "rank": "Rang",
+      "discipline": "Discipline",
+      "status":  "Statut",
+      "archive": "Archiver",
+      "load-error": "Erreur de chargement",
+      "confirm-archive": "Voulez-vous vraiment archiver ?",
+      "archive-error": "Erreur d'archivage",
+      "search": "Rechercher...",
+      "form": {
+        "mandatory-id" : "L’identifiant est obligatoire.",
+        "different-id": "La variante doit avoir un identifiant différent du kata de base.",
+        "meta-json": "Les métadonnées doivent être un objet JSON.",
+        "meta-valid-json":"Les métadonnées doivent être un objet JSON valide.",
+        "tests-json": "Les tests doivent être un tableau JSON.",
+        "tests-valid-json": "Les tests doivent être un tableau JSON valide.",
+        "variant-general-error": "Impossible de créer la variante. Vérifie l’identifiant et les données saisies.",
+        "create-variant": "Créer une variante",
+        "new-id": "Nouvel identifiant",
+        "title": "Titre",
+        "statement": "Énoncé",
+        "signature": "Signature",
+        "discipline": "Discipline",
+        "rank": "Rang",
+        "concepts": "Concepts (séparés par des virgules)",
+        "solution-reference": "Référence de solution",
+        "class-name" : "Nom de la classe",
+        "tests": "Tests (JSON)",
+        "metadata": "Métadonnées (JSON)",
+        "cancel": "Annuler",
+        "creation": "Création…",
+        "archive-base-kata": "Archiver le kata de base après la création"
+      }
+    }
   }
 }

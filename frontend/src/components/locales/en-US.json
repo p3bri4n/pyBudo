@@ -3,6 +3,12 @@
     "english": "English",
     "french": "French"
   },
+  "common": {
+    "back": "Back",
+    "loading": "Loading...",
+    "error": "An error has occurred",
+    "saving": "Saving..."
+  },
   "layout": {
     "pybudo": "pyBudo",
     "pybudo-tm": "© PyBudo",
@@ -25,14 +31,12 @@
     "pybudo": "Login to PyBudo",
     "email": "Email",
     "password": "Password",
-    "invalid-credentials": "Incorrect email or password",
-    "back": "Back"
+    "invalid-credentials": "Incorrect email or password"
   },
   "register": {
     "create-account": "Create an account",
     "not-matching-passwords": "Passwords do not match",
     "register-error": "An error occurred during registration",
-    "back": "Back",
     "username": "Username",
     "email": "Email",
     "password": "Password",
@@ -66,5 +70,70 @@
     "expected": "expected",
     "got": "got",
     "error": "error"
+  },
+  "admin": {
+    "layout": {
+      "dashboard": "Dashboard",
+      "users": "Users",
+      "katas": "Katas"
+    },
+    "dashboard": {
+      "unknown-error": "Unknown Error",
+      "dashboard": "Dashboard",
+      "users": "Users",
+      "active-users": "Active users",
+      "katas": "Katas",
+      "published-katas": "Published katas"
+    },
+    "users": {
+      "users": "Users",
+      "id": "Identifiant",
+      "email": "Email",
+      "username": "Username",
+      "registration": "Registration",
+      "status": "Status",
+      "role": "Role",
+      "active": "Active",
+      "inactive": "Inactive",
+      "search": "Search...",
+      "load-error": "Loading error"
+    },
+    "katas": {
+      "id": "ID",
+      "title": "Title",
+      "type": "Type",
+      "rank": "Rank",
+      "discipline": "Discipline",
+      "status":  "Status",
+      "archive": "Archive",
+      "load-error": "Loading error",
+      "confirm-archive": "Do you really want to archive ?",
+      "archive-error": "Archive error",
+      "search": "Search...",
+      "form": {
+        "mandatory-id" : "Id is mandatory.",
+        "different-id": "The variant must have a different ID than the base kata.",
+        "meta-json": "The metadata must be a JSON object.",
+        "meta-valid-json":"The metadata must be a valid JSON object.",
+        "tests-json": "The tests must be a JSON table.",
+        "tests-valid-json": "The tests must be a valid JSON table.",
+        "variant-general-error": "Creation of the variant impossible. Check the ID and data entered.",
+        "create-variant": "Create a variant",
+        "new-id": "New ID",
+        "title": "Title",
+        "statement": "Statement",
+        "signature": "Signature",
+        "discipline": "Discipline",
+        "rank": "Rank",
+        "concepts": "Concepts (separated by commas)",
+        "solution-reference": "Solution reference",
+        "class-name" : "Class nema",
+        "tests": "Tests (JSON)",
+        "metadata": "Metadata (JSON)",
+        "cancel": "Cancel",
+        "creation": "Creation…",
+        "archive-base-kata": "Archive base kata after creation"
+      }
+    }
   }
 }
