@@ -86,8 +86,8 @@ class KataBase(BaseModel):
     rank: Rank
     discipline: str
     variant_of: str | None = None
-    title: str
-    statement: str
+    title: dict[str, str]  # {langue: texte}
+    statement: dict[str, str]
     signature: str
     concepts_used: list[str]
 

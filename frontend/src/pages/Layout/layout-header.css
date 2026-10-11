@@ -35,8 +35,12 @@
     grid-column: 2;
 }
 
-.Layout__logout {
+/* Langues à gauche du bouton de déconnexion */
+.Layout__actions {
     grid-column: 3;
     justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
     margin-right: 1rem;
 }

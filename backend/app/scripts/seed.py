@@ -9,13 +9,13 @@ from app.db import engine
 from app.model import Kata
 from app.schemas import KataInternal, KataPublic
 
-KATAS_PATH = Path(__file__).resolve().parents[1] / "data" / "katas.json"
+KATAS_PATH = Path(__file__).resolve().parents[1] / "data" / "katas_i18n.json"
 
 
 def load_katas(path: Path = KATAS_PATH):
     # Récupère tous les katas depuis le json
     with path.open(encoding="utf-8") as file:
-        return json.load(file)
+        return json.load(file)["katas"]
 
 
 def validate_catalog(katas):

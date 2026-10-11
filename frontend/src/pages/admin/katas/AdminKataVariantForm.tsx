@@ -16,7 +16,7 @@ import type {
 } from "../../../interfaces/interfaces.ts";
 
 import "./admin-katas.css";
-import {RANKS} from "../../../constants/constants.ts";
+import {KATA_LANGUAGES, RANKS} from "../../../constants/constants.ts";
 
 interface AdminKataVariantFormProps {
     kata: AdminKata;
@@ -162,26 +162,30 @@ export function AdminKataVariantForm({
                 />
             </label>
 
-            <label>
-                {t("admin.katas.form.title")}
-                <input
-                    className={"input-dojo"}
-                    value={title}
-                    onChange={(event) => setTitle(event.target.value)}
-                    required
-                />
-            </label>
+            {KATA_LANGUAGES.map((language) => (
+                <label key={`title-${language}`}>
+                    {t("admin.katas.form.title")} ({language})
+                    <input
+                        className={"input-dojo"}
+                        value={title[language] ?? ""}
+                        onChange={(event) => setTitle({...title, [language]: event.target.value})}
+                        required
+                    />
+                </label>
+            ))}
 
-            <label>
-                {t("admin.katas.form.statement")}
-                <textarea
-                    className={"input-dojo"}
-                    value={statement}
-                    onChange={(event) => setStatement(event.target.value)}
-                    required
-                    rows={5}
-                />
-            </label>
+            {KATA_LANGUAGES.map((language) => (
+                <label key={`statement-${language}`}>
+                    {t("admin.katas.form.statement")} ({language})
+                    <textarea
+                        className={"input-dojo"}
+                        value={statement[language] ?? ""}
+                        onChange={(event) => setStatement({...statement, [language]: event.target.value})}
+                        required
+                        rows={5}
+                    />
+                </label>
+            ))}
 
             <label>
                 {t("admin.katas.form.signature")}

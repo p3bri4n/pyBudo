@@ -47,8 +47,8 @@ class BaseEntityHelper:
         kata_type="function",
         rank="kyu_10",
         discipline="core",
-        title="Premier Kata",
-        statement="Écrivez une fonction qui reçoit deux entiers et renvoie leur somme.",
+        title=None,
+        statement=None,
         signature="def additionner(a: int, b: int) -> int:",
         solution_reference="def additionner(a, b):\n    return a + b",
         variant_of=None,
@@ -63,8 +63,12 @@ class BaseEntityHelper:
             kata_type=kata_type,
             rank=rank,
             discipline=discipline,
-            title=title,
-            statement=statement,
+            title=title if title is not None else {"fr": "Premier Kata"},
+            statement=statement
+            if statement is not None
+            else {
+                "fr": "Écrivez une fonction qui reçoit deux entiers et renvoie leur somme."
+            },
             signature=signature,
             solution_reference=solution_reference,
             variant_of=variant_of,

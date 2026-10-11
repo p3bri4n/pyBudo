@@ -10,9 +10,10 @@ import {useKataProgression} from "../../../hooks/useKataProgression.ts";
 import type {Kata, Rank} from "../../../interfaces/interfaces.ts";
 import {RANKS} from "../../../constants/constants.ts";
 import {Loading} from "../../../components/ui/Loading.tsx";
+import {localize} from "../../../utils/utils.ts";
 
 function Dojo() {
-    const {t} = useTranslation();
+    const {t, i18n} = useTranslation();
     const { loading } = useAuth();
     const {
         progression,
@@ -77,7 +78,7 @@ function Dojo() {
                                 className={`kata-item${selectedKata?.id === kata.id ? " kata-item--selected" : ""}`}
                                 onClick={() => setSelectedKata(kata)}
                             >
-                                <h3>{kata.title}</h3>
+                                <h3>{localize(kata.title, i18n.language)}</h3>
                                 <span className="kata-rank">{kata.rank}</span>
                                 {passedKataIds?.has(kata.id) && (
                                     <span className="kata-passed"> ✅ {t("dojo.kata-passed")}</span>
@@ -100,8 +101,8 @@ function Dojo() {
             <section className="kata-workspace">
                 {selectedKata && (
                     <aside className="kata-details">
-                        <h2>{selectedKata.title}</h2>
-                        <p>{selectedKata.statement}</p>
+                        <h2>{localize(selectedKata.title, i18n.language)}</h2>
+                        <p>{localize(selectedKata.statement, i18n.language)}</p>
                     </aside>
                 )}
                 <div className="kata-editor">

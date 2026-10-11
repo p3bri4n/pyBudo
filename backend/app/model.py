@@ -38,8 +38,8 @@ class Kata(SQLModel, table=True):
     rank: str = Field(index=True)
     discipline: str = Field(index=True)
     variant_of: str | None = Field(foreign_key="kata.id", default=None)
-    title: str
-    statement: str
+    title: dict[str, str] = Field(sa_column=Column(JSON, nullable=False))
+    statement: dict[str, str] = Field(sa_column=Column(JSON, nullable=False))
     signature: str
     solution_reference: str
     tests: list[dict] = Field(default_factory=list, sa_column=Column(JSON))

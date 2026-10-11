@@ -8,3 +8,7 @@ export const RANKS = [
 ] as const;
 
 export const EXECUTION_TIMEOUT_MS = 2000;
+
+// Langues des champs traduits des katas (title, statement), identique à katas_i18n.json
+export const KATA_LANGUAGES = ["fr", "en"] as const;
+export const KATA_DEFAULT_LANGUAGE = "fr";

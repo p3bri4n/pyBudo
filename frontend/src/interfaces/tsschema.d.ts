@@ -272,9 +272,13 @@ export interface components {
             /** Variant Of */
             variant_of?: string | null;
             /** Title */
-            title: string;
+            title: {
+                [key: string]: string;
+            };
             /** Statement */
-            statement: string;
+            statement: {
+                [key: string]: string;
+            };
             /** Signature */
             signature: string;
             /** Concepts Used */
@@ -309,9 +313,13 @@ export interface components {
             /** Variant Of */
             variant_of?: string | null;
             /** Title */
-            title: string;
+            title: {
+                [key: string]: string;
+            };
             /** Statement */
-            statement: string;
+            statement: {
+                [key: string]: string;
+            };
             /** Signature */
             signature: string;
             /** Concepts Used */
@@ -340,9 +348,13 @@ export interface components {
             /** Variant Of */
             variant_of?: string | null;
             /** Title */
-            title: string;
+            title: {
+                [key: string]: string;
+            };
             /** Statement */
-            statement: string;
+            statement: {
+                [key: string]: string;
+            };
             /** Signature */
             signature: string;
             /** Concepts Used */
@@ -398,9 +410,13 @@ export interface components {
             /** Variant Of */
             variant_of?: string | null;
             /** Title */
-            title: string;
+            title: {
+                [key: string]: string;
+            };
             /** Statement */
-            statement: string;
+            statement: {
+                [key: string]: string;
+            };
             /** Signature */
             signature: string;
             /** Concepts Used */
@@ -433,9 +449,13 @@ export interface components {
             /** Variant Of */
             variant_of?: string | null;
             /** Title */
-            title: string;
+            title: {
+                [key: string]: string;
+            };
             /** Statement */
-            statement: string;
+            statement: {
+                [key: string]: string;
+            };
             /** Signature */
             signature: string;
             /** Concepts Used */
@@ -462,9 +482,13 @@ export interface components {
             /** Variant Of */
             variant_of?: string | null;
             /** Title */
-            title: string;
+            title: {
+                [key: string]: string;
+            };
             /** Statement */
-            statement: string;
+            statement: {
+                [key: string]: string;
+            };
             /** Signature */
             signature: string;
             /** Concepts Used */

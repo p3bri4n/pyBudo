@@ -9,11 +9,12 @@ import {
 import type { AdminKata } from "../../../interfaces/interfaces.ts";
 import { Loading } from "../../../components/ui/Loading.tsx";
 import {AdminKataVariantForm} from "./AdminKataVariantForm.tsx";
+import { localize } from "../../../utils/utils.ts";
 
 function AdminKataDetail() {
     const { kataId } = useParams<{ kataId: string }>();
     const navigate = useNavigate();
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     const [kata, setKata] = useState<AdminKata | null>(null);
     const [loading, setLoading] = useState(true);
@@ -95,7 +96,7 @@ function AdminKataDetail() {
                 ← {t("common.back")}
             </button>
 
-            <h1>{kata.title}</h1>
+            <h1>{localize(kata.title, i18n.language)}</h1>
 
             {error && <p role="alert">{error}</p>}
 

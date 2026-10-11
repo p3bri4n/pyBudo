@@ -12,7 +12,9 @@ class TestsKatas(BaseEntityHelper):
             id="kyu_10_addition",
             rank="kyu_10",
             discipline="core",
-            statement="Écrivez une fonction qui reçoit deux entiers et renvoie leur somme.",
+            statement={
+                "fr": "Écrivez une fonction qui reçoit deux entiers et renvoie leur somme."
+            },
             solution_reference="def additionner(a, b):\n    return a + b",
         )
 
@@ -21,7 +23,9 @@ class TestsKatas(BaseEntityHelper):
             id="kyu_2_check_pair",
             rank="kyu_2",
             discipline="django",
-            statement="Écrivez une fonction qui reçoit un entier et renvoie True s'il est pair, False sinon",
+            statement={
+                "fr": "Écrivez une fonction qui reçoit un entier et renvoie True s'il est pair, False sinon"
+            },
             solution_reference="def est_pair(n):\n"
             "if n % 2 == 0:\n"
             "return True\n"

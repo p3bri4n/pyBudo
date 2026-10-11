@@ -1,0 +1,2164 @@
+{
+  "katas": [
+    {
+      "id": "kyu10_total_price",
+      "kata_type": "function",
+      "rank": "kyu_10",
+      "discipline": "core",
+      "variant_of": null,
+      "title": {
+        "fr": "Prix total d'une commande",
+        "en": "Order total price"
+      },
+      "statement": {
+        "fr": "Écrivez la fonction `total_price(unit_price, quantity, shipping=5)` qui retourne le prix total d'une commande : le prix unitaire multiplié par la quantité, plus les frais de port. Les frais de port valent 5 par défaut.",
+        "en": "Write the function `total_price(unit_price, quantity, shipping=5)` that returns the total price of an order: the unit price multiplied by the quantity, plus the shipping cost. Shipping defaults to 5."
+      },
+      "signature": "def total_price(unit_price, quantity, shipping=5): ...",
+      "solution_reference": "def total_price(unit_price, quantity, shipping=5):\n    return unit_price * quantity + shipping\n",
+      "tests": [
+        {
+          "input": [
+            4,
+            3
+          ],
+          "output": 17
+        },
+        {
+          "input": [
+            10,
+            2,
+            0
+          ],
+          "output": 20
+        },
+        {
+          "input": [
+            7,
+            1,
+            3
+          ],
+          "output": 10
+        },
+        {
+          "input": [
+            0,
+            5
+          ],
+          "output": 5
+        },
+        {
+          "input": [
+            25,
+            4,
+            12
+          ],
+          "output": 112
+        }
+      ],
+      "concepts_used": [
+        "function definition",
+        "default parameter",
+        "arithmetic operators"
+      ],
+      "metadata": {
+        "model": "claude",
+        "level_spec_version": "level_spec-v1-draft",
+        "attempts": 1,
+        "status": "publie",
+        "violations_detected": []
+      }
+    },
+    {
+      "id": "kyu9_ticket_price",
+      "kata_type": "function",
+      "rank": "kyu_9",
+      "discipline": "core",
+      "variant_of": null,
+      "title": {
+        "fr": "Tarif d'un billet",
+        "en": "Ticket fare"
+      },
+      "statement": {
+        "fr": "Écrivez la fonction `ticket_price(age)` qui retourne le prix d'un billet selon l'âge : 5 pour les moins de 12 ans, 7 pour les 65 ans et plus, 10 sinon.",
+        "en": "Write the function `ticket_price(age)` that returns the price of a ticket depending on age: 5 for under 12, 7 for 65 and over, 10 otherwise."
+      },
+      "signature": "def ticket_price(age): ...",
+      "solution_reference": "def ticket_price(age):\n    if age < 12:\n        return 5\n    if age >= 65:\n        return 7\n    return 10\n",
+      "tests": [
+        {
+          "input": [
+            3
+          ],
+          "output": 5
+        },
+        {
+          "input": [
+            11
+          ],
+          "output": 5
+        },
+        {
+          "input": [
+            12
+          ],
+          "output": 10
+        },
+        {
+          "input": [
+            30
+          ],
+          "output": 10
+        },
+        {
+          "input": [
+            64
+          ],
+          "output": 10
+        },
+        {
+          "input": [
+            65
+          ],
+          "output": 7
+        },
+        {
+          "input": [
+            90
+          ],
+          "output": 7
+        }
+      ],
+      "concepts_used": [
+        "conditional statements",
+        "comparison operators",
+        "multiple return"
+      ],
+      "metadata": {
+        "model": "claude",
+        "level_spec_version": "level_spec-v1-draft",
+        "attempts": 1,
+        "status": "publie",
+        "violations_detected": []
+      }
+    },
+    {
+      "id": "kyu8_digit_sum",
+      "kata_type": "function",
+      "rank": "kyu_8",
+      "discipline": "core",
+      "variant_of": null,
+      "title": {
+        "fr": "Somme des chiffres",
+        "en": "Digit sum"
+      },
+      "statement": {
+        "fr": "Écrivez la fonction `digit_sum(n)` qui retourne la somme des chiffres de l'entier positif ou nul `n` (par exemple 123 donne 6). Utilisez une boucle, sans convertir `n` en chaîne.",
+        "en": "Write the function `digit_sum(n)` that returns the sum of the digits of the non-negative integer `n` (for example 123 gives 6). Use a loop, without converting `n` to a string."
+      },
+      "signature": "def digit_sum(n): ...",
+      "solution_reference": "def digit_sum(n):\n    total = 0\n    while n > 0:\n        total += n % 10\n        n //= 10\n    return total\n",
+      "tests": [
+        {
+          "input": [
+            0
+          ],
+          "output": 0
+        },
+        {
+          "input": [
+            7
+          ],
+          "output": 7
+        },
+        {
+          "input": [
+            123
+          ],
+          "output": 6
+        },
+        {
+          "input": [
+            9999
+          ],
+          "output": 36
+        },
+        {
+          "input": [
+            1000
+          ],
+          "output": 1
+        },
+        {
+          "input": [
+            505
+          ],
+          "output": 10
+        }
+      ],
+      "concepts_used": [
+        "while loop",
+        "modulo",
+        "floor division",
+        "accumulator"
+      ],
+      "metadata": {
+        "model": "claude",
+        "level_spec_version": "level_spec-v1-draft",
+        "attempts": 1,
+        "status": "publie",
+        "violations_detected": []
+      }
+    },
+    {
+      "id": "kyu7_unique_in_order",
+      "kata_type": "function",
+      "rank": "kyu_7",
+      "discipline": "core",
+      "variant_of": null,
+      "title": {
+        "fr": "Doublons supprimés, ordre conservé",
+        "en": "Remove duplicates, keep order"
+      },
+      "statement": {
+        "fr": "Écrivez la fonction `unique_in_order(items)` qui retourne une nouvelle liste contenant les éléments de `items` sans doublon, en gardant la première apparition de chacun et l'ordre d'origine.",
+        "en": "Write the function `unique_in_order(items)` that returns a new list containing the elements of `items` without duplicates, keeping the first occurrence of each and the original order."
+      },
+      "signature": "def unique_in_order(items): ...",
+      "solution_reference": "def unique_in_order(items):\n    result = []\n    for item in items:\n        if item not in result:\n            result.append(item)\n    return result\n",
+      "tests": [
+        {
+          "input": [
+            []
+          ],
+          "output": []
+        },
+        {
+          "input": [
+            [
+              1,
+              2,
+              2,
+              3,
+              1
+            ]
+          ],
+          "output": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "input": [
+            [
+              "a",
+              "b",
+              "a",
+              "c",
+              "b"
+            ]
+          ],
+          "output": [
+            "a",
+            "b",
+            "c"
+          ]
+        },
+        {
+          "input": [
+            [
+              5,
+              5,
+              5
+            ]
+          ],
+          "output": [
+            5
+          ]
+        },
+        {
+          "input": [
+            [
+              3,
+              1,
+              2
+            ]
+          ],
+          "output": [
+            3,
+            1,
+            2
+          ]
+        },
+        {
+          "input": [
+            [
+              0,
+              "0",
+              0
+            ]
+          ],
+          "output": [
+            0,
+            "0"
+          ]
+        }
+      ],
+      "concepts_used": [
+        "lists",
+        "for loop",
+        "membership test",
+        "append"
+      ],
+      "metadata": {
+        "model": "claude",
+        "level_spec_version": "level_spec-v1-draft",
+        "attempts": 1,
+        "status": "publie",
+        "violations_detected": []
+      }
+    },
+    {
+      "id": "kyu6_word_frequency",
+      "kata_type": "function",
+      "rank": "kyu_6",
+      "discipline": "core",
+      "variant_of": null,
+      "title": {
+        "fr": "Fréquence des mots",
+        "en": "Word frequency"
+      },
+      "statement": {
+        "fr": "Écrivez la fonction `word_frequency(text)` qui retourne un dictionnaire associant chaque mot de `text` à son nombre d'occurrences. Les mots sont séparés par des espaces (un ou plusieurs) et la casse est ignorée : les clés sont en minuscules.",
+        "en": "Write the function `word_frequency(text)` that returns a dictionary mapping each word of `text` to its number of occurrences. Words are separated by whitespace (one or more characters) and case is ignored: keys are lowercase."
+      },
+      "signature": "def word_frequency(text): ...",
+      "solution_reference": "def word_frequency(text):\n    counts = {}\n    for word in text.lower().split():\n        counts[word] = counts.get(word, 0) + 1\n    return counts\n",
+      "tests": [
+        {
+          "input": [
+            "the cat and the hat"
+          ],
+          "output": {
+            "the": 2,
+            "cat": 1,
+            "and": 1,
+            "hat": 1
+          }
+        },
+        {
+          "input": [
+            "Hello hello HELLO"
+          ],
+          "output": {
+            "hello": 3
+          }
+        },
+        {
+          "input": [
+            ""
+          ],
+          "output": {}
+        },
+        {
+          "input": [
+            "  a  b a "
+          ],
+          "output": {
+            "a": 2,
+            "b": 1
+          }
+        },
+        {
+          "input": [
+            "to be or not to be"
+          ],
+          "output": {
+            "to": 2,
+            "be": 2,
+            "or": 1,
+            "not": 1
+          }
+        }
+      ],
+      "concepts_used": [
+        "dictionaries",
+        "dict.get",
+        "string methods",
+        "for loop"
+      ],
+      "metadata": {
+        "model": "claude",
+        "level_spec_version": "level_spec-v1-draft",
+        "attempts": 1,
+        "status": "publie",
+        "violations_detected": []
+      }
+    },
+    {
+      "id": "kyu5_group_by_first_letter",
+      "kata_type": "function",
+      "rank": "kyu_5",
+      "discipline": "core",
+      "variant_of": null,
+      "title": {
+        "fr": "Regrouper par initiale",
+        "en": "Group by first letter"
+      },
+      "statement": {
+        "fr": "Écrivez la fonction `group_by_first_letter(words)` qui regroupe des mots non vides selon leur première lettre. Elle retourne un dictionnaire dont les clés sont les initiales en minuscules et les valeurs les listes de mots correspondants, triées avec `sorted`.",
+        "en": "Write the function `group_by_first_letter(words)` that groups non-empty words by their first letter. It returns a dictionary whose keys are lowercase initials and whose values are the lists of matching words, sorted with `sorted`."
+      },
+      "signature": "def group_by_first_letter(words): ...",
+      "solution_reference": "def group_by_first_letter(words):\n    groups = {}\n    for word in words:\n        letter = word[0].lower()\n        if letter not in groups:\n            groups[letter] = []\n        groups[letter].append(word)\n    for letter in groups:\n        groups[letter] = sorted(groups[letter])\n    return groups\n",
+      "tests": [
+        {
+          "input": [
+            []
+          ],
+          "output": {}
+        },
+        {
+          "input": [
+            [
+              "apple",
+              "avocado",
+              "banana",
+              "cherry"
+            ]
+          ],
+          "output": {
+            "a": [
+              "apple",
+              "avocado"
+            ],
+            "b": [
+              "banana"
+            ],
+            "c": [
+              "cherry"
+            ]
+          }
+        },
+        {
+          "input": [
+            [
+              "Zebra",
+              "zoo",
+              "apple"
+            ]
+          ],
+          "output": {
+            "z": [
+              "Zebra",
+              "zoo"
+            ],
+            "a": [
+              "apple"
+            ]
+          }
+        },
+        {
+          "input": [
+            [
+              "b",
+              "a",
+              "B",
+              "A"
+            ]
+          ],
+          "output": {
+            "b": [
+              "B",
+              "b"
+            ],
+            "a": [
+              "A",
+              "a"
+            ]
+          }
+        },
+        {
+          "input": [
+            [
+              "kiwi"
+            ]
+          ],
+          "output": {
+            "k": [
+              "kiwi"
+            ]
+          }
+        },
+        {
+          "input": [
+            [
+              "dog",
+              "door",
+              "cat",
+              "cow",
+              "dig"
+            ]
+          ],
+          "output": {
+            "d": [
+              "dig",
+              "dog",
+              "door"
+            ],
+            "c": [
+              "cat",
+              "cow"
+            ]
+          }
+        }
+      ],
+      "concepts_used": [
+        "dictionaries of lists",
+        "string indexing",
+        "sorted",
+        "nested loops"
+      ],
+      "metadata": {
+        "model": "claude",
+        "level_spec_version": "level_spec-v1-draft",
+        "attempts": 1,
+        "status": "publie",
+        "violations_detected": []
+      }
+    },
+    {
+      "id": "kyu4_caesar_shift",
+      "kata_type": "function",
+      "rank": "kyu_4",
+      "discipline": "core",
+      "variant_of": null,
+      "title": {
+        "fr": "Chiffrement de César",
+        "en": "Caesar cipher"
+      },
+      "statement": {
+        "fr": "Écrivez la fonction `caesar_shift(text, shift)` qui décale chaque lettre de l'alphabet latin (a-z, A-Z) de `shift` positions, en revenant au début de l'alphabet après z. La casse est conservée, les autres caractères sont inchangés. `shift` peut être négatif ou supérieur à 26.",
+        "en": "Write the function `caesar_shift(text, shift)` that shifts every letter of the Latin alphabet (a-z, A-Z) by `shift` positions, wrapping around after z. Case is preserved and other characters are left unchanged. `shift` may be negative or greater than 26."
+      },
+      "signature": "def caesar_shift(text, shift): ...",
+      "solution_reference": "def caesar_shift(text, shift):\n    result = \"\"\n    for char in text:\n        if \"a\" <= char <= \"z\":\n            result += chr((ord(char) - ord(\"a\") + shift) % 26 + ord(\"a\"))\n        elif \"A\" <= char <= \"Z\":\n            result += chr((ord(char) - ord(\"A\") + shift) % 26 + ord(\"A\"))\n        else:\n            result += char\n    return result\n",
+      "tests": [
+        {
+          "input": [
+            "abc",
+            1
+          ],
+          "output": "bcd"
+        },
+        {
+          "input": [
+            "xyz",
+            3
+          ],
+          "output": "abc"
+        },
+        {
+          "input": [
+            "Hello, World!",
+            5
+          ],
+          "output": "Mjqqt, Btwqi!"
+        },
+        {
+          "input": [
+            "abc",
+            -1
+          ],
+          "output": "zab"
+        },
+        {
+          "input": [
+            "Python 3.12",
+            26
+          ],
+          "output": "Python 3.12"
+        },
+        {
+          "input": [
+            "",
+            4
+          ],
+          "output": ""
+        },
+        {
+          "input": [
+            "ZaZ",
+            -27
+          ],
+          "output": "YzY"
+        }
+      ],
+      "concepts_used": [
+        "ord / chr",
+        "modulo",
+        "string comparison",
+        "string building"
+      ],
+      "metadata": {
+        "model": "claude",
+        "level_spec_version": "level_spec-v1-draft",
+        "attempts": 1,
+        "status": "publie",
+        "violations_detected": []
+      }
+    },
+    {
+      "id": "kyu3_to_int_list",
+      "kata_type": "function",
+      "rank": "kyu_3",
+      "discipline": "core",
+      "variant_of": null,
+      "title": {
+        "fr": "Conversion tolérante aux erreurs",
+        "en": "Error-tolerant conversion"
+      },
+      "statement": {
+        "fr": "Écrivez la fonction `to_int_list(tokens)` qui convertit chaque chaîne de `tokens` avec `int()`. Elle retourne un dictionnaire `{\"values\": [...], \"errors\": n}` : `values` contient les entiers obtenus (dans l'ordre) et `errors` le nombre de chaînes non convertibles, qui sont ignorées.",
+        "en": "Write the function `to_int_list(tokens)` that converts each string of `tokens` with `int()`. It returns a dictionary `{\"values\": [...], \"errors\": n}`: `values` holds the resulting integers (in order) and `errors` the number of strings that could not be converted, which are skipped."
+      },
+      "signature": "def to_int_list(tokens): ...",
+      "solution_reference": "def to_int_list(tokens):\n    values = []\n    errors = 0\n    for token in tokens:\n        try:\n            values.append(int(token))\n        except ValueError:\n            errors += 1\n    return {\"values\": values, \"errors\": errors}\n",
+      "tests": [
+        {
+          "input": [
+            [
+              "1",
+              "2",
+              "3"
+            ]
+          ],
+          "output": {
+            "values": [
+              1,
+              2,
+              3
+            ],
+            "errors": 0
+          }
+        },
+        {
+          "input": [
+            [
+              "10",
+              "x",
+              "20",
+              " 7 "
+            ]
+          ],
+          "output": {
+            "values": [
+              10,
+              20,
+              7
+            ],
+            "errors": 1
+          }
+        },
+        {
+          "input": [
+            [
+              "3.5",
+              "",
+              "-4"
+            ]
+          ],
+          "output": {
+            "values": [
+              -4
+            ],
+            "errors": 2
+          }
+        },
+        {
+          "input": [
+            []
+          ],
+          "output": {
+            "values": [],
+            "errors": 0
+          }
+        },
+        {
+          "input": [
+            [
+              "abc",
+              "def"
+            ]
+          ],
+          "output": {
+            "values": [],
+            "errors": 2
+          }
+        }
+      ],
+      "concepts_used": [
+        "try / except",
+        "ValueError",
+        "dictionaries",
+        "for loop"
+      ],
+      "metadata": {
+        "model": "claude",
+        "level_spec_version": "level_spec-v1-draft",
+        "attempts": 1,
+        "status": "publie",
+        "violations_detected": []
+      }
+    },
+    {
+      "id": "kyu2_days_until",
+      "kata_type": "function",
+      "rank": "kyu_2",
+      "discipline": "core",
+      "variant_of": null,
+      "title": {
+        "fr": "Jours avant l'échéance",
+        "en": "Days until deadline"
+      },
+      "statement": {
+        "fr": "Écrivez la fonction `days_until(today, deadline)`. Les deux arguments sont des dates au format `\"AAAA-MM-JJ\"`. Elle retourne le nombre de jours entiers entre `today` et `deadline`, ou 0 si l'échéance est déjà passée. Si l'une des dates est invalide, elle retourne `None`. Utilisez le module `datetime`.",
+        "en": "Write the function `days_until(today, deadline)`. Both arguments are dates formatted as `\"YYYY-MM-DD\"`. It returns the whole number of days between `today` and `deadline`, or 0 if the deadline has already passed. If either date is invalid, it returns `None`. Use the `datetime` module."
+      },
+      "signature": "def days_until(today, deadline): ...",
+      "solution_reference": "from datetime import date\n\n\ndef days_until(today, deadline):\n    try:\n        start = date.fromisoformat(today)\n        end = date.fromisoformat(deadline)\n    except ValueError:\n        return None\n    if end < start:\n        return 0\n    return (end - start).days\n",
+      "tests": [
+        {
+          "input": [
+            "2024-01-01",
+            "2024-01-31"
+          ],
+          "output": 30
+        },
+        {
+          "input": [
+            "2024-02-28",
+            "2024-03-01"
+          ],
+          "output": 2
+        },
+        {
+          "input": [
+            "2024-06-10",
+            "2024-06-01"
+          ],
+          "output": 0
+        },
+        {
+          "input": [
+            "2024-06-10",
+            "hello"
+          ],
+          "output": null
+        },
+        {
+          "input": [
+            "2024-13-01",
+            "2024-12-01"
+          ],
+          "output": null
+        },
+        {
+          "input": [
+            "2023-12-31",
+            "2024-01-01"
+          ],
+          "output": 1
+        },
+        {
+          "input": [
+            "2024-05-05",
+            "2024-05-05"
+          ],
+          "output": 0
+        }
+      ],
+      "concepts_used": [
+        "datetime module",
+        "try / except",
+        "date arithmetic",
+        "None as error value"
+      ],
+      "metadata": {
+        "model": "claude",
+        "level_spec_version": "level_spec-v1-draft",
+        "attempts": 1,
+        "status": "publie",
+        "violations_detected": []
+      }
+    },
+    {
+      "id": "kyu1_flatten",
+      "kata_type": "function",
+      "rank": "kyu_1",
+      "discipline": "core",
+      "variant_of": null,
+      "title": {
+        "fr": "Aplatir une liste imbriquée",
+        "en": "Flatten a nested list"
+      },
+      "statement": {
+        "fr": "Écrivez la fonction récursive `flatten(nested)` qui aplatit une liste dont les éléments peuvent eux-mêmes être des listes, à n'importe quelle profondeur. Elle retourne une liste simple qui garde l'ordre de lecture. Les chaînes ne sont pas des listes : elles restent des éléments.",
+        "en": "Write the recursive function `flatten(nested)` that flattens a list whose elements may themselves be lists, at any depth. It returns a flat list that keeps the reading order. Strings are not lists: they remain elements."
+      },
+      "signature": "def flatten(nested): ...",
+      "solution_reference": "def flatten(nested):\n    result = []\n    for item in nested:\n        if isinstance(item, list):\n            result += flatten(item)\n        else:\n            result.append(item)\n    return result\n",
+      "tests": [
+        {
+          "input": [
+            []
+          ],
+          "output": []
+        },
+        {
+          "input": [
+            [
+              1,
+              [
+                2,
+                3
+              ],
+              [
+                [
+                  4
+                ]
+              ]
+            ]
+          ],
+          "output": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "input": [
+            [
+              [],
+              [
+                []
+              ]
+            ]
+          ],
+          "output": []
+        },
+        {
+          "input": [
+            [
+              [
+                "a",
+                [
+                  "b"
+                ]
+              ],
+              "c"
+            ]
+          ],
+          "output": [
+            "a",
+            "b",
+            "c"
+          ]
+        },
+        {
+          "input": [
+            [
+              1,
+              2,
+              3
+            ]
+          ],
+          "output": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "input": [
+            [
+              [
+                [
+                  [
+                    7
+                  ]
+                ]
+              ]
+            ]
+          ],
+          "output": [
+            7
+          ]
+        }
+      ],
+      "concepts_used": [
+        "recursion",
+        "base case",
+        "isinstance",
+        "lists"
+      ],
+      "metadata": {
+        "model": "claude",
+        "level_spec_version": "level_spec-v1-draft",
+        "attempts": 1,
+        "status": "publie",
+        "violations_detected": []
+      }
+    },
+    {
+      "id": "shodan_parking",
+      "kata_type": "class",
+      "rank": "shodan",
+      "discipline": "core",
+      "variant_of": null,
+      "title": {
+        "fr": "Parking",
+        "en": "Parking lot"
+      },
+      "statement": {
+        "fr": "Implémentez la classe `Parking`. Le constructeur reçoit la capacité (attribut `capacity`) et crée la liste vide `cars` des plaques présentes.\n\n- `free_spots()` : retourne le nombre de places libres.\n- `enter(plate)` : fait entrer la voiture et retourne `True`. Si le parking est complet ou si la plaque est déjà présente, rien ne change et la méthode retourne `False`.\n- `leave(plate)` : fait sortir la voiture et retourne `True`. Si la plaque est absente, retourne `False`.",
+        "en": "Implement the class `Parking`. The constructor receives the capacity (attribute `capacity`) and creates the empty list `cars` of plates currently parked.\n\n- `free_spots()`: returns the number of free spots.\n- `enter(plate)`: parks the car and returns `True`. If the lot is full or the plate is already present, nothing changes and the method returns `False`.\n- `leave(plate)`: removes the car and returns `True`. If the plate is absent, returns `False`."
+      },
+      "class_name": "Parking",
+      "signature": "class Parking:\n    def __init__(self, capacity): ...\n    def free_spots(self): ...\n    def enter(self, plate): ...\n    def leave(self, plate): ...",
+      "solution_reference": "class Parking:\n    def __init__(self, capacity):\n        self.capacity = capacity\n        self.cars = []\n\n    def free_spots(self):\n        return self.capacity - len(self.cars)\n\n    def enter(self, plate):\n        if self.free_spots() == 0 or plate in self.cars:\n            return False\n        self.cars.append(plate)\n        return True\n\n    def leave(self, plate):\n        if plate not in self.cars:\n            return False\n        self.cars.remove(plate)\n        return True\n",
+      "tests": [
+        {
+          "init": [
+            2
+          ],
+          "calls": [
+            {
+              "method": "enter",
+              "args": [
+                "AA-1"
+              ],
+              "expected_return": true
+            },
+            {
+              "method": "enter",
+              "args": [
+                "AA-1"
+              ],
+              "expected_return": false
+            },
+            {
+              "method": "enter",
+              "args": [
+                "BB-2"
+              ],
+              "expected_return": true
+            },
+            {
+              "method": "enter",
+              "args": [
+                "CC-3"
+              ],
+              "expected_return": false
+            },
+            {
+              "method": "free_spots",
+              "args": [],
+              "expected_return": 0
+            }
+          ],
+          "expected_state": {
+            "capacity": 2,
+            "cars": [
+              "AA-1",
+              "BB-2"
+            ]
+          }
+        },
+        {
+          "init": [
+            3
+          ],
+          "calls": [
+            {
+              "method": "leave",
+              "args": [
+                "AA-1"
+              ],
+              "expected_return": false
+            },
+            {
+              "method": "enter",
+              "args": [
+                "AA-1"
+              ],
+              "expected_return": true
+            },
+            {
+              "method": "leave",
+              "args": [
+                "AA-1"
+              ],
+              "expected_return": true
+            },
+            {
+              "method": "free_spots",
+              "args": [],
+              "expected_return": 3
+            }
+          ],
+          "expected_state": {
+            "capacity": 3,
+            "cars": []
+          }
+        },
+        {
+          "init": [
+            1
+          ],
+          "calls": [
+            {
+              "method": "enter",
+              "args": [
+                "X"
+              ],
+              "expected_return": true
+            },
+            {
+              "method": "leave",
+              "args": [
+                "X"
+              ],
+              "expected_return": true
+            },
+            {
+              "method": "enter",
+              "args": [
+                "Y"
+              ],
+              "expected_return": true
+            },
+            {
+              "method": "free_spots",
+              "args": [],
+              "expected_return": 0
+            }
+          ],
+          "expected_state": {
+            "capacity": 1,
+            "cars": [
+              "Y"
+            ]
+          }
+        },
+        {
+          "init": [
+            0
+          ],
+          "calls": [
+            {
+              "method": "enter",
+              "args": [
+                "X"
+              ],
+              "expected_return": false
+            },
+            {
+              "method": "free_spots",
+              "args": [],
+              "expected_return": 0
+            }
+          ],
+          "expected_state": {
+            "capacity": 0,
+            "cars": []
+          }
+        },
+        {
+          "init": [
+            2
+          ],
+          "calls": [
+            {
+              "method": "enter",
+              "args": [
+                "A"
+              ],
+              "expected_return": true
+            },
+            {
+              "method": "enter",
+              "args": [
+                "B"
+              ],
+              "expected_return": true
+            },
+            {
+              "method": "leave",
+              "args": [
+                "A"
+              ],
+              "expected_return": true
+            },
+            {
+              "method": "enter",
+              "args": [
+                "C"
+              ],
+              "expected_return": true
+            },
+            {
+              "method": "free_spots",
+              "args": [],
+              "expected_return": 0
+            }
+          ],
+          "expected_state": {
+            "capacity": 2,
+            "cars": [
+              "B",
+              "C"
+            ]
+          }
+        }
+      ],
+      "concepts_used": [
+        "class",
+        "constructor",
+        "instance attributes",
+        "method calling another method"
+      ],
+      "metadata": {
+        "model": "claude",
+        "level_spec_version": "level_spec-v1-draft",
+        "attempts": 1,
+        "status": "publie",
+        "violations_detected": []
+      }
+    },
+    {
+      "id": "nidan_discounted_product",
+      "kata_type": "class",
+      "rank": "nidan",
+      "discipline": "core",
+      "variant_of": null,
+      "title": {
+        "fr": "Produit remisé",
+        "en": "Discounted product"
+      },
+      "statement": {
+        "fr": "Implémentez deux classes. Les prix sont des entiers (centimes).\n\n`Product(name, price)` : attributs `name` et `price`. `final_price()` retourne `price`. `describe()` retourne `\"<name>: <final_price>\"`.\n\n`DiscountedProduct(Product)` : le constructeur reçoit `name`, `price` et `percent` (remise en pourcentage), et appelle le constructeur de la classe parente. `final_price()` est redéfinie : elle retourne le prix de la classe parente réduit de `percent` %, par `prix * (100 - percent) // 100`. `set_percent(percent)` change la remise et retourne `True`, sauf si `percent` n'est pas entre 0 et 100 inclus : rien ne change et elle retourne `False`.",
+        "en": "Implement two classes. Prices are integers (cents).\n\n`Product(name, price)`: attributes `name` and `price`. `final_price()` returns `price`. `describe()` returns `\"<name>: <final_price>\"`.\n\n`DiscountedProduct(Product)`: the constructor receives `name`, `price` and `percent` (discount in percent) and calls the parent constructor. `final_price()` is overridden: it returns the parent's price reduced by `percent` %, computed as `price * (100 - percent) // 100`. `set_percent(percent)` changes the discount and returns `True`, unless `percent` is outside 0 to 100 inclusive: nothing changes and it returns `False`."
+      },
+      "class_name": "DiscountedProduct",
+      "signature": "class Product:\n    def __init__(self, name, price): ...\n    def final_price(self): ...\n    def describe(self): ...\n\nclass DiscountedProduct(Product):\n    def __init__(self, name, price, percent): ...\n    def final_price(self): ...\n    def set_percent(self, percent): ...",
+      "solution_reference": "class Product:\n    def __init__(self, name, price):\n        self.name = name\n        self.price = price\n\n    def final_price(self):\n        return self.price\n\n    def describe(self):\n        return f\"{self.name}: {self.final_price()}\"\n\n\nclass DiscountedProduct(Product):\n    def __init__(self, name, price, percent):\n        super().__init__(name, price)\n        self.percent = percent\n\n    def final_price(self):\n        return super().final_price() * (100 - self.percent) // 100\n\n    def set_percent(self, percent):\n        if percent < 0 or percent > 100:\n            return False\n        self.percent = percent\n        return True\n",
+      "tests": [
+        {
+          "init": [
+            "Pen",
+            200,
+            10
+          ],
+          "calls": [
+            {
+              "method": "final_price",
+              "args": [],
+              "expected_return": 180
+            },
+            {
+              "method": "describe",
+              "args": [],
+              "expected_return": "Pen: 180"
+            },
+            {
+              "method": "set_percent",
+              "args": [
+                50
+              ],
+              "expected_return": true
+            },
+            {
+              "method": "final_price",
+              "args": [],
+              "expected_return": 100
+            },
+            {
+              "method": "describe",
+              "args": [],
+              "expected_return": "Pen: 100"
+            }
+          ],
+          "expected_state": {
+            "name": "Pen",
+            "price": 200,
+            "percent": 50
+          }
+        },
+        {
+          "init": [
+            "Book",
+            1500,
+            0
+          ],
+          "calls": [
+            {
+              "method": "final_price",
+              "args": [],
+              "expected_return": 1500
+            },
+            {
+              "method": "set_percent",
+              "args": [
+                101
+              ],
+              "expected_return": false
+            },
+            {
+              "method": "set_percent",
+              "args": [
+                -1
+              ],
+              "expected_return": false
+            },
+            {
+              "method": "final_price",
+              "args": [],
+              "expected_return": 1500
+            }
+          ],
+          "expected_state": {
+            "name": "Book",
+            "price": 1500,
+            "percent": 0
+          }
+        },
+        {
+          "init": [
+            "Lamp",
+            999,
+            100
+          ],
+          "calls": [
+            {
+              "method": "final_price",
+              "args": [],
+              "expected_return": 0
+            },
+            {
+              "method": "set_percent",
+              "args": [
+                100
+              ],
+              "expected_return": true
+            },
+            {
+              "method": "describe",
+              "args": [],
+              "expected_return": "Lamp: 0"
+            }
+          ],
+          "expected_state": {
+            "name": "Lamp",
+            "price": 999,
+            "percent": 100
+          }
+        },
+        {
+          "init": [
+            "Mug",
+            333,
+            33
+          ],
+          "calls": [
+            {
+              "method": "final_price",
+              "args": [],
+              "expected_return": 223
+            },
+            {
+              "method": "set_percent",
+              "args": [
+                0
+              ],
+              "expected_return": true
+            },
+            {
+              "method": "final_price",
+              "args": [],
+              "expected_return": 333
+            },
+            {
+              "method": "describe",
+              "args": [],
+              "expected_return": "Mug: 333"
+            }
+          ],
+          "expected_state": {
+            "name": "Mug",
+            "price": 333,
+            "percent": 0
+          }
+        },
+        {
+          "init": [
+            "Bag",
+            5000,
+            25
+          ],
+          "calls": [
+            {
+              "method": "describe",
+              "args": [],
+              "expected_return": "Bag: 3750"
+            },
+            {
+              "method": "set_percent",
+              "args": [
+                40
+              ],
+              "expected_return": true
+            },
+            {
+              "method": "describe",
+              "args": [],
+              "expected_return": "Bag: 3000"
+            },
+            {
+              "method": "set_percent",
+              "args": [
+                200
+              ],
+              "expected_return": false
+            },
+            {
+              "method": "final_price",
+              "args": [],
+              "expected_return": 3000
+            }
+          ],
+          "expected_state": {
+            "name": "Bag",
+            "price": 5000,
+            "percent": 40
+          }
+        }
+      ],
+      "concepts_used": [
+        "single inheritance",
+        "super().__init__",
+        "method overriding",
+        "super() method call"
+      ],
+      "metadata": {
+        "model": "claude",
+        "level_spec_version": "level_spec-v1-draft",
+        "attempts": 1,
+        "status": "publie",
+        "violations_detected": []
+      }
+    },
+    {
+      "id": "sandan_team",
+      "kata_type": "class",
+      "rank": "sandan",
+      "discipline": "core",
+      "variant_of": null,
+      "title": {
+        "fr": "Équipe",
+        "en": "Team"
+      },
+      "statement": {
+        "fr": "Implémentez la classe `Team`. Le constructeur reçoit le nom (attribut `name`) et crée la liste vide `members`.\n\n- `add(member)` : ajoute le membre et retourne `True`. S'il est déjà dans l'équipe, rien ne change et la méthode retourne `False`. Utilisez l'opérateur `in` sur l'équipe elle-même.\n- `__len__` : nombre de membres.\n- `__contains__(member)` : `True` si le membre fait partie de l'équipe.\n- `__str__` : `\"<name> (<n> members)\"`, avec `n` le nombre de membres (toujours « members », même pour 0 ou 1).\n- `__repr__` : `\"Team(<name>)\"`, avec le nom affiché par `repr` (guillemets inclus).",
+        "en": "Implement the class `Team`. The constructor receives the name (attribute `name`) and creates the empty list `members`.\n\n- `add(member)`: adds the member and returns `True`. If already in the team, nothing changes and the method returns `False`. Use the `in` operator on the team itself.\n- `__len__`: number of members.\n- `__contains__(member)`: `True` if the member belongs to the team.\n- `__str__`: `\"<name> (<n> members)\"`, with `n` the number of members (always \"members\", even for 0 or 1).\n- `__repr__`: `\"Team(<name>)\"`, with the name rendered by `repr` (quotes included)."
+      },
+      "class_name": "Team",
+      "signature": "class Team:\n    def __init__(self, name): ...\n    def add(self, member): ...\n    def __len__(self): ...\n    def __contains__(self, member): ...\n    def __str__(self): ...\n    def __repr__(self): ...",
+      "solution_reference": "class Team:\n    def __init__(self, name):\n        self.name = name\n        self.members = []\n\n    def add(self, member):\n        if member in self:\n            return False\n        self.members.append(member)\n        return True\n\n    def __len__(self):\n        return len(self.members)\n\n    def __contains__(self, member):\n        return member in self.members\n\n    def __str__(self):\n        return f\"{self.name} ({len(self)} members)\"\n\n    def __repr__(self):\n        return f\"Team({self.name!r})\"\n",
+      "tests": [
+        {
+          "init": [
+            "Dev"
+          ],
+          "calls": [
+            {
+              "method": "add",
+              "args": [
+                "Ann"
+              ],
+              "expected_return": true
+            },
+            {
+              "method": "add",
+              "args": [
+                "Ann"
+              ],
+              "expected_return": false
+            },
+            {
+              "method": "add",
+              "args": [
+                "Bob"
+              ],
+              "expected_return": true
+            },
+            {
+              "method": "__len__",
+              "args": [],
+              "expected_return": 2
+            },
+            {
+              "method": "__contains__",
+              "args": [
+                "Ann"
+              ],
+              "expected_return": true
+            },
+            {
+              "method": "__contains__",
+              "args": [
+                "Zed"
+              ],
+              "expected_return": false
+            },
+            {
+              "method": "__str__",
+              "args": [],
+              "expected_return": "Dev (2 members)"
+            },
+            {
+              "method": "__repr__",
+              "args": [],
+              "expected_return": "Team('Dev')"
+            }
+          ],
+          "expected_state": {
+            "name": "Dev",
+            "members": [
+              "Ann",
+              "Bob"
+            ]
+          }
+        },
+        {
+          "init": [
+            "Ops"
+          ],
+          "calls": [
+            {
+              "method": "__len__",
+              "args": [],
+              "expected_return": 0
+            },
+            {
+              "method": "__str__",
+              "args": [],
+              "expected_return": "Ops (0 members)"
+            },
+            {
+              "method": "__contains__",
+              "args": [
+                "x"
+              ],
+              "expected_return": false
+            }
+          ],
+          "expected_state": {
+            "name": "Ops",
+            "members": []
+          }
+        },
+        {
+          "init": [
+            "QA"
+          ],
+          "calls": [
+            {
+              "method": "add",
+              "args": [
+                "a"
+              ],
+              "expected_return": true
+            },
+            {
+              "method": "add",
+              "args": [
+                "b"
+              ],
+              "expected_return": true
+            },
+            {
+              "method": "add",
+              "args": [
+                "c"
+              ],
+              "expected_return": true
+            },
+            {
+              "method": "__len__",
+              "args": [],
+              "expected_return": 3
+            },
+            {
+              "method": "__str__",
+              "args": [],
+              "expected_return": "QA (3 members)"
+            }
+          ],
+          "expected_state": {
+            "name": "QA",
+            "members": [
+              "a",
+              "b",
+              "c"
+            ]
+          }
+        },
+        {
+          "init": [
+            "O'Brien team"
+          ],
+          "calls": [
+            {
+              "method": "add",
+              "args": [
+                "Liam"
+              ],
+              "expected_return": true
+            },
+            {
+              "method": "__repr__",
+              "args": [],
+              "expected_return": "Team(\"O'Brien team\")"
+            },
+            {
+              "method": "__str__",
+              "args": [],
+              "expected_return": "O'Brien team (1 members)"
+            }
+          ],
+          "expected_state": {
+            "name": "O'Brien team",
+            "members": [
+              "Liam"
+            ]
+          }
+        },
+        {
+          "init": [
+            "Solo"
+          ],
+          "calls": [
+            {
+              "method": "add",
+              "args": [
+                1
+              ],
+              "expected_return": true
+            },
+            {
+              "method": "add",
+              "args": [
+                1
+              ],
+              "expected_return": false
+            },
+            {
+              "method": "__contains__",
+              "args": [
+                1
+              ],
+              "expected_return": true
+            },
+            {
+              "method": "__contains__",
+              "args": [
+                "1"
+              ],
+              "expected_return": false
+            },
+            {
+              "method": "__len__",
+              "args": [],
+              "expected_return": 1
+            }
+          ],
+          "expected_state": {
+            "name": "Solo",
+            "members": [
+              1
+            ]
+          }
+        }
+      ],
+      "concepts_used": [
+        "__len__",
+        "__contains__",
+        "__str__",
+        "__repr__",
+        "in operator on custom class"
+      ],
+      "metadata": {
+        "model": "claude",
+        "level_spec_version": "level_spec-v1-draft",
+        "attempts": 1,
+        "status": "publie",
+        "violations_detected": []
+      }
+    },
+    {
+      "id": "yondan_gradebook",
+      "kata_type": "class",
+      "rank": "yondan",
+      "discipline": "core",
+      "variant_of": null,
+      "title": {
+        "fr": "Carnet de notes",
+        "en": "Gradebook"
+      },
+      "statement": {
+        "fr": "Implémentez la classe `Gradebook`. Le constructeur n'a pas d'argument et crée le dictionnaire vide `grades` (nom d'élève vers liste de notes).\n\n- `add_grade(name, grade)` : ajoute la note à l'élève (qui est créé s'il n'existe pas). Ne retourne rien.\n- `average(name)` : moyenne des notes de l'élève arrondie à 2 décimales avec `round`, ou `None` si l'élève est inconnu.\n- `averages()` : dictionnaire nom vers moyenne pour tous les élèves, construit par compréhension.\n- `above(threshold)` : liste triée (ordre alphabétique) des noms dont la moyenne est supérieure ou égale à `threshold`, construite par compréhension.",
+        "en": "Implement the class `Gradebook`. The constructor takes no argument and creates the empty dictionary `grades` (student name to list of grades).\n\n- `add_grade(name, grade)`: adds the grade to the student (created if unknown). Returns nothing.\n- `average(name)`: the student's average rounded to 2 decimals with `round`, or `None` if the student is unknown.\n- `averages()`: dictionary of name to average for every student, built with a comprehension.\n- `above(threshold)`: alphabetically sorted list of names whose average is greater than or equal to `threshold`, built with a comprehension."
+      },
+      "class_name": "Gradebook",
+      "signature": "class Gradebook:\n    def __init__(self): ...\n    def add_grade(self, name, grade): ...\n    def average(self, name): ...\n    def averages(self): ...\n    def above(self, threshold): ...",
+      "solution_reference": "class Gradebook:\n    def __init__(self):\n        self.grades = {}\n\n    def add_grade(self, name, grade):\n        if name not in self.grades:\n            self.grades[name] = []\n        self.grades[name].append(grade)\n\n    def average(self, name):\n        if name not in self.grades:\n            return None\n        values = self.grades[name]\n        return round(sum(values) / len(values), 2)\n\n    def averages(self):\n        return {name: self.average(name) for name in self.grades}\n\n    def above(self, threshold):\n        return sorted([name for name, avg in self.averages().items() if avg >= threshold])\n",
+      "tests": [
+        {
+          "init": [],
+          "calls": [
+            {
+              "method": "add_grade",
+              "args": [
+                "alice",
+                15
+              ],
+              "expected_return": null
+            },
+            {
+              "method": "add_grade",
+              "args": [
+                "alice",
+                12
+              ],
+              "expected_return": null
+            },
+            {
+              "method": "average",
+              "args": [
+                "alice"
+              ],
+              "expected_return": 13.5
+            },
+            {
+              "method": "average",
+              "args": [
+                "bob"
+              ],
+              "expected_return": null
+            },
+            {
+              "method": "averages",
+              "args": [],
+              "expected_return": {
+                "alice": 13.5
+              }
+            },
+            {
+              "method": "above",
+              "args": [
+                14
+              ],
+              "expected_return": []
+            }
+          ],
+          "expected_state": {
+            "grades": {
+              "alice": [
+                15,
+                12
+              ]
+            }
+          }
+        },
+        {
+          "init": [],
+          "calls": [
+            {
+              "method": "above",
+              "args": [
+                0
+              ],
+              "expected_return": []
+            },
+            {
+              "method": "averages",
+              "args": [],
+              "expected_return": {}
+            },
+            {
+              "method": "average",
+              "args": [
+                "nobody"
+              ],
+              "expected_return": null
+            }
+          ],
+          "expected_state": {
+            "grades": {}
+          }
+        },
+        {
+          "init": [],
+          "calls": [
+            {
+              "method": "add_grade",
+              "args": [
+                "zoe",
+                10
+              ],
+              "expected_return": null
+            },
+            {
+              "method": "add_grade",
+              "args": [
+                "adam",
+                10
+              ],
+              "expected_return": null
+            },
+            {
+              "method": "add_grade",
+              "args": [
+                "max",
+                8
+              ],
+              "expected_return": null
+            },
+            {
+              "method": "above",
+              "args": [
+                10
+              ],
+              "expected_return": [
+                "adam",
+                "zoe"
+              ]
+            },
+            {
+              "method": "above",
+              "args": [
+                11
+              ],
+              "expected_return": []
+            }
+          ],
+          "expected_state": {
+            "grades": {
+              "zoe": [
+                10
+              ],
+              "adam": [
+                10
+              ],
+              "max": [
+                8
+              ]
+            }
+          }
+        },
+        {
+          "init": [],
+          "calls": [
+            {
+              "method": "add_grade",
+              "args": [
+                "eve",
+                14
+              ],
+              "expected_return": null
+            },
+            {
+              "method": "add_grade",
+              "args": [
+                "eve",
+                15
+              ],
+              "expected_return": null
+            },
+            {
+              "method": "add_grade",
+              "args": [
+                "eve",
+                15
+              ],
+              "expected_return": null
+            },
+            {
+              "method": "average",
+              "args": [
+                "eve"
+              ],
+              "expected_return": 14.67
+            },
+            {
+              "method": "above",
+              "args": [
+                14.67
+              ],
+              "expected_return": [
+                "eve"
+              ]
+            }
+          ],
+          "expected_state": {
+            "grades": {
+              "eve": [
+                14,
+                15,
+                15
+              ]
+            }
+          }
+        },
+        {
+          "init": [],
+          "calls": [
+            {
+              "method": "add_grade",
+              "args": [
+                "li",
+                20
+              ],
+              "expected_return": null
+            },
+            {
+              "method": "add_grade",
+              "args": [
+                "jo",
+                5
+              ],
+              "expected_return": null
+            },
+            {
+              "method": "averages",
+              "args": [],
+              "expected_return": {
+                "li": 20.0,
+                "jo": 5.0
+              }
+            },
+            {
+              "method": "above",
+              "args": [
+                5
+              ],
+              "expected_return": [
+                "jo",
+                "li"
+              ]
+            },
+            {
+              "method": "above",
+              "args": [
+                20.5
+              ],
+              "expected_return": []
+            }
+          ],
+          "expected_state": {
+            "grades": {
+              "li": [
+                20
+              ],
+              "jo": [
+                5
+              ]
+            }
+          }
+        }
+      ],
+      "concepts_used": [
+        "dict comprehension",
+        "list comprehension",
+        "round",
+        "sorted",
+        "dictionary of lists"
+      ],
+      "metadata": {
+        "model": "claude",
+        "level_spec_version": "level_spec-v1-draft",
+        "attempts": 1,
+        "status": "publie",
+        "violations_detected": []
+      }
+    },
+    {
+      "id": "godan_number_bag",
+      "kata_type": "class",
+      "rank": "godan",
+      "discipline": "core",
+      "variant_of": null,
+      "title": {
+        "fr": "Sac de nombres",
+        "en": "Number bag"
+      },
+      "statement": {
+        "fr": "Implémentez la classe `NumberBag`. Le constructeur reçoit un itérable de nombres et en garde une copie sous forme de liste dans l'attribut `values`.\n\n- `is_even(n)` : méthode statique (`@staticmethod`), `True` si `n` est pair.\n- `evens()` : liste des valeurs paires, dans l'ordre.\n- `odds()` : liste des valeurs impaires, dans l'ordre.\n- `top(k)` : les `k` plus grandes valeurs, de la plus grande à la plus petite (utilisez `sorted` avec une `lambda` comme clé).\n- `add(value)` : ajoute la valeur à la fin de `values`. Ne retourne rien.\n\n`evens` et `odds` doivent s'appuyer sur une même méthode privée `_select(predicate)` qui est un générateur (`yield`).",
+        "en": "Implement the class `NumberBag`. The constructor receives an iterable of numbers and keeps a list copy in the attribute `values`.\n\n- `is_even(n)`: static method (`@staticmethod`), `True` if `n` is even.\n- `evens()`: list of the even values, in order.\n- `odds()`: list of the odd values, in order.\n- `top(k)`: the `k` largest values, from largest to smallest (use `sorted` with a `lambda` as key).\n- `add(value)`: appends the value to `values`. Returns nothing.\n\n`evens` and `odds` must both rely on a private method `_select(predicate)` that is a generator (`yield`)."
+      },
+      "class_name": "NumberBag",
+      "signature": "class NumberBag:\n    def __init__(self, values): ...\n    @staticmethod\n    def is_even(n): ...\n    def evens(self): ...\n    def odds(self): ...\n    def top(self, k): ...\n    def add(self, value): ...",
+      "solution_reference": "class NumberBag:\n    def __init__(self, values):\n        self.values = list(values)\n\n    @staticmethod\n    def is_even(n):\n        return n % 2 == 0\n\n    def _select(self, predicate):\n        for value in self.values:\n            if predicate(value):\n                yield value\n\n    def evens(self):\n        return list(self._select(NumberBag.is_even))\n\n    def odds(self):\n        return list(self._select(lambda v: not NumberBag.is_even(v)))\n\n    def top(self, k):\n        return sorted(self.values, key=lambda v: -v)[:k]\n\n    def add(self, value):\n        self.values.append(value)\n",
+      "tests": [
+        {
+          "init": [
+            [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          ],
+          "calls": [
+            {
+              "method": "evens",
+              "args": [],
+              "expected_return": [
+                2,
+                4,
+                6
+              ]
+            },
+            {
+              "method": "odds",
+              "args": [],
+              "expected_return": [
+                1,
+                3,
+                5
+              ]
+            },
+            {
+              "method": "top",
+              "args": [
+                2
+              ],
+              "expected_return": [
+                6,
+                5
+              ]
+            },
+            {
+              "method": "is_even",
+              "args": [
+                3
+              ],
+              "expected_return": false
+            },
+            {
+              "method": "add",
+              "args": [
+                10
+              ],
+              "expected_return": null
+            },
+            {
+              "method": "evens",
+              "args": [],
+              "expected_return": [
+                2,
+                4,
+                6,
+                10
+              ]
+            }
+          ],
+          "expected_state": {
+            "values": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              10
+            ]
+          }
+        },
+        {
+          "init": [
+            []
+          ],
+          "calls": [
+            {
+              "method": "evens",
+              "args": [],
+              "expected_return": []
+            },
+            {
+              "method": "odds",
+              "args": [],
+              "expected_return": []
+            },
+            {
+              "method": "top",
+              "args": [
+                3
+              ],
+              "expected_return": []
+            }
+          ],
+          "expected_state": {
+            "values": []
+          }
+        },
+        {
+          "init": [
+            [
+              5,
+              5,
+              2
+            ]
+          ],
+          "calls": [
+            {
+              "method": "top",
+              "args": [
+                2
+              ],
+              "expected_return": [
+                5,
+                5
+              ]
+            },
+            {
+              "method": "odds",
+              "args": [],
+              "expected_return": [
+                5,
+                5
+              ]
+            },
+            {
+              "method": "is_even",
+              "args": [
+                2
+              ],
+              "expected_return": true
+            }
+          ],
+          "expected_state": {
+            "values": [
+              5,
+              5,
+              2
+            ]
+          }
+        },
+        {
+          "init": [
+            [
+              -4,
+              -3,
+              0
+            ]
+          ],
+          "calls": [
+            {
+              "method": "evens",
+              "args": [],
+              "expected_return": [
+                -4,
+                0
+              ]
+            },
+            {
+              "method": "top",
+              "args": [
+                1
+              ],
+              "expected_return": [
+                0
+              ]
+            },
+            {
+              "method": "is_even",
+              "args": [
+                -3
+              ],
+              "expected_return": false
+            }
+          ],
+          "expected_state": {
+            "values": [
+              -4,
+              -3,
+              0
+            ]
+          }
+        },
+        {
+          "init": [
+            [
+              7,
+              8
+            ]
+          ],
+          "calls": [
+            {
+              "method": "add",
+              "args": [
+                9
+              ],
+              "expected_return": null
+            },
+            {
+              "method": "odds",
+              "args": [],
+              "expected_return": [
+                7,
+                9
+              ]
+            },
+            {
+              "method": "top",
+              "args": [
+                5
+              ],
+              "expected_return": [
+                9,
+                8,
+                7
+              ]
+            }
+          ],
+          "expected_state": {
+            "values": [
+              7,
+              8,
+              9
+            ]
+          }
+        }
+      ],
+      "concepts_used": [
+        "generator (yield)",
+        "lambda",
+        "@staticmethod",
+        "sorted with key"
+      ],
+      "metadata": {
+        "model": "claude",
+        "level_spec_version": "level_spec-v1-draft",
+        "attempts": 1,
+        "status": "publie",
+        "violations_detected": []
+      }
+    }
+  ]
+}

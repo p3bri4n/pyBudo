@@ -6,3 +6,24 @@
     gap: 0.5rem;
     cursor: pointer;
 }
+
+.language {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    opacity: 0.6;
+}
+
+.language.active {
+    opacity: 1;
+    font-weight: bold;
+}
+
+/* Drapeaux flag-icons (MIT, github.com/lipis/flag-icons), format 4:3 */
+.language__flag {
+    width: 24px;
+    height: 18px;
+    border-radius: 3px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+    object-fit: cover;
+}
