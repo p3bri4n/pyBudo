@@ -33,6 +33,8 @@ function Dojo() {
     const userRank = progression?.core_dan && ranks.includes(progression.core_dan) ? progression.core_dan : null;
     const displayedRank = selectedRank ?? userRank ?? ranks[0] ?? null;
     const katas = allKatas.filter((kata) => kata.rank === displayedRank);
+    // Un seul kata dans le rang : il est ouvert directement, sans clic sur son titre
+    const currentKata = selectedKata ?? (katas.length === 1 ? katas[0] : null) ?? null;
 
     const handleRankChange = (rank: Rank) => {
         setSelectedRank(rank);
@@ -75,7 +77,7 @@ function Dojo() {
                         <li key={kata.id}>
                             <button
                                 type="button"
-                                className={`kata-item${selectedKata?.id === kata.id ? " kata-item--selected" : ""}`}
+                                className={`kata-item${currentKata?.id === kata.id ? " kata-item--selected" : ""}`}
                                 onClick={() => setSelectedKata(kata)}
                             >
                                 <h3>{localize(kata.title, i18n.language)}</h3>
@@ -99,18 +101,18 @@ function Dojo() {
             </section>
 
             <section className="kata-workspace">
-                {selectedKata && (
+                {currentKata && (
                     <aside className="kata-details">
-                        <h2>{localize(selectedKata.title, i18n.language)}</h2>
-                        <p>{localize(selectedKata.statement, i18n.language)}</p>
+                        <h2>{localize(currentKata.title, i18n.language)}</h2>
+                        <p>{localize(currentKata.statement, i18n.language)}</p>
                     </aside>
                 )}
                 <div className="kata-editor">
                     {/* key : remonte l'éditeur pour repartir de la signature à chaque changement de kata */}
                     <PythonRunner
-                        key={selectedKata?.id}
-                        initialCode={selectedKata ? `${selectedKata.signature}\n    pass\n` : undefined}
-                        kata={selectedKata ?? undefined}
+                        key={currentKata?.id}
+                        initialCode={currentKata ? `${currentKata.signature}\n    pass\n` : undefined}
+                        kata={currentKata ?? undefined}
                         onKataPassed={handleKataPassed}
                     />
                 </div>
