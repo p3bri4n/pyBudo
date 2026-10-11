@@ -1,9 +1,11 @@
-import {KATA_DEFAULT_LANGUAGE} from "../constants/constants.ts";
+import type {Translated} from "../interfaces/interfaces.ts";
 
-// Texte traduit {fr, en} dans la langue de l'interface ("en-US" -> "en"), sinon en langue par défaut
-export function localize(text: Record<string, string>, language: string): string {
+// Texte traduit {fr, en} dans la langue de l'interface ("en-US" -> "en"),
+// sinon en français (seule traduction obligatoire, cf. Translated dans backend/app/schemas.py)
+export function localize(text: Translated, language: string): string {
     const code = language.split("-")[0] ?? language;
-    return text[code] ?? text[KATA_DEFAULT_LANGUAGE] ?? Object.values(text)[0] ?? "";
+    const translations: Record<string, string | null | undefined> = text;
+    return translations[code] || text.fr;
 }
 
 export function formatDate(date: string): string {

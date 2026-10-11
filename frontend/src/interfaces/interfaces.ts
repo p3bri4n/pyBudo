@@ -17,6 +17,7 @@ export type FunctionKataInput = components["schemas"]["FunctionKataInternal-Inpu
 export type ClassKataInput = components["schemas"]["ClassKataInternal-Input"];
 export type FunctionKataTest = components["schemas"]["FunctionKataTest"];
 export type ClassKataTest = components["schemas"]["ClassKataTest"];
+export type Translated = components["schemas"]["Translated"];
 
 export type Rank = Kata["rank"]
 

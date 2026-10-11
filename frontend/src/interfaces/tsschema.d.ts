@@ -271,14 +271,8 @@ export interface components {
             discipline: string;
             /** Variant Of */
             variant_of?: string | null;
-            /** Title */
-            title: {
-                [key: string]: string;
-            };
-            /** Statement */
-            statement: {
-                [key: string]: string;
-            };
+            title: components["schemas"]["Translated"];
+            statement: components["schemas"]["Translated"];
             /** Signature */
             signature: string;
             /** Concepts Used */
@@ -312,14 +306,8 @@ export interface components {
             discipline: string;
             /** Variant Of */
             variant_of?: string | null;
-            /** Title */
-            title: {
-                [key: string]: string;
-            };
-            /** Statement */
-            statement: {
-                [key: string]: string;
-            };
+            title: components["schemas"]["Translated"];
+            statement: components["schemas"]["Translated"];
             /** Signature */
             signature: string;
             /** Concepts Used */
@@ -347,14 +335,8 @@ export interface components {
             discipline: string;
             /** Variant Of */
             variant_of?: string | null;
-            /** Title */
-            title: {
-                [key: string]: string;
-            };
-            /** Statement */
-            statement: {
-                [key: string]: string;
-            };
+            title: components["schemas"]["Translated"];
+            statement: components["schemas"]["Translated"];
             /** Signature */
             signature: string;
             /** Concepts Used */
@@ -409,14 +391,8 @@ export interface components {
             discipline: string;
             /** Variant Of */
             variant_of?: string | null;
-            /** Title */
-            title: {
-                [key: string]: string;
-            };
-            /** Statement */
-            statement: {
-                [key: string]: string;
-            };
+            title: components["schemas"]["Translated"];
+            statement: components["schemas"]["Translated"];
             /** Signature */
             signature: string;
             /** Concepts Used */
@@ -448,14 +424,8 @@ export interface components {
             discipline: string;
             /** Variant Of */
             variant_of?: string | null;
-            /** Title */
-            title: {
-                [key: string]: string;
-            };
-            /** Statement */
-            statement: {
-                [key: string]: string;
-            };
+            title: components["schemas"]["Translated"];
+            statement: components["schemas"]["Translated"];
             /** Signature */
             signature: string;
             /** Concepts Used */
@@ -481,14 +451,8 @@ export interface components {
             discipline: string;
             /** Variant Of */
             variant_of?: string | null;
-            /** Title */
-            title: {
-                [key: string]: string;
-            };
-            /** Statement */
-            statement: {
-                [key: string]: string;
-            };
+            title: components["schemas"]["Translated"];
+            statement: components["schemas"]["Translated"];
             /** Signature */
             signature: string;
             /** Concepts Used */
@@ -583,6 +547,13 @@ export interface components {
              * @default bearer
              */
             token_type: string;
+        };
+        /** Translated */
+        Translated: {
+            /** Fr */
+            fr: string;
+            /** En */
+            en?: string | null;
         };
         /** UserAdmin */
         UserAdmin: {

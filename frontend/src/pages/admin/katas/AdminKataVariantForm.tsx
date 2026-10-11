@@ -12,11 +12,12 @@ import type {
     ClassKataInput,
     ClassKataTest,
     FunctionKataInput,
-    FunctionKataTest
+    FunctionKataTest,
+    Translated
 } from "../../../interfaces/interfaces.ts";
 
 import "./admin-katas.css";
-import {KATA_LANGUAGES, RANKS} from "../../../constants/constants.ts";
+import {KATA_DEFAULT_LANGUAGE, KATA_LANGUAGES, RANKS} from "../../../constants/constants.ts";
 
 interface AdminKataVariantFormProps {
     kata: AdminKata;
@@ -24,6 +25,12 @@ interface AdminKataVariantFormProps {
 
 function rankValue(value: string): AdminKata["rank"] {
     return value as AdminKata["rank"];
+}
+
+// Seul le français est obligatoire : un anglais vide n'est pas envoyé,
+// l'affichage retombe alors sur le français
+function withoutEmptyTranslations({fr, en}: Translated): Translated {
+    return en?.trim() ? {fr, en} : {fr};
 }
 
 export function AdminKataVariantForm({
@@ -93,8 +100,8 @@ export function AdminKataVariantForm({
 
         const common = {
             id: id.trim(),
-            title,
-            statement,
+            title: withoutEmptyTranslations(title),
+            statement: withoutEmptyTranslations(statement),
             signature,
             discipline,
             rank,
@@ -164,24 +171,26 @@ export function AdminKataVariantForm({
 
             {KATA_LANGUAGES.map((language) => (
                 <label key={`title-${language}`}>
-                    {t("admin.katas.form.title")} ({language})
+                    {t("admin.katas.form.title")} ({language}
+                    {language !== KATA_DEFAULT_LANGUAGE && `, ${t("admin.katas.form.optional")}`})
                     <input
                         className={"input-dojo"}
                         value={title[language] ?? ""}
                         onChange={(event) => setTitle({...title, [language]: event.target.value})}
-                        required
+                        required={language === KATA_DEFAULT_LANGUAGE}
                     />
                 </label>
             ))}
 
             {KATA_LANGUAGES.map((language) => (
                 <label key={`statement-${language}`}>
-                    {t("admin.katas.form.statement")} ({language})
+                    {t("admin.katas.form.statement")} ({language}
+                    {language !== KATA_DEFAULT_LANGUAGE && `, ${t("admin.katas.form.optional")}`})
                     <textarea
                         className={"input-dojo"}
                         value={statement[language] ?? ""}
                         onChange={(event) => setStatement({...statement, [language]: event.target.value})}
-                        required
+                        required={language === KATA_DEFAULT_LANGUAGE}
                         rows={5}
                     />
                 </label>
