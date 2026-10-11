@@ -6,7 +6,8 @@
   "common": {
     "back": "Retour",
     "loading" : "Chargement...",
-    "error": "Une erreur est survenue"
+    "error": "Une erreur est survenue",
+    "saving": "Sauvegarde"
   },
   "layout": {
     "pybudo": "pyBudo",
@@ -112,6 +113,7 @@
         "mandatory-id" : "L’identifiant est obligatoire.",
         "different-id": "La variante doit avoir un identifiant différent du kata de base.",
         "meta-json": "Les métadonnées doivent être un objet JSON.",
+        "meta-valid-json":"Les métadonnées doivent être un objet JSON valide.",
         "tests-json": "Les tests doivent être un tableau JSON.",
         "tests-valid-json": "Les tests doivent être un tableau JSON valide.",
         "variant-general-error": "Impossible de créer la variante. Vérifie l’identifiant et les données saisies.",

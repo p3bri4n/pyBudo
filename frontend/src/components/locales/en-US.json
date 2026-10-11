@@ -6,7 +6,8 @@
   "common": {
     "back": "Back",
     "loading": "Loading...",
-    "error": "An error has occurred"
+    "error": "An error has occurred",
+    "saving": "Saving"
   },
   "layout": {
     "pybudo": "pyBudo",
@@ -112,6 +113,7 @@
         "mandatory-id" : "Id is mandatory.",
         "different-id": "The variant must have a different ID than the base kata.",
         "meta-json": "The metadata must be a JSON object.",
+        "meta-valid-json":"The metadata must be a valid JSON object.",
         "tests-json": "The tests must be a JSON table.",
         "tests-valid-json": "The tests must be a valid JSON table.",
         "variant-general-error": "Creation of the variant impossible. Check the ID and data entered.",
