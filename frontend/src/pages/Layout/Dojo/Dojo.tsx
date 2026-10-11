@@ -33,8 +33,12 @@ function Dojo() {
     const userRank = progression?.core_dan && ranks.includes(progression.core_dan) ? progression.core_dan : null;
     const displayedRank = selectedRank ?? userRank ?? ranks[0] ?? null;
     const katas = allKatas.filter((kata) => kata.rank === displayedRank);
-    // Un seul kata dans le rang : il est ouvert directement, sans clic sur son titre
-    const currentKata = selectedKata ?? (katas.length === 1 ? katas[0] : null) ?? null;
+    // Sans clic sur un titre : le premier kata non réussi du rang, ou le premier si tous sont réussis.
+    // On attend les complétions pour ne pas changer de kata une fois l'éditeur affiché
+    const defaultKata = passedKataIds === null
+        ? null
+        : katas.find((kata) => !passedKataIds.has(kata.id)) ?? katas[0] ?? null;
+    const currentKata = selectedKata ?? defaultKata;
 
     const handleRankChange = (rank: Rank) => {
         setSelectedRank(rank);
@@ -42,6 +46,8 @@ function Dojo() {
     };
 
     const handleKataPassed = async (kata: Kata, code: string) => {
+        // Garde le kata réussi affiché : sinon le kata par défaut passerait au suivant non réussi
+        setSelectedKata(kata);
         if (passedKataIds?.has(kata.id)) return;
         if (await completeKata(kata.id, code)) {
             refreshProgression();
