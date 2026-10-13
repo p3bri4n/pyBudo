@@ -111,6 +111,7 @@
       "archive-error": "Erreur d'archivage",
       "search": "Rechercher...",
       "form": {
+        "optional": "facultatif",
         "mandatory-id" : "L’identifiant est obligatoire.",
         "different-id": "La variante doit avoir un identifiant différent du kata de base.",
         "meta-json": "Les métadonnées doivent être un objet JSON.",

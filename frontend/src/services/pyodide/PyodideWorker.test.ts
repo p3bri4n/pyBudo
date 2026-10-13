@@ -15,9 +15,9 @@ const mockRunKataTests = Object.assign(
 const createTestKata = (overrides: Partial<FunctionKata> = {}): FunctionKata => ({
     id: "test-kata",
     rank: "kyu_10",
-    title: "Test kata",
+    title: {fr: "Test kata"},
     discipline: "core",
-    statement: "Test statement",
+    statement: {fr: "Test statement"},
     signature: "def test():",
     concepts_used: [],
     kata_type: "function",

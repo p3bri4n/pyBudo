@@ -271,10 +271,8 @@ export interface components {
             discipline: string;
             /** Variant Of */
             variant_of?: string | null;
-            /** Title */
-            title: string;
-            /** Statement */
-            statement: string;
+            title: components["schemas"]["Translated"];
+            statement: components["schemas"]["Translated"];
             /** Signature */
             signature: string;
             /** Concepts Used */
@@ -308,10 +306,8 @@ export interface components {
             discipline: string;
             /** Variant Of */
             variant_of?: string | null;
-            /** Title */
-            title: string;
-            /** Statement */
-            statement: string;
+            title: components["schemas"]["Translated"];
+            statement: components["schemas"]["Translated"];
             /** Signature */
             signature: string;
             /** Concepts Used */
@@ -339,10 +335,8 @@ export interface components {
             discipline: string;
             /** Variant Of */
             variant_of?: string | null;
-            /** Title */
-            title: string;
-            /** Statement */
-            statement: string;
+            title: components["schemas"]["Translated"];
+            statement: components["schemas"]["Translated"];
             /** Signature */
             signature: string;
             /** Concepts Used */
@@ -397,10 +391,8 @@ export interface components {
             discipline: string;
             /** Variant Of */
             variant_of?: string | null;
-            /** Title */
-            title: string;
-            /** Statement */
-            statement: string;
+            title: components["schemas"]["Translated"];
+            statement: components["schemas"]["Translated"];
             /** Signature */
             signature: string;
             /** Concepts Used */
@@ -432,10 +424,8 @@ export interface components {
             discipline: string;
             /** Variant Of */
             variant_of?: string | null;
-            /** Title */
-            title: string;
-            /** Statement */
-            statement: string;
+            title: components["schemas"]["Translated"];
+            statement: components["schemas"]["Translated"];
             /** Signature */
             signature: string;
             /** Concepts Used */
@@ -461,10 +451,8 @@ export interface components {
             discipline: string;
             /** Variant Of */
             variant_of?: string | null;
-            /** Title */
-            title: string;
-            /** Statement */
-            statement: string;
+            title: components["schemas"]["Translated"];
+            statement: components["schemas"]["Translated"];
             /** Signature */
             signature: string;
             /** Concepts Used */
@@ -559,6 +547,13 @@ export interface components {
              * @default bearer
              */
             token_type: string;
+        };
+        /** Translated */
+        Translated: {
+            /** Fr */
+            fr: string;
+            /** En */
+            en?: string | null;
         };
         /** UserAdmin */
         UserAdmin: {

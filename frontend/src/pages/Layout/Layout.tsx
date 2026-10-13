@@ -27,9 +27,12 @@ function Layout() {
                             <h1>Dojo</h1>
                             <p>{t("dojo.welcome")}, {user.username}san.</p>
                         </div>
-                        <button className={"btn-dojo Layout__logout"} onClick={handleLogout}>
-                            {t('dojo.logout')}
-                        </button>
+                        <div className={"Layout__actions"}>
+                            <LanguageChoices/>
+                            <button className={"btn-dojo"} onClick={handleLogout}>
+                                {t('dojo.logout')}
+                            </button>
+                        </div>
                     </>
                 )}
             </header>
@@ -39,7 +42,8 @@ function Layout() {
             </main>
 
             <footer>
-                <LanguageChoices/>
+                {/* Connecté : le choix de langue est dans l'en-tête */}
+                {!user && <LanguageChoices/>}
                 {t("layout.pybudo-tm")} - {t("layout.dojo-code")}
             </footer>
         </div>

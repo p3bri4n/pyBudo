@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import "./language-choices.css"
+import {LANGUAGES} from "../../../constants/constants.ts";
 
 const LanguageChoices = () => {
     const { i18n, t } = useTranslation()
@@ -11,13 +12,14 @@ const LanguageChoices = () => {
 
     return (
         <div className="switch_languages">
-            {['en-US', 'fr-FR'].map(lang => (
+            {LANGUAGES.map(({ code, label, flag }) => (
                 <span
-                    key={lang}
-                    className={`language ${i18n.language === lang ? 'active' : ''}`}
-                    onClick={() => setLanguage(lang)}
+                    key={code}
+                    className={`language ${i18n.language === code ? 'active' : ''}`}
+                    onClick={() => setLanguage(code)}
                 >
-                    {t(`languages.${lang === 'fr-FR' ? 'french' :'english'}`)}
+                    <img className="language__flag" src={flag} alt="" width={24} height={18} />
+                    {t(`languages.${label}`)}
                 </span>
             ))}
         </div>

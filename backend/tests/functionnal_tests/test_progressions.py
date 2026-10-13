@@ -38,7 +38,7 @@ class TestsProgressions(BaseEntityHelper):
             id="kyu_10_addition",
             rank="kyu_10",
             discipline="core",
-            title="core 1",
+            title={"fr": "core 1"},
         )
         user = self._add_user(
             session, username="john", email="john@example.com", password="password123"
@@ -70,7 +70,7 @@ class TestsProgressions(BaseEntityHelper):
             id="kyu_9_substraction",
             rank="kyu_9",
             discipline="core",
-            title="core 2",
+            title={"fr": "core 2"},
         )
 
         code = "x" * (MAX_CODE_LENGTH + 1)
@@ -88,7 +88,7 @@ class TestsProgressions(BaseEntityHelper):
             id="kyu_8_division",
             rank="kyu_8",
             discipline="core",
-            title="core 3",
+            title={"fr": "core 3"},
         )
 
         code = "x" * MAX_CODE_LENGTH
@@ -129,7 +129,7 @@ class TestsProgressions(BaseEntityHelper):
             id="kyu_10_addition",
             rank="kyu_10",
             discipline="core",
-            title="core 1",
+            title={"fr": "core 1"},
         )
         user = self._add_user(
             session, username="john", email="john@example.com", password="password123"

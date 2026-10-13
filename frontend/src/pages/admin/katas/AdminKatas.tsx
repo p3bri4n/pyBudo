@@ -5,9 +5,10 @@ import "./admin-katas.css"
 import {Loading} from "../../../components/ui/Loading.tsx";
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
+import {localize} from "../../../utils/utils.ts";
 
 function AdminKatas() {
-    const {t} = useTranslation();
+    const {t, i18n} = useTranslation();
     const navigate = useNavigate();
     const [katas, setKatas] = useState<AdminKata[]>([]);
     const [loading, setLoading] = useState(true);
@@ -33,7 +34,7 @@ function AdminKatas() {
         const query = search.toLowerCase();
 
         return (
-            kata.title.toLowerCase().includes(query) ||
+            localize(kata.title, i18n.language).toLowerCase().includes(query) ||
             kata.rank.toLowerCase().includes(query) ||
             kata.discipline.toLowerCase().includes(query)
         );
@@ -74,7 +75,7 @@ function AdminKatas() {
                             navigate(`/back-office/katas/${encodeURIComponent(kata.id)}`)
                         }>
                         <td>{kata.id}</td>
-                        <td>{kata.title}</td>
+                        <td>{localize(kata.title, i18n.language)}</td>
                         <td>{kata.kata_type}</td>
                         <td>{kata.rank}</td>
                         <td>{kata.discipline}</td>

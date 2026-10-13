@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Annotated, Any, Literal
 
-from pydantic import AliasChoices, BaseModel, ConfigDict, Field
+from pydantic import AliasChoices, BaseModel, ConfigDict, Field, model_serializer
 
 from app.rank import Rank
 
@@ -81,13 +81,24 @@ class ProgressionPublic(BaseModel):
     disciplines: list[DisciplineProgressionPublic] = []
 
 
+class Translated(BaseModel):
+    fr: str = Field(min_length=1)
+    en: str | None = None
+
+    # N'enregistre pas les traductions absentes ({"fr": …} plutôt que {"fr": …, "en": null}).
+    # Mode "wrap" sans annotation de retour : le schéma OpenAPI reste un seul Translated
+    @model_serializer(mode="wrap")
+    def _drop_missing(self, handler):
+        return {k: v for k, v in handler(self).items() if v is not None}
+
+
 class KataBase(BaseModel):
     id: str
     rank: Rank
     discipline: str
     variant_of: str | None = None
-    title: str
-    statement: str
+    title: Translated
+    statement: Translated
     signature: str
     concepts_used: list[str]
 

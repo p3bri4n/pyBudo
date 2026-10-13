@@ -1,3 +1,6 @@
+import flagFr from "../assets/images/flags/fr.svg";
+import flagGb from "../assets/images/flags/gb.svg";
+
 export const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000"
 
 // Rangs dans l'ordre croissant, identique à backend/app/rank.py
@@ -8,3 +11,12 @@ export const RANKS = [
 ] as const;
 
 export const EXECUTION_TIMEOUT_MS = 2000;
+
+// Langues des champs traduits des katas (title, statement), identique à katas_i18n.json
+export const KATA_LANGUAGES = ["fr", "en"] as const;
+export const KATA_DEFAULT_LANGUAGE = "fr";
+
+export const LANGUAGES = [
+    { code: 'en-US', label: 'english', flag: flagGb },
+    { code: 'fr-FR', label: 'french', flag: flagFr },
+];

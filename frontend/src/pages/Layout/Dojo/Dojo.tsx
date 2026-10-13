@@ -10,9 +10,10 @@ import {useKataProgression} from "../../../hooks/useKataProgression.ts";
 import type {Kata, Rank} from "../../../interfaces/interfaces.ts";
 import {RANKS} from "../../../constants/constants.ts";
 import {Loading} from "../../../components/ui/Loading.tsx";
+import {localize} from "../../../utils/utils.ts";
 
 function Dojo() {
-    const {t} = useTranslation();
+    const {t, i18n} = useTranslation();
     const { loading } = useAuth();
     const {
         progression,
@@ -32,6 +33,12 @@ function Dojo() {
     const userRank = progression?.core_dan && ranks.includes(progression.core_dan) ? progression.core_dan : null;
     const displayedRank = selectedRank ?? userRank ?? ranks[0] ?? null;
     const katas = allKatas.filter((kata) => kata.rank === displayedRank);
+    // Sans clic sur un titre : le premier kata non réussi du rang, ou le premier si tous sont réussis.
+    // On attend les complétions pour ne pas changer de kata une fois l'éditeur affiché
+    const defaultKata = passedKataIds === null
+        ? null
+        : katas.find((kata) => !passedKataIds.has(kata.id)) ?? katas[0] ?? null;
+    const currentKata = selectedKata ?? defaultKata;
 
     const handleRankChange = (rank: Rank) => {
         setSelectedRank(rank);
@@ -39,6 +46,8 @@ function Dojo() {
     };
 
     const handleKataPassed = async (kata: Kata, code: string) => {
+        // Garde le kata réussi affiché : sinon le kata par défaut passerait au suivant non réussi
+        setSelectedKata(kata);
         if (passedKataIds?.has(kata.id)) return;
         if (await completeKata(kata.id, code)) {
             refreshProgression();
@@ -74,10 +83,10 @@ function Dojo() {
                         <li key={kata.id}>
                             <button
                                 type="button"
-                                className={`kata-item${selectedKata?.id === kata.id ? " kata-item--selected" : ""}`}
+                                className={`kata-item${currentKata?.id === kata.id ? " kata-item--selected" : ""}`}
                                 onClick={() => setSelectedKata(kata)}
                             >
-                                <h3>{kata.title}</h3>
+                                <h3>{localize(kata.title, i18n.language)}</h3>
                                 <span className="kata-rank">{kata.rank}</span>
                                 {passedKataIds?.has(kata.id) && (
                                     <span className="kata-passed"> ✅ {t("dojo.kata-passed")}</span>
@@ -98,18 +107,18 @@ function Dojo() {
             </section>
 
             <section className="kata-workspace">
-                {selectedKata && (
+                {currentKata && (
                     <aside className="kata-details">
-                        <h2>{selectedKata.title}</h2>
-                        <p>{selectedKata.statement}</p>
+                        <h2>{localize(currentKata.title, i18n.language)}</h2>
+                        <p>{localize(currentKata.statement, i18n.language)}</p>
                     </aside>
                 )}
                 <div className="kata-editor">
                     {/* key : remonte l'éditeur pour repartir de la signature à chaque changement de kata */}
                     <PythonRunner
-                        key={selectedKata?.id}
-                        initialCode={selectedKata ? `${selectedKata.signature}\n    pass\n` : undefined}
-                        kata={selectedKata ?? undefined}
+                        key={currentKata?.id}
+                        initialCode={currentKata ? `${currentKata.signature}\n    pass\n` : undefined}
+                        kata={currentKata ?? undefined}
                         onKataPassed={handleKataPassed}
                     />
                 </div>
