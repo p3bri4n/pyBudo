@@ -128,7 +128,7 @@
         "rank": "Rank",
         "concepts": "Concepts (separated by commas)",
         "solution-reference": "Solution reference",
-        "class-name" : "Class nema",
+        "class-name" : "Class name",
         "tests": "Tests (JSON)",
         "metadata": "Metadata (JSON)",
         "cancel": "Cancel",
