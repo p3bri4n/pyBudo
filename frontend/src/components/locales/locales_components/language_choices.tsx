@@ -1,12 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import "./language-choices.css"
-import flagFr from "../../../assets/images/flags/fr.svg";
-import flagGb from "../../../assets/images/flags/gb.svg";
-
-const LANGUAGES = [
-    { code: 'en-US', label: 'english', flag: flagGb },
-    { code: 'fr-FR', label: 'french', flag: flagFr },
-];
+import {LANGUAGES} from "../../../constants/constants.ts";
 
 const LanguageChoices = () => {
     const { i18n, t } = useTranslation()
