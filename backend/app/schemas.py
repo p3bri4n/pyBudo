@@ -3,7 +3,7 @@ from typing import Annotated, Any, Literal
 
 from pydantic import AliasChoices, BaseModel, ConfigDict, Field, model_serializer
 
-from app.rank import Rank
+from app.rank import Ranks
 
 MAX_CODE_LENGTH = 5000
 
@@ -73,11 +73,11 @@ class DisciplineProgressionPublic(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     discipline: str
-    highest_dan_practiced: Rank
+    highest_dan_practiced: Ranks
 
 
 class ProgressionPublic(BaseModel):
-    core_dan: Rank | None
+    core_dan: Ranks | None
     disciplines: list[DisciplineProgressionPublic] = []
 
 
@@ -94,7 +94,7 @@ class Translated(BaseModel):
 
 class KataBase(BaseModel):
     id: str
-    rank: Rank
+    rank: Ranks
     discipline: str
     variant_of: str | None = None
     title: Translated

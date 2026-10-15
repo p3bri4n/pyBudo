@@ -1,12 +1,12 @@
 from typing import get_args
 
-from app.rank import RANK_ORDER, Rank
+from app.rank import RANK_ORDER, Ranks
 from tests.data.base_entity_helper import BaseEntityHelper
 
 
 class TestsRanks(BaseEntityHelper):
     def test_all_ranks_are_defined(self):
-        ranks = get_args(Rank)
+        ranks = get_args(Ranks)
         assert len(ranks) == 15
         assert "kyu_10" in ranks
         assert "godan" in ranks
@@ -19,7 +19,7 @@ class TestsRanks(BaseEntityHelper):
         assert RANK_ORDER["godan"] == 14
 
     def test_rank_order_is_increasing(self):
-        ranks = get_args(Rank)
+        ranks = get_args(Ranks)
         for i in range(len(ranks) - 1):
             current_rank = ranks[i]
             next_rank = ranks[i + 1]
