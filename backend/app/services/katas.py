@@ -1,7 +1,8 @@
-from sqlmodel import Session, select
 from typing import get_args
-from app.model import Kata
 
+from sqlmodel import Session, select
+
+from app.model import Kata
 from app.rank import Ranks
 
 

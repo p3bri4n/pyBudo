@@ -6,7 +6,7 @@ from sqlmodel import Session, select
 from app.dependencies import get_current_user, get_session
 from app.model import KataCompletion, User
 from app.schemas import KataCompletionCreate, KataCompletionPublic, ProgressionPublic
-from app.services.katas import get_published_kata, can_access_kata
+from app.services.katas import can_access_kata, get_published_kata
 from app.services.recalculate import recalculate_progression
 
 router = APIRouter()
