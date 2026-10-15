@@ -83,7 +83,9 @@ class TestsProgressions(BaseEntityHelper):
 
         assert response2.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
-    def test_add_completion_returns_403_if_wrong_rank(self, client: Client, session: Session):
+    def test_add_completion_returns_403_if_wrong_rank(
+        self, client: Client, session: Session
+    ):
         kata = self._add_kata(
             session=session,
             id="kyu_8_division",

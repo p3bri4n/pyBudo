@@ -57,7 +57,7 @@ def add_completions(
     if not can_access_kata(user_rank, kata.rank):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="You do not have access to this kata."
+            detail="You do not have access to this kata.",
         )
 
     kata_completion = KataCompletion(
