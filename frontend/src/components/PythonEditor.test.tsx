@@ -22,29 +22,29 @@ describe("PythonRunner", () => {
     })
 
     it("Renders the initial code", () => {
-        const { container } = render(<PythonRunner/>);
+        const { container } = render(<PythonRunner disabled={false}/>);
         expect(container.querySelector(".cm-content")).toHaveTextContent("print('Hello pyBudo!')");
     })
 
     it("Renders the provided initial code", () => {
-        const { container } = render(<PythonRunner initialCode={"def f(x):\n    pass"}/>);
+        const { container } = render(<PythonRunner disabled={false} initialCode={"def f(x):\n    pass"}/>);
         expect(container.querySelector(".cm-content")).toHaveTextContent("def f(x):");
     })
 
     it("Highlights Python syntax", () => {
-        const { container } = render(<PythonRunner/>);
+        const { container } = render(<PythonRunner disabled={false}/>);
         expect(container.querySelectorAll(".cm-line span").length).toBeGreaterThan(0);
     })
 
     it("Has a single execute button", () => {
-        render(<PythonRunner kata={kata}/>);
+        render(<PythonRunner disabled={false} kata={kata}/>);
         expect(screen.getAllByRole("button")).toHaveLength(1);
         expect(screen.getByText("python-runner.execute")).toBeInTheDocument();
     })
 
     it("Runs the code without tests when no kata is selected", async () => {
         vi.mocked(executePython).mockResolvedValue({ stdout: "Hello", stderr: "", result: undefined, error: null });
-        render(<PythonRunner/>);
+        render(<PythonRunner disabled={false}/>);
 
         fireEvent.click(screen.getByText("python-runner.execute"));
 
@@ -61,7 +61,7 @@ describe("PythonRunner", () => {
             ],
         });
         const onKataPassed = vi.fn();
-        render(<PythonRunner kata={kata} onKataPassed={onKataPassed}/>);
+        render(<PythonRunner disabled={false} kata={kata} onKataPassed={onKataPassed}/>);
 
         fireEvent.click(screen.getByText("python-runner.execute"));
 
@@ -78,7 +78,7 @@ describe("PythonRunner", () => {
             ],
         });
         const onKataPassed = vi.fn();
-        render(<PythonRunner kata={kata} onKataPassed={onKataPassed}/>);
+        render(<PythonRunner disabled={false} kata={kata} onKataPassed={onKataPassed}/>);
 
         fireEvent.click(screen.getByText("python-runner.execute"));
 
