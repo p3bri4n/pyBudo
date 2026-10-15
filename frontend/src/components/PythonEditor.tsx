@@ -15,6 +15,7 @@ type PythonRunnerProps = {
     initialCode?: string;
     kata?: Kata;
     onKataPassed?: (kata: Kata, code: string) => void;
+    disabled: boolean;
 };
 
 function formatValue(value: unknown): string {
@@ -25,6 +26,7 @@ export function PythonRunner({
                                  initialCode = DEFAULT_CODE,
                                  kata,
                                  onKataPassed,
+                                 disabled
                              }: PythonRunnerProps) {
     const [code, setCode] = useState(initialCode);
     const [output, setOutput] = useState("");
@@ -99,7 +101,7 @@ export function PythonRunner({
                 <button
                     className={"btn-dojo"}
                     onClick={() => kata ? testKata(kata) : runCode()}
-                    disabled={loading}
+                    disabled={disabled}
                 >
                     {loading
                         ? `${t("python-runner.execution")}`

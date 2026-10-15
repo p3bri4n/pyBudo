@@ -44,7 +44,7 @@ class TestsProgressions(BaseEntityHelper):
             session, username="john", email="john@example.com", password="password123"
         )
 
-        self._add_progression(session, user_id=user.id)
+        self._add_progression(session, user_id=user.id, core_dan="kyu_10")
 
         login = client.post(
             "/auth/login", json={"email": "john@example.com", "password": "password123"}
@@ -83,23 +83,37 @@ class TestsProgressions(BaseEntityHelper):
 
         assert response2.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
-        kata3 = self._add_kata(
+    def test_add_completion_returns_403_if_wrong_rank(
+        self, client: Client, session: Session
+    ):
+        kata = self._add_kata(
             session=session,
             id="kyu_8_division",
             rank="kyu_8",
             discipline="core",
             title={"fr": "core 3"},
         )
+        user = self._add_user(
+            session, username="john", email="john@example.com", password="password123"
+        )
+
+        self._add_progression(session, user_id=user.id, core_dan="kyu_10")
+
+        login = client.post(
+            "/auth/login", json={"email": "john@example.com", "password": "password123"}
+        )
+        assert login.status_code == status.HTTP_200_OK
+        token = login.json()["access_token"]
 
         code = "x" * MAX_CODE_LENGTH
 
-        response3 = client.post(
+        response = client.post(
             "/completions",
-            json={"kata_id": kata3.id, "code": code},
+            json={"kata_id": kata.id, "code": code},
             headers={"Authorization": f"Bearer {token}"},
         )
 
-        assert response3.status_code == status.HTTP_200_OK
+        assert response.status_code == status.HTTP_403_FORBIDDEN
 
     def test_add_completion_with_unknown_kata_returns_404(
         self, client: Client, session: Session
@@ -135,7 +149,7 @@ class TestsProgressions(BaseEntityHelper):
             session, username="john", email="john@example.com", password="password123"
         )
 
-        self._add_progression(session, user_id=user.id)
+        self._add_progression(session, user_id=user.id, core_dan="kyu_10")
 
         login = client.post(
             "/auth/login", json={"email": "john@example.com", "password": "password123"}

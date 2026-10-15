@@ -6,7 +6,7 @@ from sqlmodel import Session, select
 from app.dependencies import get_current_user, get_session
 from app.model import KataCompletion, User
 from app.schemas import KataCompletionCreate, KataCompletionPublic, ProgressionPublic
-from app.services.katas import get_published_kata
+from app.services.katas import can_access_kata, get_published_kata
 from app.services.recalculate import recalculate_progression
 
 router = APIRouter()
@@ -51,6 +51,13 @@ def add_completions(
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail="Completion already exist",
+        )
+
+    user_rank = user.progression.core_dan if user.progression else None
+    if not can_access_kata(user_rank, kata.rank):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="You do not have access to this kata.",
         )
 
     kata_completion = KataCompletion(

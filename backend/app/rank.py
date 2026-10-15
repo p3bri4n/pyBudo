@@ -1,7 +1,7 @@
 from typing import Literal, get_args
 
 # La liste établi des rank depuis le json, dans l'ordre croissant
-Rank = Literal[
+Ranks = Literal[
     "kyu_10",
     "kyu_9",
     "kyu_8",
@@ -20,4 +20,4 @@ Rank = Literal[
 ]
 
 # Donne une valeur numérique à chaque rank de manière croissant (le dernier est le plus elevé)
-RANK_ORDER = {rank: i for i, rank in enumerate(get_args(Rank))}
+RANK_ORDER = {rank: i for i, rank in enumerate(get_args(Ranks))}

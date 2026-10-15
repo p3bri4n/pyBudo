@@ -53,7 +53,8 @@
     "katas-loading": "Chargement des katas...",
     "katas-error": "Impossible de charger les katas.",
     "kata-passed": "Réussi",
-    "completion-error": "Le kata est réussi mais n'a pas pu être enregistré."
+    "completion-error": "Le kata est réussi mais n'a pas pu être enregistré.",
+    "kata-locked": "Niveau requis trop éloigné"
   },
   "progression": {
     "progression": "ma progression",
