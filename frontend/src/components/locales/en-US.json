@@ -53,7 +53,8 @@
     "katas-loading": "Loading katas...",
     "katas-error": "Unable to load katas.",
     "kata-passed": "Passed",
-    "completion-error": "The kata passed but could not be saved."
+    "completion-error": "The kata passed but could not be saved.",
+    "kata-locked": "Rank requirement too high"
   },
   "progression": {
     "progression": "my progression",

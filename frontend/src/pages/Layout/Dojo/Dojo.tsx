@@ -53,6 +53,14 @@ function Dojo() {
             refreshProgression();
         }
     };
+    const unlocked = currentKata ? isKataUnlocked(currentKata.rank) : false;
+    function isKataUnlocked(kataRank: string): boolean {
+        if (!userRank) return false;
+        const userRankIndex = RANKS.indexOf(userRank as (typeof RANKS)[number]);
+        const kataRankIndex = RANKS.indexOf(kataRank as (typeof RANKS)[number]);
+        if (kataRankIndex === -1) return false;
+        return kataRankIndex <= userRankIndex + 1;
+    }
 
     if (loading) {
         return <Loading/>;
@@ -79,21 +87,37 @@ function Dojo() {
                 {katasError && <p>{t("dojo.katas-error")}</p>}
                 {completionError && <p>{t("dojo.completion-error")}</p>}
                 <ul className="kata-list">
-                    {katas.map((kata) => (
-                        <li key={kata.id}>
-                            <button
-                                type="button"
-                                className={`kata-item${currentKata?.id === kata.id ? " kata-item--selected" : ""}`}
-                                onClick={() => setSelectedKata(kata)}
-                            >
-                                <h3>{localize(kata.title, i18n.language)}</h3>
-                                <span className="kata-rank">{kata.rank}</span>
-                                {passedKataIds?.has(kata.id) && (
-                                    <span className="kata-passed"> ✅ {t("dojo.kata-passed")}</span>
-                                )}
-                            </button>
-                        </li>
-                    ))}
+                    {katas.map((kata) => {
+                        return (
+                            <li key={kata.id}>
+                                <button
+                                    type="button"
+                                    className={[
+                                        "kata-item",
+                                        currentKata?.id === kata.id
+                                            ? "kata-item--selected"
+                                            : "",
+                                        !unlocked ? "kata-item--locked" : "",
+                                    ].filter(Boolean).join(" ")}
+                                    onClick={() => {
+                                        if (unlocked) {
+                                            setSelectedKata(kata);
+                                        }
+                                    }}
+                                    disabled={!unlocked}
+                                    aria-disabled={!unlocked}
+                                    title={!unlocked ? t("dojo.kata-locked") : undefined}
+                                >
+                                    <h3>{localize(kata.title, i18n.language)}</h3>
+                                    <span className="kata-rank">{kata.rank}</span>
+                                    {!unlocked && (<span className="kata-locked">{t("dojo.kata-locked")}</span>)}
+                                    {passedKataIds?.has(kata.id) && (
+                                        <span className="kata-passed">{t("dojo.kata-passed")}</span>
+                                    )}
+                                </button>
+                            </li>
+                        );
+                    })}
                 </ul>
             </section>
 
@@ -120,6 +144,7 @@ function Dojo() {
                         initialCode={currentKata ? `${currentKata.signature}\n    pass\n` : undefined}
                         kata={currentKata ?? undefined}
                         onKataPassed={handleKataPassed}
+                        disabled={!unlocked}
                     />
                 </div>
             </section>
