@@ -46,7 +46,9 @@ export default function CompletionHistory({
                                     {" · "}
                                     {completion.kata.rank}
                                 </p>
-
+                                <p>
+                                    {completion.code}
+                                </p>
                                 <time dateTime={completion.completed_at}>
                                     {new Date(
                                         completion.completed_at
