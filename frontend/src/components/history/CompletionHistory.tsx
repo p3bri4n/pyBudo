@@ -1,17 +1,15 @@
 
 import { useTranslation } from "react-i18next";
 import { localize } from "../../utils/utils";
-import type {Kata, KataCompletion} from "../../interfaces/interfaces.ts";
+import type {KataCompletionHistory} from "../../interfaces/interfaces.ts";
 
 type CompletionHistoryProps = {
-    completions: KataCompletion[];
-    katas: Kata[];
+    completions: KataCompletionHistory[];
     loading: boolean;
 };
 
 export default function CompletionHistory({
                                               completions,
-                                              katas,
                                               loading,
                                           }: CompletionHistoryProps) {
     const { t, i18n } = useTranslation();
@@ -33,12 +31,6 @@ export default function CompletionHistory({
 
             <ul className="completion-history__list">
                 {completions.map((completion, index) => {
-                    const kata = katas.find(
-                        (item) => item.id === completion.kata_id
-                    );
-
-                    if (!kata) return null;
-
                     return (
                         <li
                             className="completion-history__item"
@@ -46,13 +38,13 @@ export default function CompletionHistory({
                         >
                             <div className="completion-history__info">
                                 <h3>
-                                    {localize(kata.title, i18n.language)}
+                                    {localize(completion.kata.title, i18n.language)}
                                 </h3>
 
                                 <p>
-                                    {kata.discipline}
+                                    {completion.kata.discipline}
                                     {" · "}
-                                    {kata.rank}
+                                    {completion.kata.rank}
                                 </p>
 
                                 <time dateTime={completion.completed_at}>

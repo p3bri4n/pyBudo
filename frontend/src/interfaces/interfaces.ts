@@ -9,6 +9,9 @@ export type ClassKata = components["schemas"]["ClassKataPublic"]
 export type Kata = FunctionKata | ClassKata
 export type UserProgression = components["schemas"]["ProgressionPublic"]
 export type KataCompletion = components["schemas"]["KataCompletionPublic"]
+export type KataCompletionHistory = KataCompletion & {
+    kata: Pick<Kata, "id" | "title" | "discipline" | "rank">;
+};
 export type KataCompletionStats = components["schemas"]["KataCompletionStats"]
 export type AdminStats = components["schemas"]["AdminStats"]
 export type AdminUser = components["schemas"]["UserAdmin"]

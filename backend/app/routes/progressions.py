@@ -78,6 +78,37 @@ def get_completions_stats(
     )
 
 
+@router.get("/completions/history")
+def get_completions_history(
+    session: Session = Depends(get_session),
+    current_user: User = Depends(get_current_user),
+):
+    statement = (
+        select(KataCompletion, Kata)
+        .join(Kata, Kata.id == KataCompletion.kata_id)
+        .where(KataCompletion.user_id == current_user.id)
+        .order_by(KataCompletion.completed_at.desc())
+    )
+
+    rows = session.exec(statement).all()
+
+    return [
+        {
+            "kata_id": completion.kata_id,
+            "code": completion.code,
+            "user_id": completion.user_id,
+            "completed_at": completion.completed_at,
+            "verified": completion.verified,
+            "kata": {
+                "id": kata.id,
+                "title": kata.title,
+                "discipline": kata.discipline,
+                "rank": kata.rank,
+            },
+        }
+        for completion, kata in rows
+    ]
+
 @router.post("/completions", response_model=KataCompletionPublic)
 def add_completions(
     completion: KataCompletionCreate,
