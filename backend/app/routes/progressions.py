@@ -6,7 +6,12 @@ from datetime import datetime, timedelta, timezone
 
 from app.dependencies import get_current_user, get_session
 from app.model import Kata, KataCompletion, User
-from app.schemas import KataCompletionCreate, KataCompletionPublic, ProgressionPublic, KataCompletionStats
+from app.schemas import (
+    KataCompletionCreate,
+    KataCompletionPublic,
+    ProgressionPublic,
+    KataCompletionStats,
+)
 from app.services.katas import can_access_kata, get_published_kata
 from app.services.recalculate import recalculate_progression
 
@@ -108,6 +113,7 @@ def get_completions_history(
         }
         for completion, kata in rows
     ]
+
 
 @router.post("/completions", response_model=KataCompletionPublic)
 def add_completions(

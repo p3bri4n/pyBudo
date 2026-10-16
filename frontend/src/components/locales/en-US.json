@@ -63,6 +63,11 @@
     "core": "Core",
     "no-rank": "No rank yet"
   },
+  "navigation": {
+    "main": "Main navigation",
+    "dojo": "Dojo",
+    "history": "History"
+  },
   "history": {
     "title": "My history",
     "description": "Review your completed katas and track your progress.",
@@ -70,6 +75,8 @@
     "empty": "No completions match these filters.",
     "error": "Unable to load your history.",
     "recent-completions": "Completion history",
+    "verified": "Verified",
+    "not-verified": "Not verified",
     "stats": {
       "title": "My statistics",
       "total": "Completed katas",
@@ -88,13 +95,6 @@
         "30d": "Last 30 days"
       }
     }
-  },
-  "navigation": {
-    "main": "Main navigation",
-    "dojo": "Dojo",
-    "history": "History",
-    "verified": "Verified",
-    "not-verified": "Not verified"
   },
   "python-runner": {
     "execution": "Execution",
