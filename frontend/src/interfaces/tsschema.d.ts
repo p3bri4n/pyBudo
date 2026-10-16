@@ -226,6 +226,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/completions/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Completions Stats */
+        get: operations["get_completions_stats_completions_stats_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/katas": {
         parameters: {
             query?: never;
@@ -499,6 +516,17 @@ export interface components {
             completed_at: string;
             /** Verified */
             verified: boolean;
+        };
+        /** KataCompletionStats */
+        KataCompletionStats: {
+            /** Total Completions */
+            total_completions: number;
+            /** Completions Last 7 Days */
+            completions_last_7_days: number;
+            /** Disciplines Count */
+            disciplines_count: number;
+            /** Ranks Count */
+            ranks_count: number;
         };
         /** KataStats */
         KataStats: {
@@ -991,6 +1019,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_completions_stats_completions_stats_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["KataCompletionStats"];
                 };
             };
         };

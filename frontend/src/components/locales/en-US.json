@@ -63,6 +63,39 @@
     "core": "Core",
     "no-rank": "No rank yet"
   },
+  "history": {
+    "title": "My history",
+    "description": "Review your completed katas and track your progress.",
+    "loading": "Loading history...",
+    "empty": "No completions match these filters.",
+    "error": "Unable to load your history.",
+    "recent-completions": "Completion history",
+    "stats": {
+      "title": "My statistics",
+      "total": "Completed katas",
+      "last-7-days": "This week",
+      "disciplines": "Disciplines practiced",
+      "ranks": "Ranks practiced"
+    },
+    "filters": {
+      "discipline": "Discipline",
+      "rank": "Rank",
+      "period": "Period",
+      "all": "All",
+      "periods": {
+        "all": "All time",
+        "7d": "Last 7 days",
+        "30d": "Last 30 days"
+      }
+    }
+  },
+  "navigation": {
+    "main": "Main navigation",
+    "dojo": "Dojo",
+    "history": "History",
+    "verified": "Verified",
+    "not-verified": "Not verified"
+  },
   "python-runner": {
     "execution": "Execution",
     "execute": "Execute",

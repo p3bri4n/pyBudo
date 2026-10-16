@@ -11,6 +11,7 @@ import type {Kata, Rank} from "../../../interfaces/interfaces.ts";
 import {RANKS} from "../../../constants/constants.ts";
 import {Loading} from "../../../components/ui/Loading.tsx";
 import {localize} from "../../../utils/utils.ts";
+import {DojoNavigation} from "../../../components/navigation/DojoNavigation.tsx";
 
 function Dojo() {
     const {t, i18n} = useTranslation();
@@ -67,7 +68,7 @@ function Dojo() {
     }
     return (
         <div>
-
+            <DojoNavigation />
             <section>
                 <h2>{t("dojo.katas")}</h2>
                 {ranks.length > 0 && (

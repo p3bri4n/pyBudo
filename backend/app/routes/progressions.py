@@ -1,13 +1,15 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlmodel import Session, select
+from sqlmodel import func, Session, select
+from datetime import datetime, timedelta, timezone
 
 from app.dependencies import get_current_user, get_session
-from app.model import KataCompletion, User
-from app.schemas import KataCompletionCreate, KataCompletionPublic, ProgressionPublic
+from app.model import Kata, KataCompletion, User
+from app.schemas import KataCompletionCreate, KataCompletionPublic, ProgressionPublic, KataCompletionStats
 from app.services.katas import can_access_kata, get_published_kata
 from app.services.recalculate import recalculate_progression
+
 
 router = APIRouter()
 
@@ -29,6 +31,51 @@ def get_completions(
     return session.exec(
         select(KataCompletion).where(KataCompletion.user_id == user.id)
     ).all()
+
+
+@router.get("/completions/stats", response_model=KataCompletionStats)
+def get_completions_stats(
+    session: Session = Depends(get_session),
+    current_user: User = Depends(get_current_user),
+) -> KataCompletionStats:
+
+    total_completions = session.exec(
+        select(func.count())
+        .select_from(KataCompletion)
+        .where(KataCompletion.user_id == current_user.id)
+    ).one()
+
+    since = datetime.now(timezone.utc) - timedelta(days=7)
+
+    completions_last_7_days = session.exec(
+        select(func.count())
+        .select_from(KataCompletion)
+        .where(
+            KataCompletion.user_id == current_user.id,
+            KataCompletion.completed_at >= since,
+        )
+    ).one()
+
+    disciplines_count = session.exec(
+        select(func.count(func.distinct(Kata.discipline)))
+        .select_from(KataCompletion)
+        .join(Kata, KataCompletion.kata_id == Kata.id)
+        .where(KataCompletion.user_id == current_user.id)
+    ).one()
+
+    ranks_count = session.exec(
+        select(func.count(func.distinct(Kata.rank)))
+        .select_from(KataCompletion)
+        .join(Kata, KataCompletion.kata_id == Kata.id)
+        .where(KataCompletion.user_id == current_user.id)
+    ).one()
+
+    return KataCompletionStats(
+        total_completions=total_completions,
+        completions_last_7_days=completions_last_7_days,
+        disciplines_count=disciplines_count,
+        ranks_count=ranks_count,
+    )
 
 
 @router.post("/completions", response_model=KataCompletionPublic)

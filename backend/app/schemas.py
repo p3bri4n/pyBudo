@@ -59,6 +59,13 @@ class KataCompletionPublic(KataCompletionCreate):
     verified: bool
 
 
+class KataCompletionStats(BaseModel):
+    total_completions: int
+    completions_last_7_days: int
+    disciplines_count: int
+    ranks_count: int
+
+
 class KataStats(BaseModel):
     katas_number: int
     published_katas: int

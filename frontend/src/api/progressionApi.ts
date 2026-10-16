@@ -1,6 +1,6 @@
 import {apiClient, authHeaders} from "./apiClient.ts";
 import {token} from "./authApi.ts";
-import type {KataCompletion, UserProgression} from "../interfaces/interfaces";
+import type {KataCompletion, KataCompletionStats, UserProgression} from "../interfaces/interfaces";
 
 export const getProgression = async (): Promise<UserProgression> => {
     const response = await apiClient.get(
@@ -20,6 +20,13 @@ export const addCompletion = async (kataId: string, code: string): Promise<KataC
 export const getCompletions = async (): Promise<KataCompletion[]> => {
     const response = await apiClient.get(
         "/completions",
+        authHeaders(token()))
+    return response.data;
+}
+
+export const getCompletionsStats = async (): Promise<KataCompletionStats> => {
+    const response = await apiClient.get(
+        "/completions/stats",
         authHeaders(token()))
     return response.data;
 }

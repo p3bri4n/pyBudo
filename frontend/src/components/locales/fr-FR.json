@@ -63,6 +63,39 @@
     "core": "Tronc commun",
     "no-rank": "Aucun rang"
   },
+  "navigation": {
+  "main": "Navigation principale",
+  "dojo": "Dojo",
+  "history": "Historique"
+},
+  "history": {
+    "title": "Mon historique",
+    "description": "Retrouve tes katas terminés et suis ta progression.",
+    "loading": "Chargement de l'historique...",
+    "empty": "Aucune complétion ne correspond à ces filtres.",
+    "error": "Impossible de charger ton historique.",
+    "recent-completions": "Historique des complétions",
+    "verified": "Vérifié",
+    "not-verified": "Non Vérifié",
+    "stats": {
+      "title": "Mes statistiques",
+      "total": "Katas terminés",
+      "last-7-days": "Cette semaine",
+      "disciplines": "Disciplines pratiquées",
+      "ranks": "Rangs travaillés"
+    },
+    "filters": {
+      "discipline": "Discipline",
+      "rank": "Rang",
+      "period": "Période",
+      "all": "Tous",
+      "periods": {
+        "all": "Toutes les dates",
+        "7d": "7 derniers jours",
+        "30d": "30 derniers jours"
+      }
+    }
+  },
   "python-runner": {
     "execution": "Execution",
     "execute": "Executer",
