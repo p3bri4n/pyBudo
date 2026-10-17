@@ -23,15 +23,15 @@ def _run_test(func, test):
         # Aller-retour JSON : les clés de dict deviennent des str, comme dans les tests
         got = json.loads(json.dumps(func(*test["input"])))
         return {"got": got, "error": None, "passed": _equal(got, test["output"])}
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         return {"got": None, "error": f"{type(e).__name__}: {e}", "passed": False}
 
 
 def _run_kata_tests(user_code, func_name, tests_json):
     namespace = {}
     try:
-        exec(user_code, namespace)
-    except Exception as e:
+        exec(user_code, namespace)  # noqa: S102
+    except Exception as e:  # noqa: BLE001
         return json.dumps({"error": f"{type(e).__name__}: {e}", "results": []})
 
     func = namespace.get(func_name)

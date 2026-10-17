@@ -9,6 +9,10 @@ export type ClassKata = components["schemas"]["ClassKataPublic"]
 export type Kata = FunctionKata | ClassKata
 export type UserProgression = components["schemas"]["ProgressionPublic"]
 export type KataCompletion = components["schemas"]["KataCompletionPublic"]
+export type KataCompletionHistory = KataCompletion & {
+    kata: Pick<Kata, "id" | "title" | "discipline" | "rank">;
+};
+export type KataCompletionStats = components["schemas"]["KataCompletionStats"]
 export type AdminStats = components["schemas"]["AdminStats"]
 export type AdminUser = components["schemas"]["UserAdmin"]
 export type AdminKata = components["schemas"]["ClassKataInternal-Output"] | components["schemas"]["FunctionKataInternal-Output"]
@@ -20,6 +24,14 @@ export type ClassKataTest = components["schemas"]["ClassKataTest"];
 export type Translated = components["schemas"]["Translated"];
 
 export type Rank = Kata["rank"]
+
+export type AdminCompletionStats = components["schemas"]["AdminCompletionStats"];
+export type AdminUserCompletions  = components["schemas"]["AdminUserCompletions"];
+
+export type AdminKataSummary = components["schemas"]["AdminKataSummary"];
+export type AdminKataCompletionEntry = components["schemas"]["AdminKataCompletionEntry"];
+export type AdminKataCompletionStats = components["schemas"]["AdminKataCompletionStats"];
+export type AdminKataCompletions = components["schemas"]["AdminKataCompletions"];
 
 export interface AuthContextType {
     user: User | null;

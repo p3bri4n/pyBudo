@@ -1,0 +1,38 @@
+.dojo-navigation {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    padding: 0.75rem;
+    border: 1px solid var(--paper-edge, #d8c6a5);
+    border-radius: 10px;
+    background: var(--paper, #f8f1e3);
+}
+
+.dojo-navigation__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1rem;
+    border-radius: 7px;
+    color: var(--text-color, #493723);
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.dojo-navigation__link:hover {
+    background: rgb(120 85 45 / 10%);
+}
+
+.dojo-navigation__link.active {
+    background: var(--paper-light, #79552f);
+    color: #fff;
+}
+
+.dojo-navigation__link:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+}
+

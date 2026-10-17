@@ -59,6 +59,13 @@ class KataCompletionPublic(KataCompletionCreate):
     verified: bool
 
 
+class KataCompletionStats(BaseModel):
+    total_completions: int
+    completions_last_7_days: int
+    disciplines_count: int
+    ranks_count: int
+
+
 class KataStats(BaseModel):
     katas_number: int
     published_katas: int
@@ -67,6 +74,15 @@ class KataStats(BaseModel):
 class AdminStats(BaseModel):
     users: UserStats
     katas: KataStats
+
+
+class AdminCompletionStats(BaseModel):
+    total_completions: int
+    completions_last_7_days: int
+    users_with_completions: int
+    distinct_katas_completed: int
+    disciplines_count: int
+    ranks_count: int
 
 
 class DisciplineProgressionPublic(BaseModel):
@@ -101,6 +117,60 @@ class KataBase(BaseModel):
     statement: Translated
     signature: str
     concepts_used: list[str]
+
+
+class AdminKataTitle(BaseModel):
+    fr: str
+    en: str | None = None
+
+
+class AdminKataSummary(BaseModel):
+    id: str
+    title: AdminKataTitle
+    discipline: str
+    rank: str
+
+
+class AdminKataPublic(BaseModel):
+    id: str
+    title: AdminKataTitle
+    discipline: str
+    rank: str
+
+
+class AdminKataCompletionPublic(BaseModel):
+    kata_id: str
+    code: str
+    user_id: int
+    completed_at: datetime
+    verified: bool
+    kata: AdminKataPublic
+
+
+class AdminUserCompletions(BaseModel):
+    user: UserAdmin
+    stats: AdminCompletionStats
+    completions: list[AdminKataCompletionPublic]
+
+
+class AdminKataCompletionEntry(BaseModel):
+    user_id: int
+    username: str
+    completed_at: datetime
+    verified: bool
+
+
+class AdminKataCompletionStats(BaseModel):
+    total_completions: int
+    completions_last_7_days: int
+    distinct_users_completed: int
+    verified_completions: int
+
+
+class AdminKataCompletions(BaseModel):
+    kata: AdminKataSummary
+    stats: AdminKataCompletionStats
+    completions: list[AdminKataCompletionEntry]
 
 
 class FunctionKataTest(BaseModel):

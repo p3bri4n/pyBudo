@@ -7,7 +7,9 @@
     "back": "Retour",
     "loading" : "Chargement...",
     "error": "Une erreur est survenue",
-    "saving": "Sauvegarde..."
+    "saving": "Sauvegarde...",
+    "yes": "Oui",
+    "no": "Non"
   },
   "layout": {
     "pybudo": "pyBudo",
@@ -63,6 +65,40 @@
     "core": "Tronc commun",
     "no-rank": "Aucun rang"
   },
+  "navigation": {
+  "main": "Navigation principale",
+  "dojo": "Dojo",
+  "history": "Historique",
+    "completions": "Complétions"
+},
+  "history": {
+    "title": "Mon historique",
+    "description": "Retrouve tes katas terminés et suis ta progression.",
+    "loading": "Chargement de l'historique...",
+    "empty": "Aucune complétion ne correspond à ces filtres.",
+    "error": "Impossible de charger ton historique.",
+    "recent-completions": "Historique des complétions",
+    "verified": "Vérifié",
+    "not-verified": "Non Vérifié",
+    "stats": {
+      "title": "Mes statistiques",
+      "total": "Katas terminés",
+      "last-7-days": "Cette semaine",
+      "disciplines": "Disciplines pratiquées",
+      "ranks": "Rangs travaillés"
+    },
+    "filters": {
+      "discipline": "Discipline",
+      "rank": "Rang",
+      "period": "Période",
+      "all": "Tous",
+      "periods": {
+        "all": "Toutes les dates",
+        "7d": "7 derniers jours",
+        "30d": "30 derniers jours"
+      }
+    }
+  },
   "python-runner": {
     "execution": "Execution",
     "execute": "Executer",
@@ -84,7 +120,33 @@
       "users" : "Utilisateurs",
       "active-users": "Utilisateurs actifs",
       "katas": "Katas",
-      "published-katas": "Katas publiés"
+      "published-katas": "Katas publiés",
+      "global-completions": "Completions globales",
+      "total-completions": "Total completions",
+      "completions-last-7-days": "Completions Derniers 7 jours",
+      "users-with-completions": "Utilisateurs avec des completions",
+      "distinct-katas-completed": "Katas distincts completés",
+      "disciplines-count": "Nombre de disciplines",
+      "ranks-count": "Nombre de rangs",
+      "user-search": "Recherche utilisateurs",
+      "search-placeholder": "Recherchez un utilisateur",
+      "searching": "Recherche en cours",
+      "search": "Recherche",
+      "no-users-found": "Aucun utilisateur trouvé",
+      "close": "Fermer",
+      "completion-history": "Historique de Completions",
+      "no-completions": "Aucune completion",
+      "kata-title": "titre du kata",
+      "discipline": "Discipline",
+      "rank": "Rang",
+      "completed-at": "Completé le",
+      "verified": "Vérifié",
+      "kata-search": "Recherche kata",
+      "kata-search-placeholder": "Recherchez un kata",
+      "no-katas-found": "Aucun kata trouvé",
+      "distinct-users-completed": "Utilisateur distincts complété",
+      "verified-completions": "Completions vérifiées",
+      "username": "Nom d'utilisateur"
     },
     "users": {
       "users": "Utilisateurs",

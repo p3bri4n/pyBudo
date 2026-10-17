@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta, timezone
+
 from fastapi import status
 from httpx import Client
 from sqlmodel import Session
@@ -245,3 +247,98 @@ class TestsProgressions(BaseEntityHelper):
             headers={"Authorization": f"Bearer {token}"},
         )
         assert response.status_code == status.HTTP_404_NOT_FOUND
+
+    def test_completions_stats_empty(self, client, session):
+        self._add_user(session=session)
+        token = self._auth_user(client)
+        response = client.get(
+            "/completions/stats", headers={"Authorization": f"Bearer {token}"}
+        )
+
+        assert response.status_code == 200
+        assert response.json() == {
+            "total_completions": 0,
+            "completions_last_7_days": 0,
+            "disciplines_count": 0,
+            "ranks_count": 0,
+        }
+
+    def test_completions_stats_with_data(self, client, session):
+        user = self._add_user(session=session)
+
+        self._add_completed_kata(
+            session=session,
+            user_id=user.id,
+            kata_id="kyu_10_addition",
+            rank="kyu_10",
+            discipline="core",
+            code="def perimetre(a, b):\n    return 2 * (a + b)",
+            meta=None,
+        )
+        self._add_completed_kata(
+            session=session,
+            user_id=user.id,
+            kata_id="kyu_9_ticket_price",
+            rank="kyu_9",
+            discipline="core",
+            code="def perimetre(a, b):\n    return 2 * (a + b)",
+            meta=None,
+        )
+
+        token = self._auth_user(client)
+        response = client.get(
+            "/completions/stats", headers={"Authorization": f"Bearer {token}"}
+        )
+
+        assert response.status_code == 200
+        assert response.json() == {
+            "total_completions": 2,
+            "completions_last_7_days": 2,
+            "disciplines_count": 1,
+            "ranks_count": 2,
+        }
+
+    def test_completions_history_returns_kata_details_and_newest_first(
+        self, client, session
+    ):
+        user = self._add_user(session=session)
+        token = self._auth_user(client)
+        now = datetime.now(timezone.utc)
+
+        self._add_completed_kata(
+            session=session,
+            user_id=user.id,
+            kata_id="kyu_10_addition",
+            rank="kyu_10",
+            discipline="core",
+            code="OLD",
+            completed_at=now - timedelta(days=2),
+            meta=None,
+        )
+        self._add_completed_kata(
+            session=session,
+            user_id=user.id,
+            kata_id="kyu_9_ticket_price",
+            rank="kyu_9",
+            discipline="core",
+            code="NEW",
+            completed_at=now,
+            meta=None,
+        )
+
+        response = client.get(
+            "/completions/history", headers={"Authorization": f"Bearer {token}"}
+        )
+
+        assert response.status_code == 200
+        data = response.json()
+
+        assert len(data) == 2
+        assert [item["code"] for item in data] == ["NEW", "OLD"]
+
+        first = data[0]
+        assert first["kata_id"] == "kyu_9_ticket_price"
+        assert first["user_id"] == user.id
+        assert first["kata"]["id"] == "kyu_9_ticket_price"
+        assert first["kata"]["discipline"] == "core"
+        assert first["kata"]["rank"] == "kyu_9"

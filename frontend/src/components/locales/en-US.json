@@ -7,7 +7,9 @@
     "back": "Back",
     "loading": "Loading...",
     "error": "An error has occurred",
-    "saving": "Saving..."
+    "saving": "Saving...",
+    "yes": "Yes",
+    "no": "No"
   },
   "layout": {
     "pybudo": "pyBudo",
@@ -63,6 +65,40 @@
     "core": "Core",
     "no-rank": "No rank yet"
   },
+  "navigation": {
+    "main": "Main navigation",
+    "dojo": "Dojo",
+    "history": "History",
+    "completions": "Completions"
+  },
+  "history": {
+    "title": "My history",
+    "description": "Review your completed katas and track your progress.",
+    "loading": "Loading history...",
+    "empty": "No completions match these filters.",
+    "error": "Unable to load your history.",
+    "recent-completions": "Completion history",
+    "verified": "Verified",
+    "not-verified": "Not verified",
+    "stats": {
+      "title": "My statistics",
+      "total": "Completed katas",
+      "last-7-days": "This week",
+      "disciplines": "Disciplines practiced",
+      "ranks": "Ranks practiced"
+    },
+    "filters": {
+      "discipline": "Discipline",
+      "rank": "Rank",
+      "period": "Period",
+      "all": "All",
+      "periods": {
+        "all": "All time",
+        "7d": "Last 7 days",
+        "30d": "Last 30 days"
+      }
+    }
+  },
   "python-runner": {
     "execution": "Execution",
     "execute": "Execute",
@@ -84,7 +120,33 @@
       "users": "Users",
       "active-users": "Active users",
       "katas": "Katas",
-      "published-katas": "Published katas"
+      "published-katas": "Published katas",
+      "global-completions": "Global completions",
+      "total-completions": "Total completions",
+      "completions-last-7-days": "Last 7 days completions",
+      "users-with-completions": "Users with completions",
+      "distinct-katas-completed": "Distinct katas completed",
+      "disciplines-count": "Disciplines count",
+      "ranks-count": "Ranks count",
+      "user-search": "User search",
+      "search-placeholder": "Search for user",
+      "searching": "Searching",
+      "search": "Search",
+      "no-users-found": "No users found",
+      "close": "Close",
+      "completion-history": "Completion history",
+      "no-completions": "No completions",
+      "kata-title": "Kata title",
+      "discipline": "Discipline",
+      "rank": "Rank",
+      "completed-at": "Completed at",
+      "verified": "Verified",
+      "kata-search": "Kata search",
+      "kata-search-placeholder": "Search for kata",
+      "no-katas-found": "No katas found",
+      "distinct-users-completed": "Distinct users completed",
+      "verified-completions": "Verified completions",
+      "username": "Username"
     },
     "users": {
       "users": "Users",

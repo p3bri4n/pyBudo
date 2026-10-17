@@ -55,6 +55,57 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/admin/users/{user_id}/completions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Admin User Completions */
+        get: operations["get_admin_user_completions_admin_users__user_id__completions_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/katas/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Search Admin Katas */
+        get: operations["search_admin_katas_admin_katas_search_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/katas/{kata_id}/completions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Admin Kata Completions */
+        get: operations["get_admin_kata_completions_admin_katas__kata_id__completions_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/admin/katas/{kata_id}": {
         parameters: {
             query?: never;
@@ -115,6 +166,23 @@ export interface paths {
         };
         /** Get Admin Stats */
         get: operations["get_admin_stats_admin_stats_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/completions/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Admin Completion Stats */
+        get: operations["get_admin_completion_stats_admin_completions_stats_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -226,6 +294,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/completions/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Completions Stats */
+        get: operations["get_completions_stats_completions_stats_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/completions/history": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Completions History */
+        get: operations["get_completions_history_completions_history_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/katas": {
         parameters: {
             query?: never;
@@ -247,10 +349,108 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AdminCompletionStats */
+        AdminCompletionStats: {
+            /** Total Completions */
+            total_completions: number;
+            /** Completions Last 7 Days */
+            completions_last_7_days: number;
+            /** Users With Completions */
+            users_with_completions: number;
+            /** Distinct Katas Completed */
+            distinct_katas_completed: number;
+            /** Disciplines Count */
+            disciplines_count: number;
+            /** Ranks Count */
+            ranks_count: number;
+        };
+        /** AdminKataCompletionEntry */
+        AdminKataCompletionEntry: {
+            /** User Id */
+            user_id: number;
+            /** Username */
+            username: string;
+            /**
+             * Completed At
+             * Format: date-time
+             */
+            completed_at: string;
+            /** Verified */
+            verified: boolean;
+        };
+        /** AdminKataCompletionPublic */
+        AdminKataCompletionPublic: {
+            /** Kata Id */
+            kata_id: string;
+            /** Code */
+            code: string;
+            /** User Id */
+            user_id: number;
+            /**
+             * Completed At
+             * Format: date-time
+             */
+            completed_at: string;
+            /** Verified */
+            verified: boolean;
+            kata: components["schemas"]["AdminKataPublic"];
+        };
+        /** AdminKataCompletionStats */
+        AdminKataCompletionStats: {
+            /** Total Completions */
+            total_completions: number;
+            /** Completions Last 7 Days */
+            completions_last_7_days: number;
+            /** Distinct Users Completed */
+            distinct_users_completed: number;
+            /** Verified Completions */
+            verified_completions: number;
+        };
+        /** AdminKataCompletions */
+        AdminKataCompletions: {
+            kata: components["schemas"]["AdminKataSummary"];
+            stats: components["schemas"]["AdminKataCompletionStats"];
+            /** Completions */
+            completions: components["schemas"]["AdminKataCompletionEntry"][];
+        };
+        /** AdminKataPublic */
+        AdminKataPublic: {
+            /** Id */
+            id: string;
+            title: components["schemas"]["AdminKataTitle"];
+            /** Discipline */
+            discipline: string;
+            /** Rank */
+            rank: string;
+        };
+        /** AdminKataSummary */
+        AdminKataSummary: {
+            /** Id */
+            id: string;
+            title: components["schemas"]["AdminKataTitle"];
+            /** Discipline */
+            discipline: string;
+            /** Rank */
+            rank: string;
+        };
+        /** AdminKataTitle */
+        AdminKataTitle: {
+            /** Fr */
+            fr: string;
+            /** En */
+            en?: string | null;
+        };
         /** AdminStats */
         AdminStats: {
             users: components["schemas"]["UserStats"];
             katas: components["schemas"]["KataStats"];
+        };
+        /** AdminUserCompletions */
+        AdminUserCompletions: {
+            user: components["schemas"]["UserAdmin"];
+            stats: components["schemas"]["AdminCompletionStats"];
+            /** Completions */
+            completions: components["schemas"]["AdminKataCompletionPublic"][];
         };
         /** ClassKataInternal */
         "ClassKataInternal-Input": {
@@ -500,6 +700,17 @@ export interface components {
             /** Verified */
             verified: boolean;
         };
+        /** KataCompletionStats */
+        KataCompletionStats: {
+            /** Total Completions */
+            total_completions: number;
+            /** Completions Last 7 Days */
+            completions_last_7_days: number;
+            /** Disciplines Count */
+            disciplines_count: number;
+            /** Ranks Count */
+            ranks_count: number;
+        };
         /** KataStats */
         KataStats: {
             /** Katas Number */
@@ -650,7 +861,11 @@ export interface operations {
     };
     get_users_admin_users_get: {
         parameters: {
-            query?: never;
+            query?: {
+                search?: string;
+                skip?: number;
+                limit?: number;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -664,6 +879,15 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["UserAdmin"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -686,6 +910,100 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["UserAdmin"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_admin_user_completions_admin_users__user_id__completions_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminUserCompletions"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    search_admin_katas_admin_katas_search_get: {
+        parameters: {
+            query?: {
+                search?: string;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminKataSummary"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_admin_kata_completions_admin_katas__kata_id__completions_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                kata_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminKataCompletions"];
                 };
             };
             /** @description Validation Error */
@@ -812,6 +1130,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["AdminStats"];
+                };
+            };
+        };
+    };
+    get_admin_completion_stats_admin_completions_stats_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminCompletionStats"];
                 };
             };
         };
@@ -991,6 +1329,46 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_completions_stats_completions_stats_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["KataCompletionStats"];
+                };
+            };
+        };
+    };
+    get_completions_history_completions_history_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
                 };
             };
         };

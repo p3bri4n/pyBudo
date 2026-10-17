@@ -1,15 +1,17 @@
-import { useEffect, useState } from "react";
-import { getAdminStats } from "../../../api/adminApi.ts";
-import type { AdminStats } from "../../../interfaces/interfaces.ts";
-import "./admin-dashboard.css"
-import {useTranslation} from "react-i18next";
-import {Loading} from "../../../components/ui/Loading.tsx";
+import { useEffect, useState} from "react";
+import { useTranslation } from "react-i18next";
+
+import {getAdminStats, getAdminCompletionStats} from "../../../api/adminApi.ts";
+
+import type {AdminStats, AdminCompletionStats} from "../../../interfaces/interfaces.ts";
+
+import { Loading } from "../../../components/ui/Loading.tsx";
+import "./admin-dashboard.css";
 
 type StatCardProps = {
     label: string;
     value: number | string;
 };
-
 
 function StatCard({ label, value }: StatCardProps) {
     return (
@@ -20,69 +22,124 @@ function StatCard({ label, value }: StatCardProps) {
     );
 }
 
-
 function AdminDashboard() {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
+
     const [stats, setStats] = useState<AdminStats | null>(null);
+    const [completionStats, setCompletionStats] =
+        useState<AdminCompletionStats | null>(null);
+
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
+        let cancelled = false;
+
         async function loadStats() {
+            setLoading(true);
+            setError(null);
+
             try {
-                const data = await getAdminStats();
-                setStats(data);
-            } catch (error) {
-                setError(
-                    error instanceof Error
-                        ? error.message
-                        : t("admin.dashboard.unknown-error"),
-                );
+                const [adminData, completionData] = await Promise.all([
+                    getAdminStats(),
+                    getAdminCompletionStats(),
+                ]);
+
+                if (cancelled) return;
+
+                setStats(adminData);
+                setCompletionStats(completionData);
+            } catch (err) {
+                if (!cancelled) {
+                    setError(
+                        err instanceof Error
+                            ? err.message
+                            : t("admin.dashboard.unknown-error"),
+                    );
+                }
             } finally {
-                setLoading(false);
+                if (!cancelled) setLoading(false);
             }
         }
 
         void loadStats();
+
+        return () => {
+            cancelled = true;
+        };
     }, [t]);
 
     if (loading) {
-        return <Loading/>;
+        return <Loading />;
     }
 
     if (error) {
-        return <p>{error}</p>;
+        return <p role="alert">{error}</p>;
     }
 
-    if (!stats) {
+    if (!stats || !completionStats) {
         return null;
     }
 
     return (
-        <div className={"AdminDashboard"}>
+        <div className="AdminDashboard">
             <h1>{t("admin.dashboard.dashboard")}</h1>
 
-            <div className="admin-stats-grid">
-                <StatCard
-                    label={t("admin.dashboard.users")}
-                    value={stats.users.total_users}
-                />
+            <section className="admin-section">
+                <h2>{t("admin.dashboard.global-completions")}</h2>
 
-                <StatCard
-                    label={t("admin.dashboard.active-users")}
-                    value={stats.users.active_users}
-                />
+                <div className="admin-stats-grid">
+                    <StatCard
+                        label={t("admin.dashboard.users")}
+                        value={stats.users.total_users}
+                    />
 
-                <StatCard
-                    label={t("admin.dashboard.katas")}
-                    value={stats.katas.katas_number}
-                />
+                    <StatCard
+                        label={t("admin.dashboard.active-users")}
+                        value={stats.users.active_users}
+                    />
 
-                <StatCard
-                    label={t("admin.dashboard.published-katas")}
-                    value={stats.katas.published_katas}
-                />
-            </div>
+                    <StatCard
+                        label={t("admin.dashboard.katas")}
+                        value={stats.katas.katas_number}
+                    />
+
+                    <StatCard
+                        label={t("admin.dashboard.published-katas")}
+                        value={stats.katas.published_katas}
+                    />
+
+                    <StatCard
+                        label={t("admin.dashboard.total-completions")}
+                        value={completionStats.total_completions}
+                    />
+
+                    <StatCard
+                        label={t("admin.dashboard.completions-last-7-days")}
+                        value={completionStats.completions_last_7_days}
+                    />
+
+                    <StatCard
+                        label={t("admin.dashboard.users-with-completions")}
+                        value={completionStats.users_with_completions}
+                    />
+
+                    <StatCard
+                        label={t("admin.dashboard.distinct-katas-completed")}
+                        value={completionStats.distinct_katas_completed}
+                    />
+
+                    <StatCard
+                        label={t("admin.dashboard.disciplines-count")}
+                        value={completionStats.disciplines_count}
+                    />
+
+                    <StatCard
+                        label={t("admin.dashboard.ranks-count")}
+                        value={completionStats.ranks_count}
+                    />
+                </div>
+            </section>
         </div>
     );
 }

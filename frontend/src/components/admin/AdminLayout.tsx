@@ -20,6 +20,9 @@ function AdminLayout() {
                     <NavLink to="/back-office/katas">
                         {t("admin.layout.katas")}
                     </NavLink>
+                    <NavLink to="/back-office/completions">
+                        {t("navigation.completions")}
+                    </NavLink>
                 </nav>
             </aside>
 
