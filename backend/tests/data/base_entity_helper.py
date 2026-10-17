@@ -108,7 +108,9 @@ class BaseEntityHelper:
             session=session, id=kata_id, rank=rank, discipline=discipline, meta=meta
         )
 
-        completion = KataCompletion(user_id=user_id, kata_id=kata_id, code=code, completed_at=completed_at)
+        completion = KataCompletion(
+            user_id=user_id, kata_id=kata_id, code=code, completed_at=completed_at
+        )
 
         session.add(completion)
         session.commit()

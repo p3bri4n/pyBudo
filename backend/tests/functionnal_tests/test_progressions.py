@@ -251,7 +251,9 @@ class TestsProgressions(BaseEntityHelper):
     def test_completions_stats_empty(self, client, session):
         self._add_user(session=session)
         token = self._auth_user(client)
-        response = client.get("/completions/stats", headers={"Authorization": f"Bearer {token}"})
+        response = client.get(
+            "/completions/stats", headers={"Authorization": f"Bearer {token}"}
+        )
 
         assert response.status_code == 200
         assert response.json() == {
@@ -284,7 +286,9 @@ class TestsProgressions(BaseEntityHelper):
         )
 
         token = self._auth_user(client)
-        response = client.get("/completions/stats", headers={"Authorization": f"Bearer {token}"})
+        response = client.get(
+            "/completions/stats", headers={"Authorization": f"Bearer {token}"}
+        )
 
         assert response.status_code == 200
         assert response.json() == {
@@ -294,7 +298,9 @@ class TestsProgressions(BaseEntityHelper):
             "ranks_count": 2,
         }
 
-    def test_completions_history_returns_kata_details_and_newest_first(self, client, session):
+    def test_completions_history_returns_kata_details_and_newest_first(
+        self, client, session
+    ):
         user = self._add_user(session=session)
         token = self._auth_user(client)
         now = datetime.now(timezone.utc)
@@ -316,11 +322,13 @@ class TestsProgressions(BaseEntityHelper):
             rank="kyu_9",
             discipline="core",
             code="NEW",
-            completed_at= now,
+            completed_at=now,
             meta=None,
         )
 
-        response = client.get("/completions/history", headers={"Authorization": f"Bearer {token}"})
+        response = client.get(
+            "/completions/history", headers={"Authorization": f"Bearer {token}"}
+        )
 
         assert response.status_code == 200
         data = response.json()
