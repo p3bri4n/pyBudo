@@ -39,7 +39,7 @@ def get_completions(
 @router.get("/completions/stats", response_model=KataCompletionStats)
 def get_completions_stats(
     session: Annotated[Session, Depends(get_session)],
-    current_user: Annotated[User, Depends(get_current_user)]
+    current_user: Annotated[User, Depends(get_current_user)],
 ) -> KataCompletionStats:
 
     total_completions = session.exec(
@@ -84,7 +84,7 @@ def get_completions_stats(
 @router.get("/completions/history")
 def get_completions_history(
     session: Annotated[Session, Depends(get_session)],
-    current_user: Annotated[User, Depends(get_current_user)]
+    current_user: Annotated[User, Depends(get_current_user)],
 ):
     statement = (
         select(KataCompletion, Kata)

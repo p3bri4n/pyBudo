@@ -295,7 +295,5 @@ def get_admin_stats(session: Annotated[Session, Depends(get_session)]):
 
 
 @router.get("/completions/stats", response_model=AdminCompletionStats)
-def get_admin_completion_stats(
-    session: Annotated[Session, Depends(get_session)]
-):
+def get_admin_completion_stats(session: Annotated[Session, Depends(get_session)]):
     return build_completion_stats(session)
