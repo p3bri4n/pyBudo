@@ -15,16 +15,10 @@ def build_completion_stats(
     recent_query = select(func.count()).select_from(KataCompletion)
 
     if user_id is not None:
-        completion_query = completion_query.where(
-            KataCompletion.user_id == user_id
-        )
-        recent_query = recent_query.where(
-            KataCompletion.user_id == user_id
-        )
+        completion_query = completion_query.where(KataCompletion.user_id == user_id)
+        recent_query = recent_query.where(KataCompletion.user_id == user_id)
 
-    recent_query = recent_query.where(
-        KataCompletion.completed_at >= since
-    )
+    recent_query = recent_query.where(KataCompletion.completed_at >= since)
 
     total = session.exec(completion_query).one()
     recent = session.exec(recent_query).one()
@@ -49,12 +43,8 @@ def build_completion_stats(
     )
 
     if user_id is not None:
-        discipline_query = discipline_query.where(
-            KataCompletion.user_id == user_id
-        )
-        rank_query = rank_query.where(
-            KataCompletion.user_id == user_id
-        )
+        discipline_query = discipline_query.where(KataCompletion.user_id == user_id)
+        rank_query = rank_query.where(KataCompletion.user_id == user_id)
 
     disciplines = session.exec(discipline_query).one()
     ranks = session.exec(rank_query).one()

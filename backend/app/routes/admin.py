@@ -5,9 +5,14 @@ from sqlmodel import Session, func, select
 from sqlalchemy import or_
 from app.dependencies import get_session, require_admin
 from app.model import Kata, KataCompletion, User
-from app.schemas import (AdminCompletionStats, AdminStats, AdminUserCompletions,
-                         KataInternal, KataVariantCreate, UserAdmin
-                         )
+from app.schemas import (
+    AdminCompletionStats,
+    AdminStats,
+    AdminUserCompletions,
+    KataInternal,
+    KataVariantCreate,
+    UserAdmin,
+)
 from app.services.admin.stats import build_completion_stats
 
 router = APIRouter(prefix="/admin", dependencies=[Depends(require_admin)])
