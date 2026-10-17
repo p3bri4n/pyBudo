@@ -68,7 +68,8 @@
   "navigation": {
     "main": "Main navigation",
     "dojo": "Dojo",
-    "history": "History"
+    "history": "History",
+    "completions": "Completions"
   },
   "history": {
     "title": "My history",
@@ -128,7 +129,7 @@
       "disciplines-count": "Disciplines count",
       "ranks-count": "Ranks count",
       "user-search": "User search",
-      "search-placeholder": "Search for an user",
+      "search-placeholder": "Search for user",
       "searching": "Searching",
       "search": "Search",
       "no-users-found": "No users found",

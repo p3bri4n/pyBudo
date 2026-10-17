@@ -68,7 +68,8 @@
   "navigation": {
   "main": "Navigation principale",
   "dojo": "Dojo",
-  "history": "Historique"
+  "history": "Historique",
+    "completions": "Complétions"
 },
   "history": {
     "title": "Mon historique",

@@ -15,6 +15,7 @@ import AdminKatas from "../admin/katas/AdminKatas.tsx";
 import AdminKataDetail from "../admin/katas/AdminKataDetail.tsx";
 import AdminUserDetail from "../admin/users/AdminUserDetail.tsx";
 import History from "../Layout/History/History.tsx";
+import {AdminCompletions} from "../admin/completions/AdminCompletions.tsx";
 
 
 const AppRouter = () => {
@@ -39,6 +40,7 @@ const AppRouter = () => {
                                 <Route path="users/:userId" element={<AdminUserDetail/>}/>
                                 <Route path="katas" element={<AdminKatas/>}/>
                                 <Route path="katas/:kataId" element={<AdminKataDetail/>}/>
+                                <Route path="completions" element={<AdminCompletions />} />
                             </Route>
                         </Route>
                 </Route>
