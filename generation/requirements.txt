@@ -1,0 +1,2 @@
+langgraph==1.2.12
+openai==3.22.1
