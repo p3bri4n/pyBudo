@@ -245,3 +245,49 @@ class TestsProgressions(BaseEntityHelper):
             headers={"Authorization": f"Bearer {token}"},
         )
         assert response.status_code == status.HTTP_404_NOT_FOUND
+
+    def test_completions_stats_empty(self, client, session):
+        self._add_user(session=session)
+        token = self._auth_user(client)
+        response = client.get("/completions/stats", headers={"Authorization": f"Bearer {token}"})
+
+        assert response.status_code == 200
+        assert response.json() == {
+            "total_completions": 0,
+            "completions_last_7_days": 0,
+            "disciplines_count": 0,
+            "ranks_count": 0,
+        }
+
+    def test_completions_stats_with_data(self, client, session):
+        user = self._add_user(session=session)
+
+        self._add_completed_kata(
+            session=session,
+            user_id=user.id,
+            kata_id="kyu_10_addition",
+            rank="kyu_10",
+            discipline="core",
+            code="def perimetre(a, b):\n    return 2 * (a + b)",
+            meta=None,
+        )
+        self._add_completed_kata(
+            session=session,
+            user_id=user.id,
+            kata_id="kyu_9_ticket_price",
+            rank="kyu_9",
+            discipline="core",
+            code="def perimetre(a, b):\n    return 2 * (a + b)",
+            meta=None,
+        )
+
+        token = self._auth_user(client)
+        response = client.get("/completions/stats", headers={"Authorization": f"Bearer {token}"})
+
+        assert response.status_code == 200
+        assert response.json() == {
+            "total_completions": 2,
+            "completions_last_7_days": 2,
+            "disciplines_count": 1,
+            "ranks_count": 2,
+        }
