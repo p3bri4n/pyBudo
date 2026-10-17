@@ -1,10 +1,14 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import AdminDashboard from "./AdminDashboard.tsx";
-import { getAdminStats } from "../../../api/adminApi.ts";
+import {getAdminCompletionStats, getAdminStats} from "../../../api/adminApi.ts";
 
 vi.mock("../../../api/adminApi.ts", () => ({
     getAdminStats: vi.fn(),
+    getAdminCompletionStats: vi.fn(),
+    searchAdminUsers: vi.fn(),
+    getAdminUserCompletions: vi.fn(),
+
 }));
 
 vi.mock("react-i18next", () => ({
@@ -30,6 +34,7 @@ vi.mock("../../components/ui/Loading.tsx", () => ({
 }));
 
 const mockedGetAdminStats = vi.mocked(getAdminStats);
+const mockedGetAdminCompletionStats = vi.mocked(getAdminCompletionStats);
 
 describe("AdminDashboard", () => {
     beforeEach(() => {
@@ -54,6 +59,14 @@ describe("AdminDashboard", () => {
                 katas_number: 50,
                 published_katas: 35,
             },
+        });
+        mockedGetAdminCompletionStats.mockResolvedValue({
+            total_completions: 12,
+            completions_last_7_days: 3,
+            users_with_completions: 5,
+            distinct_katas_completed: 8,
+            disciplines_count: 2,
+            ranks_count: 4,
         });
 
         render(<AdminDashboard />);
