@@ -1,9 +1,10 @@
 from datetime import datetime, timezone
 
-from app.model import DisciplineProgression, Kata, KataCompletion, Progression, User
 from httpx import Client
 from pwdlib import PasswordHash
 from sqlmodel import Session
+
+from app.model import DisciplineProgression, Kata, KataCompletion, Progression, User
 
 
 class BaseEntityHelper:

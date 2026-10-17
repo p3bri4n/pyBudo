@@ -1,9 +1,10 @@
 from datetime import datetime, timedelta, timezone
 
-from app.schemas import MAX_CODE_LENGTH
 from fastapi import status
 from httpx import Client
 from sqlmodel import Session
+
+from app.schemas import MAX_CODE_LENGTH
 from tests.data.base_entity_helper import BaseEntityHelper
 
 

@@ -1,6 +1,10 @@
 from datetime import datetime, timedelta, timezone
 from typing import Annotated
 
+from fastapi import APIRouter, Depends, HTTPException, Query, status
+from sqlalchemy import String, cast, or_
+from sqlmodel import Session, func, select
+
 from app.dependencies import get_session, require_admin
 from app.model import Kata, KataCompletion, User
 from app.schemas import (
@@ -14,9 +18,6 @@ from app.schemas import (
     UserAdmin,
 )
 from app.services.admin.stats import build_completion_stats
-from fastapi import APIRouter, Depends, HTTPException, Query, status
-from sqlalchemy import String, cast, or_
-from sqlmodel import Session, func, select
 
 router = APIRouter(prefix="/admin", dependencies=[Depends(require_admin)])
 

@@ -1,6 +1,9 @@
 from datetime import datetime, timedelta, timezone
 from typing import Annotated
 
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlmodel import Session, func, select
+
 from app.dependencies import get_current_user, get_session
 from app.model import Kata, KataCompletion, User
 from app.schemas import (
@@ -11,8 +14,6 @@ from app.schemas import (
 )
 from app.services.katas import can_access_kata, get_published_kata
 from app.services.recalculate import recalculate_progression
-from fastapi import APIRouter, Depends, HTTPException, status
-from sqlmodel import Session, func, select
 
 router = APIRouter()
 

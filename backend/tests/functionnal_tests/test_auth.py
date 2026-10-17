@@ -1,12 +1,13 @@
 from datetime import datetime, timedelta, timezone
 
 import jwt
-from app.dependencies import ALGORITHM, SECRET_KEY
-from app.model import Progression, User
 from fastapi import status
 from httpx import Client
 from pwdlib import PasswordHash
 from sqlmodel import Session, select
+
+from app.dependencies import ALGORITHM, SECRET_KEY
+from app.model import Progression, User
 from tests.data.base_entity_helper import BaseEntityHelper
 
 
