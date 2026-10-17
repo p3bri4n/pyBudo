@@ -119,9 +119,21 @@ class KataBase(BaseModel):
     concepts_used: list[str]
 
 
+class AdminKataTitle(BaseModel):
+    fr: str
+    en: str | None = None
+
+
+class AdminKataSummary(BaseModel):
+    id: str
+    title: AdminKataTitle
+    discipline: str
+    rank: str
+
+
 class AdminKataPublic(BaseModel):
     id: str
-    title: dict[str, str]
+    title: AdminKataTitle
     discipline: str
     rank: str
 
@@ -139,6 +151,26 @@ class AdminUserCompletions(BaseModel):
     user: UserAdmin
     stats: AdminCompletionStats
     completions: list[AdminKataCompletionPublic]
+
+
+class AdminKataCompletionEntry(BaseModel):
+    user_id: int
+    username: str
+    completed_at: datetime
+    verified: bool
+
+
+class AdminKataCompletionStats(BaseModel):
+    total_completions: int
+    completions_last_7_days: int
+    distinct_users_completed: int
+    verified_completions: int
+
+
+class AdminKataCompletions(BaseModel):
+    kata: AdminKataSummary
+    stats: AdminKataCompletionStats
+    completions: list[AdminKataCompletionEntry]
 
 
 class FunctionKataTest(BaseModel):

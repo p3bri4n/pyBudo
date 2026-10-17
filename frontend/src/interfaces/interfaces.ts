@@ -28,6 +28,11 @@ export type Rank = Kata["rank"]
 export type AdminCompletionStats = components["schemas"]["AdminCompletionStats"];
 export type AdminUserCompletions  = components["schemas"]["AdminUserCompletions"];
 
+export type AdminKataSummary = components["schemas"]["AdminKataSummary"];
+export type AdminKataCompletionEntry = components["schemas"]["AdminKataCompletionEntry"];
+export type AdminKataCompletionStats = components["schemas"]["AdminKataCompletionStats"];
+export type AdminKataCompletions = components["schemas"]["AdminKataCompletions"];
+
 export interface AuthContextType {
     user: User | null;
     loading: boolean;

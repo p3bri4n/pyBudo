@@ -1,8 +1,8 @@
 from typing import Annotated
-
+from datetime import datetime, timedelta, timezone
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlmodel import Session, func, select
-from sqlalchemy import or_
+from sqlalchemy import String, cast, or_
 from app.dependencies import get_session, require_admin
 from app.model import Kata, KataCompletion, User
 from app.schemas import (
@@ -11,7 +11,7 @@ from app.schemas import (
     AdminUserCompletions,
     KataInternal,
     KataVariantCreate,
-    UserAdmin,
+    UserAdmin, AdminKataCompletions, AdminKataSummary,
 )
 from app.services.admin.stats import build_completion_stats
 
@@ -102,6 +102,115 @@ def get_admin_user_completions(
     }
 
 
+@router.get("/katas/search", response_model=list[AdminKataSummary])
+def search_admin_katas(
+    session: Annotated[Session, Depends(get_session)],
+    search: str = Query(default="", max_length=100),
+    limit: int = Query(default=20, ge=1, le=100),
+):
+    statement = select(Kata)
+
+    if search.strip():
+        term = f"%{search.strip()}%"
+        statement = statement.where(
+            or_(
+                Kata.id.ilike(term),
+                cast(Kata.title, String).ilike(term),
+                Kata.discipline.ilike(term),
+                Kata.rank.ilike(term),
+            )
+        )
+
+    katas = session.exec(
+        statement.order_by(Kata.id).limit(limit)
+    ).all()
+
+    return [
+        AdminKataSummary(
+            id=kata.id,
+            title=kata.title,
+            discipline=kata.discipline,
+            rank=kata.rank,
+        )
+        for kata in katas
+    ]
+
+
+@router.get(
+    "/katas/{kata_id}/completions",
+    response_model=AdminKataCompletions,
+)
+def get_admin_kata_completions(
+    kata_id: str,
+    session: Annotated[Session, Depends(get_session)],
+):
+    kata = session.get(Kata, kata_id)
+
+    if kata is None:
+        raise HTTPException(status_code=404, detail="Kata not found")
+
+    now = datetime.now(timezone.utc)
+    seven_days_ago = now - timedelta(days=7)
+
+    total = session.exec(
+        select(func.count())
+        .select_from(KataCompletion)
+        .where(KataCompletion.kata_id == kata_id)
+    ).one()
+
+    recent = session.exec(
+        select(func.count())
+        .select_from(KataCompletion)
+        .where(
+            KataCompletion.kata_id == kata_id,
+            KataCompletion.completed_at >= seven_days_ago,
+        )
+    ).one()
+
+    distinct_users = session.exec(
+        select(func.count(func.distinct(KataCompletion.user_id)))
+        .where(KataCompletion.kata_id == kata_id)
+    ).one()
+
+    verified = session.exec(
+        select(func.count())
+        .select_from(KataCompletion)
+        .where(
+            KataCompletion.kata_id == kata_id,
+            KataCompletion.verified.is_(True),
+        )
+    ).one()
+
+    rows = session.exec(
+        select(KataCompletion, User)
+        .join(User, User.id == KataCompletion.user_id)
+        .where(KataCompletion.kata_id == kata_id)
+        .order_by(KataCompletion.completed_at.desc())
+    ).all()
+
+    return {
+        "kata": {
+            "id": kata.id,
+            "title": kata.title,
+            "discipline": kata.discipline,
+            "rank": kata.rank,
+        },
+        "stats": {
+            "total_completions": total,
+            "completions_last_7_days": recent,
+            "distinct_users_completed": distinct_users,
+            "verified_completions": verified,
+        },
+        "completions": [
+            {
+                "user_id": completion.user_id,
+                "username": user.username,
+                "completed_at": completion.completed_at,
+                "verified": completion.verified,
+            }
+            for completion, user in rows
+        ],
+    }
 @router.get("/katas/{kata_id}", response_model=KataInternal)
 def get_kata(kata_id: str, session: Annotated[Session, Depends(get_session)]):
     kata = session.get(Kata, kata_id)

@@ -140,7 +140,13 @@
       "discipline": "Discipline",
       "rank": "Rang",
       "completed-at": "Completé le",
-      "verified": "Vérifié"
+      "verified": "Vérifié",
+      "kata-search": "Recherche kata",
+      "kata-search-placeholder": "Recherchez un kata",
+      "no-katas-found": "Aucun kata trouvé",
+      "distinct-users-completed": "Utilisateur distincts complété",
+      "verified-completions": "Completions vérifiées",
+      "username": "Nom d'utilisateur"
     },
     "users": {
       "users": "Utilisateurs",

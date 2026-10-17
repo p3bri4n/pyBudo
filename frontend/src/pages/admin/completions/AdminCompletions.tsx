@@ -1,11 +1,14 @@
 import { useTranslation } from "react-i18next";
 import {type FormEvent, useState} from "react";
-import {getAdminUserCompletions, searchAdminUsers} from "../../../api/adminApi.ts";
+import {getAdminUserCompletions, searchAdminUsers,
+    getAdminKataCompletions, searchAdminKatas} from "../../../api/adminApi.ts";
 
-import type {AdminUser, AdminUserCompletions} from "../../../interfaces/interfaces.ts";
+import type {AdminUser, AdminUserCompletions,
+    AdminKataSummary, AdminKataCompletions} from "../../../interfaces/interfaces.ts";
 import {Loading} from "../../../components/ui/Loading.tsx";
 import {localize} from "../../../utils/utils.ts";
 import "./admin-completions.css"
+
 
 type StatCardProps = {
     label: string;
@@ -35,6 +38,21 @@ export function AdminCompletions() {
 
     const [detailsLoading, setDetailsLoading] = useState(false);
     const [detailsError, setDetailsError] = useState<string | null>(null);
+
+    const [kataSearch, setKataSearch] = useState("");
+    const [katas, setKatas] = useState<AdminKataSummary[]>([]);
+    const [kataSearchLoading, setKataSearchLoading] = useState(false);
+    const [kataSearchError, setKataSearchError] = useState<string | null>(null);
+    const [hasSearchedKatas, setHasSearchedKatas] = useState(false);
+
+    const [selectedKata, setSelectedKata] =
+        useState<AdminKataSummary | null>(null);
+
+    const [kataDetails, setKataDetails] =
+        useState<AdminKataCompletions | null>(null);
+
+    const [kataDetailsLoading, setKataDetailsLoading] = useState(false);
+    const [kataDetailsError, setKataDetailsError] = useState<string | null>(null);
 
     async function handleSearch(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -77,6 +95,51 @@ export function AdminCompletions() {
             );
         } finally {
             setDetailsLoading(false);
+        }
+    }
+
+    async function handleKataSearch(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+
+        setHasSearchedKatas(true);
+        setKataSearchLoading(true);
+        setKataSearchError(null);
+        setKatas([]);
+        setSelectedKata(null);
+        setKataDetails(null);
+        setKataDetailsError(null);
+
+        try {
+            const results = await searchAdminKatas(kataSearch);
+            setKatas(results);
+        } catch (err) {
+            setKataSearchError(
+                err instanceof Error
+                    ? err.message
+                    : t("admin.dashboard.kata-search-error"),
+            );
+        } finally {
+            setKataSearchLoading(false);
+        }
+    }
+
+    async function handleSelectKata(kata: AdminKataSummary) {
+        setSelectedKata(kata);
+        setKataDetails(null);
+        setKataDetailsError(null);
+        setKataDetailsLoading(true);
+
+        try {
+            const details = await getAdminKataCompletions(kata.id);
+            setKataDetails(details);
+        } catch (err) {
+            setKataDetailsError(
+                err instanceof Error
+                    ? err.message
+                    : t("admin.dashboard.kata-details-error"),
+            );
+        } finally {
+            setKataDetailsLoading(false);
         }
     }
 
@@ -260,6 +323,177 @@ export function AdminCompletions() {
                                                 </tr>
                                             ),
                                         )}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )}
+                        </>
+                    )}
+                </section>
+            )}
+            <section className="admin-section">
+                <h2>{t("admin.dashboard.kata-search")}</h2>
+
+                <form onSubmit={handleKataSearch}>
+                    <input
+                        className="input-dojo"
+                        type="search"
+                        value={kataSearch}
+                        onChange={(event) => setKataSearch(event.target.value)}
+                        placeholder={t("admin.dashboard.kata-search-placeholder")}
+                        aria-label={t("admin.dashboard.kata-search")}
+                    />
+
+                    <button
+                        className="btn-dojo"
+                        type="submit"
+                        disabled={kataSearchLoading}
+                    >
+                        {kataSearchLoading
+                            ? t("admin.dashboard.searching")
+                            : t("admin.dashboard.search")}
+                    </button>
+                </form>
+
+                {kataSearchError && (
+                    <p className="admin-error" role="alert">
+                        {kataSearchError}
+                    </p>
+                )}
+
+                {hasSearchedKatas && !kataSearchLoading && !kataSearchError && (
+                    <div className="admin-user-results">
+                        {katas.length === 0 ? (
+                            <p>{t("admin.dashboard.no-katas-found")}</p>
+                        ) : (
+                            katas.map((kata) => (
+                                <button
+                                    type="button"
+                                    key={kata.id}
+                                    className={`admin-user-result ${
+                                        selectedKata?.id === kata.id
+                                            ? "admin-user-result--selected"
+                                            : ""
+                                    }`}
+                                    onClick={() => void handleSelectKata(kata)}
+                                >
+                        <span>
+                            <strong>
+                                {localize(kata.title, i18n.language)
+                                    ?? kata.title.fr
+                                    ?? kata.id}
+                            </strong>
+                            <small>{kata.id}</small>
+                        </span>
+
+                                    <span>
+                            {kata.discipline} · {kata.rank}
+                        </span>
+                                </button>
+                            ))
+                        )}
+                    </div>
+                )}
+            </section>
+
+            {selectedKata && (
+                <section className="admin-section">
+                    <div className="admin-user-heading">
+                        <div>
+                            <h2>
+                                {localize(selectedKata.title, i18n.language)
+                                    ?? selectedKata.title.fr
+                                    ?? selectedKata.id}
+                            </h2>
+                            <p>
+                                {selectedKata.discipline} · {selectedKata.rank}
+                            </p>
+                        </div>
+
+                        <button
+                            className="btn-dojo"
+                            type="button"
+                            onClick={() => {
+                                setSelectedKata(null);
+                                setKataDetails(null);
+                                setKataDetailsError(null);
+                            }}
+                        >
+                            {t("admin.dashboard.close")}
+                        </button>
+                    </div>
+
+                    {kataDetailsLoading && <Loading />}
+
+                    {kataDetailsError && (
+                        <p className="admin-error" role="alert">
+                            {kataDetailsError}
+                        </p>
+                    )}
+
+                    {kataDetails && (
+                        <>
+                            <div className="admin-stats-grid">
+                                <StatCard
+                                    label={t("admin.dashboard.total-completions")}
+                                    value={kataDetails.stats.total_completions}
+                                />
+
+                                <StatCard
+                                    label={t("admin.dashboard.completions-last-7-days")}
+                                    value={kataDetails.stats.completions_last_7_days}
+                                />
+
+                                <StatCard
+                                    label={t("admin.dashboard.distinct-users-completed")}
+                                    value={kataDetails.stats.distinct_users_completed}
+                                />
+
+                                <StatCard
+                                    label={t("admin.dashboard.verified-completions")}
+                                    value={kataDetails.stats.verified_completions}
+                                />
+                            </div>
+
+                            <h3>{t("admin.dashboard.completion-history")}</h3>
+
+                            {kataDetails.completions.length === 0 ? (
+                                <p>{t("admin.dashboard.no-completions")}</p>
+                            ) : (
+                                <div className="admin-table-wrapper">
+                                    <table className="admin-completion-table">
+                                        <thead>
+                                        <tr>
+                                            <th>{t("admin.dashboard.username")}</th>
+                                            <th>{t("admin.dashboard.completed-at")}</th>
+                                            <th>{t("admin.dashboard.verified")}</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+                                        {kataDetails.completions.map((completion) => (
+                                            <tr
+                                                key={`${completion.user_id}-${completion.completed_at}`}
+                                            >
+                                                <td>{completion.username}</td>
+                                                <td>
+                                                    {new Intl.DateTimeFormat(
+                                                        i18n.language,
+                                                        {
+                                                            dateStyle: "medium",
+                                                            timeStyle: "short",
+                                                        },
+                                                    ).format(
+                                                        new Date(completion.completed_at),
+                                                    )}
+                                                </td>
+                                                <td>
+                                                    {completion.verified
+                                                        ? t("common.yes")
+                                                        : t("common.no")}
+                                                </td>
+                                            </tr>
+                                        ))}
                                         </tbody>
                                     </table>
                                 </div>

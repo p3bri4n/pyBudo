@@ -3,8 +3,11 @@ import type {
     AdminKata,
     AdminStats,
     AdminUser, AdminUserCompletions,
-    KataVariantCreate
+    KataVariantCreate,
+    AdminKataSummary,
+    AdminKataCompletions,
 } from "../interfaces/interfaces.ts";
+
 import {apiClient, authHeaders} from "./apiClient.ts";
 import {token} from "./authApi.ts";
 
@@ -82,5 +85,26 @@ export async function getAdminUserCompletions(userId: number) {
         `/admin/users/${userId}/completions`,
         authHeaders(token()),
     );
+    return response.data;
+}
+
+export async function searchAdminKatas(search: string) {
+    const response = await apiClient.get<AdminKataSummary[]>(
+        "/admin/katas/search",
+        {
+            ...authHeaders(token()),
+            params: { search: search.trim(), limit: 20 },
+        },
+    );
+
+    return response.data;
+}
+
+export async function getAdminKataCompletions(kataId: string) {
+    const response = await apiClient.get<AdminKataCompletions>(
+        `/admin/katas/${encodeURIComponent(kataId)}/completions`,
+        authHeaders(token()),
+    );
+
     return response.data;
 }
