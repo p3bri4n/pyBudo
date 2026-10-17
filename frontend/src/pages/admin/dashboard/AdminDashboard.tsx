@@ -275,6 +275,7 @@ function AdminDashboard() {
                         </div>
 
                         <button
+                            className={"btn-dojo"}
                             type="button"
                             onClick={() => {
                                 setSelectedUser(null);
