@@ -1,9 +1,8 @@
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import CompletionStats from "../../../components/history/CompletionStats";
-import type {KataCompletionStats, KataCompletionHistory} from "../../../interfaces/interfaces.ts";
 
 import CompletionHistory from "../../../components/history/CompletionHistory";
 
@@ -11,60 +10,17 @@ import CompletionFilters, {
     type CompletionFiltersValue,
 } from "../../../components/history/CompletionFilters";
 
-import {getCompletionsHistory, getCompletionsStats} from "../../../api/progressionApi";
 import {DojoNavigation} from "../../../components/navigation/DojoNavigation.tsx";
+import { useCompletionHistory } from "../../../hooks/useCompletionHistory";
 
 export default function History() {
     const { t } = useTranslation();
-
-    const [completions, setCompletions] = useState<KataCompletionHistory[]>([]);
-    const [stats, setStats] = useState<KataCompletionStats | null>(null);
-
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-
+    const { completions, stats, loading, error,} = useCompletionHistory();
     const [filters, setFilters] = useState<CompletionFiltersValue>({
         discipline: "all",
         rank: "all",
         period: "all",
     });
-
-
-
-    useEffect(() => {
-        let cancelled = false;
-
-        async function loadHistory() {
-            setLoading(true);
-            setError(null);
-
-            try {
-                const [completionData, statsData] = await Promise.all([
-                    getCompletionsHistory(),
-                    getCompletionsStats(),
-                ]);
-                console.log(completionData);
-                if (cancelled) return;
-
-                setCompletions(completionData);
-                setStats(statsData);
-            } catch {
-                if (!cancelled) {
-                    setError(t("history.error"));
-                }
-            } finally {
-                if (!cancelled) {
-                    setLoading(false);
-                }
-            }
-        }
-
-        void loadHistory();
-
-        return () => {
-            cancelled = true;
-        };
-    }, [t]);
 
     const disciplines = useMemo(
         () => [
