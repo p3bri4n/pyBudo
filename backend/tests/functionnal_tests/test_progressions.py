@@ -1,10 +1,9 @@
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timedelta, timezone
 
+from app.schemas import MAX_CODE_LENGTH
 from fastapi import status
 from httpx import Client
 from sqlmodel import Session
-
-from app.schemas import MAX_CODE_LENGTH
 from tests.data.base_entity_helper import BaseEntityHelper
 
 
@@ -305,7 +304,7 @@ class TestsProgressions(BaseEntityHelper):
         token = self._auth_user(client)
         now = datetime.now(timezone.utc)
 
-        older = self._add_completed_kata(
+        self._add_completed_kata(
             session=session,
             user_id=user.id,
             kata_id="kyu_10_addition",
@@ -315,7 +314,7 @@ class TestsProgressions(BaseEntityHelper):
             completed_at=now - timedelta(days=2),
             meta=None,
         )
-        newer = self._add_completed_kata(
+        self._add_completed_kata(
             session=session,
             user_id=user.id,
             kata_id="kyu_9_ticket_price",

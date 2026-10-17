@@ -1,11 +1,10 @@
 import copy
 
 import pytest
-from pydantic import ValidationError
-from sqlmodel import Session
-
 from app.model import Kata
 from app.scripts.seed import ingest_katas, load_katas, validate_catalog
+from pydantic import ValidationError
+from sqlmodel import Session
 from tests.data.base_entity_helper import BaseEntityHelper
 
 

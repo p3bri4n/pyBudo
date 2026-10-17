@@ -1,21 +1,22 @@
-from typing import Annotated
 from datetime import datetime, timedelta, timezone
-from fastapi import APIRouter, Depends, HTTPException, Query, status
-from sqlmodel import Session, func, select
-from sqlalchemy import String, cast, or_
+from typing import Annotated
+
 from app.dependencies import get_session, require_admin
 from app.model import Kata, KataCompletion, User
 from app.schemas import (
     AdminCompletionStats,
+    AdminKataCompletions,
+    AdminKataSummary,
     AdminStats,
     AdminUserCompletions,
     KataInternal,
     KataVariantCreate,
     UserAdmin,
-    AdminKataCompletions,
-    AdminKataSummary,
 )
 from app.services.admin.stats import build_completion_stats
+from fastapi import APIRouter, Depends, HTTPException, Query, status
+from sqlalchemy import String, cast, or_
+from sqlmodel import Session, func, select
 
 router = APIRouter(prefix="/admin", dependencies=[Depends(require_admin)])
 
@@ -62,7 +63,7 @@ def get_user(user_id: int, session: Annotated[Session, Depends(get_session)]):
 )
 def get_admin_user_completions(
     user_id: int,
-    session: Session = Depends(get_session),
+    session: Annotated[Session, Depends(get_session)],
 ):
     user = session.get(User, user_id)
 
@@ -295,6 +296,6 @@ def get_admin_stats(session: Annotated[Session, Depends(get_session)]):
 
 @router.get("/completions/stats", response_model=AdminCompletionStats)
 def get_admin_completion_stats(
-    session: Session = Depends(get_session),
+    session: Annotated[Session, Depends(get_session)]
 ):
     return build_completion_stats(session)

@@ -1,8 +1,9 @@
 from datetime import datetime, timedelta, timezone
-from sqlmodel import Session, func, select
-from sqlalchemy import distinct
+
 from app.model import Kata, KataCompletion
 from app.schemas import AdminCompletionStats
+from sqlalchemy import distinct
+from sqlmodel import Session, func, select
 
 
 def build_completion_stats(

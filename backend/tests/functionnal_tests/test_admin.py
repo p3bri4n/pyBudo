@@ -1,7 +1,6 @@
 from fastapi import status
 from httpx import Client
 from sqlmodel import Session
-
 from tests.data.base_entity_helper import BaseEntityHelper
 
 

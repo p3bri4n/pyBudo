@@ -1,10 +1,9 @@
 from datetime import datetime, timezone
 
+from app.model import DisciplineProgression, Kata, KataCompletion, Progression, User
 from httpx import Client
 from pwdlib import PasswordHash
 from sqlmodel import Session
-
-from app.model import DisciplineProgression, Kata, KataCompletion, Progression, User
 
 
 class BaseEntityHelper:
@@ -101,13 +100,14 @@ class BaseEntityHelper:
         rank="kyu_10",
         discipline="core",
         code="def perimetre(a, b):\n    return 2 * (a + b)",
-        completed_at=datetime.now(timezone.utc),
+        completed_at=None,
         meta=None,
     ):
         self._add_kata(
             session=session, id=kata_id, rank=rank, discipline=discipline, meta=meta
         )
-
+        if completed_at is None:
+            completed_at = datetime.now(timezone.utc)
         completion = KataCompletion(
             user_id=user_id, kata_id=kata_id, code=code, completed_at=completed_at
         )

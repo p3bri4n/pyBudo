@@ -1,9 +1,8 @@
 from typing import get_args
 
-from sqlmodel import Session, select
-
 from app.model import Kata
 from app.rank import Ranks
+from sqlmodel import Session, select
 
 
 def get_published_kata(kata_id: str, session: Session) -> Kata | None:

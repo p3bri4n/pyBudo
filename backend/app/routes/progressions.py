@@ -1,20 +1,18 @@
-from typing import Annotated
-
-from fastapi import APIRouter, Depends, HTTPException, status
-from sqlmodel import func, Session, select
 from datetime import datetime, timedelta, timezone
+from typing import Annotated
 
 from app.dependencies import get_current_user, get_session
 from app.model import Kata, KataCompletion, User
 from app.schemas import (
     KataCompletionCreate,
     KataCompletionPublic,
-    ProgressionPublic,
     KataCompletionStats,
+    ProgressionPublic,
 )
 from app.services.katas import can_access_kata, get_published_kata
 from app.services.recalculate import recalculate_progression
-
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlmodel import Session, func, select
 
 router = APIRouter()
 
@@ -40,8 +38,8 @@ def get_completions(
 
 @router.get("/completions/stats", response_model=KataCompletionStats)
 def get_completions_stats(
-    session: Session = Depends(get_session),
-    current_user: User = Depends(get_current_user),
+    session: Annotated[Session, Depends(get_session)],
+    current_user: Annotated[User, Depends(get_current_user)]
 ) -> KataCompletionStats:
 
     total_completions = session.exec(
@@ -85,8 +83,8 @@ def get_completions_stats(
 
 @router.get("/completions/history")
 def get_completions_history(
-    session: Session = Depends(get_session),
-    current_user: User = Depends(get_current_user),
+    session: Annotated[Session, Depends(get_session)],
+    current_user: Annotated[User, Depends(get_current_user)]
 ):
     statement = (
         select(KataCompletion, Kata)

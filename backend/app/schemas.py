@@ -1,9 +1,8 @@
 from datetime import datetime
 from typing import Annotated, Any, Literal
 
-from pydantic import AliasChoices, BaseModel, ConfigDict, Field, model_serializer
-
 from app.rank import Ranks
+from pydantic import AliasChoices, BaseModel, ConfigDict, Field, model_serializer
 
 MAX_CODE_LENGTH = 5000
 

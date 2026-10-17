@@ -3,12 +3,11 @@ from os import getenv
 from typing import Annotated
 
 import jwt
+from app.db import engine
+from app.model import User
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlmodel import Session, select
-
-from app.db import engine
-from app.model import User
 
 SECRET_KEY = getenv("SECRET_KEY")
 if not SECRET_KEY:

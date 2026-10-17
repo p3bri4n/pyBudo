@@ -1,10 +1,9 @@
 from getpass import getpass
 
-from sqlmodel import Session, select
-
 from app.db import engine
 from app.model import User
 from app.routes.auth import password_hash
+from sqlmodel import Session, select
 
 
 def create_admin() -> None:
