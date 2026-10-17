@@ -11,7 +11,9 @@ from app.schemas import (
     AdminUserCompletions,
     KataInternal,
     KataVariantCreate,
-    UserAdmin, AdminKataCompletions, AdminKataSummary,
+    UserAdmin,
+    AdminKataCompletions,
+    AdminKataSummary,
 )
 from app.services.admin.stats import build_completion_stats
 
@@ -121,9 +123,7 @@ def search_admin_katas(
             )
         )
 
-    katas = session.exec(
-        statement.order_by(Kata.id).limit(limit)
-    ).all()
+    katas = session.exec(statement.order_by(Kata.id).limit(limit)).all()
 
     return [
         AdminKataSummary(
@@ -168,8 +168,9 @@ def get_admin_kata_completions(
     ).one()
 
     distinct_users = session.exec(
-        select(func.count(func.distinct(KataCompletion.user_id)))
-        .where(KataCompletion.kata_id == kata_id)
+        select(func.count(func.distinct(KataCompletion.user_id))).where(
+            KataCompletion.kata_id == kata_id
+        )
     ).one()
 
     verified = session.exec(
@@ -211,6 +212,8 @@ def get_admin_kata_completions(
             for completion, user in rows
         ],
     }
+
+
 @router.get("/katas/{kata_id}", response_model=KataInternal)
 def get_kata(kata_id: str, session: Annotated[Session, Depends(get_session)]):
     kata = session.get(Kata, kata_id)
