@@ -7,7 +7,9 @@
     "back": "Retour",
     "loading" : "Chargement...",
     "error": "Une erreur est survenue",
-    "saving": "Sauvegarde..."
+    "saving": "Sauvegarde...",
+    "yes": "Oui",
+    "no": "Non"
   },
   "layout": {
     "pybudo": "pyBudo",
@@ -117,7 +119,27 @@
       "users" : "Utilisateurs",
       "active-users": "Utilisateurs actifs",
       "katas": "Katas",
-      "published-katas": "Katas publiés"
+      "published-katas": "Katas publiés",
+      "global-completions": "Completions globales",
+      "total-completions": "Total completions",
+      "completions-last-7-days": "Completions Derniers 7 jours",
+      "users-with-completions": "Utilisateurs avec des completions",
+      "distinct-katas-completed": "Katas distincts completés",
+      "disciplines-count": "Nombre de disciplines",
+      "ranks-count": "Nombre de rangs",
+      "user-search": "Recherche utilisateurs",
+      "search-placeholder": "Recherchez un utilisateur",
+      "searching": "Recherche en cours",
+      "search": "Recherche",
+      "no-users-found": "Aucun utilisateur trouvé",
+      "close": "Fermer",
+      "completion-history": "Historique de Completions",
+      "no-completions": "Aucune completion",
+      "kata-title": "titre du kata",
+      "discipline": "Discipline",
+      "rank": "Rang",
+      "completed-at": "Completé le",
+      "verified": "Vérifié"
     },
     "users": {
       "users": "Utilisateurs",

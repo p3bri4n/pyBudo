@@ -1,4 +1,10 @@
-import type {AdminKata, AdminStats, AdminUser, KataVariantCreate} from "../interfaces/interfaces.ts";
+import type {
+    AdminCompletionStats,
+    AdminKata,
+    AdminStats,
+    AdminUser, AdminUserCompletions,
+    KataVariantCreate
+} from "../interfaces/interfaces.ts";
 import {apiClient, authHeaders} from "./apiClient.ts";
 import {token} from "./authApi.ts";
 
@@ -50,5 +56,31 @@ export const archiveAdminKata = async (kataId: string): Promise<AdminKata> => {
         `/admin/katas/${kataId}/archive`,
         null,
         authHeaders(token()))
+    return response.data;
+}
+
+
+
+export async function getAdminCompletionStats() {
+    const response = await apiClient.get<AdminCompletionStats>(
+        "/admin/completions/stats",
+        authHeaders(token()),
+    );
+    return response.data;
+}
+
+export async function searchAdminUsers(search: string) {
+    const response = await apiClient.get<AdminUser[]>("/admin/users", {
+        ...authHeaders(token()),
+        params: { search, limit: 20 },
+    });
+    return response.data;
+}
+
+export async function getAdminUserCompletions(userId: number) {
+    const response = await apiClient.get<AdminUserCompletions>(
+        `/admin/users/${userId}/completions`,
+        authHeaders(token()),
+    );
     return response.data;
 }

@@ -25,6 +25,9 @@ export type Translated = components["schemas"]["Translated"];
 
 export type Rank = Kata["rank"]
 
+export type AdminCompletionStats = components["schemas"]["AdminCompletionStats"];
+export type AdminUserCompletions  = components["schemas"]["AdminUserCompletions"];
+
 export interface AuthContextType {
     user: User | null;
     loading: boolean;

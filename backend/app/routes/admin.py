@@ -1,11 +1,14 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlmodel import Session, func, select
-
+from sqlalchemy import or_
 from app.dependencies import get_session, require_admin
-from app.model import Kata, User
-from app.schemas import AdminStats, KataInternal, KataVariantCreate, UserAdmin
+from app.model import Kata, KataCompletion, User
+from app.schemas import (AdminCompletionStats, AdminStats, AdminUserCompletions,
+                         KataInternal, KataVariantCreate, UserAdmin
+                         )
+from app.services.admin.stats import build_completion_stats
 
 router = APIRouter(prefix="/admin", dependencies=[Depends(require_admin)])
 
@@ -16,8 +19,24 @@ def get_katas(session: Annotated[Session, Depends(get_session)]):
 
 
 @router.get("/users", response_model=list[UserAdmin])
-def get_users(session: Annotated[Session, Depends(get_session)]):
-    return session.exec(select(User)).all()
+def get_users(
+    session: Annotated[Session, Depends(get_session)],
+    search: str = Query(default="", max_length=100),
+    skip: int = Query(default=0, ge=0),
+    limit: int = Query(default=20, ge=1, le=100),
+):
+    statement = select(User)
+    if search.strip():
+        term = f"%{search.strip()}%"
+        statement = statement.where(
+            or_(
+                User.username.ilike(term),
+                User.email.ilike(term),
+            )
+        )
+
+    statement = statement.order_by(User.username).offset(skip).limit(limit)
+    return session.exec(statement).all()
 
 
 @router.get("/users/{user_id}", response_model=UserAdmin)
@@ -28,6 +47,54 @@ def get_user(user_id: int, session: Annotated[Session, Depends(get_session)]):
             status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
         )
     return user
+
+
+@router.get(
+    "/users/{user_id}/completions",
+    response_model=AdminUserCompletions,
+)
+def get_admin_user_completions(
+    user_id: int,
+    session: Session = Depends(get_session),
+):
+    user = session.get(User, user_id)
+
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    stats = build_completion_stats(session, user_id=user_id)
+
+    statement = (
+        select(KataCompletion, Kata)
+        .join(Kata, Kata.id == KataCompletion.kata_id)
+        .where(KataCompletion.user_id == user_id)
+        .order_by(KataCompletion.completed_at.desc())
+    )
+
+    rows = session.exec(statement).all()
+
+    completions = [
+        {
+            "kata_id": completion.kata_id,
+            "code": completion.code,
+            "user_id": completion.user_id,
+            "completed_at": completion.completed_at,
+            "verified": completion.verified,
+            "kata": {
+                "id": kata.id,
+                "title": kata.title,
+                "discipline": kata.discipline,
+                "rank": kata.rank,
+            },
+        }
+        for completion, kata in rows
+    ]
+
+    return {
+        "user": user,
+        "stats": stats,
+        "completions": completions,
+    }
 
 
 @router.get("/katas/{kata_id}", response_model=KataInternal)
@@ -107,3 +174,10 @@ def get_admin_stats(session: Annotated[Session, Depends(get_session)]):
     katas = {"katas_number": katas_number, "published_katas": published_katas}
 
     return AdminStats(users=users, katas=katas)
+
+
+@router.get("/completions/stats", response_model=AdminCompletionStats)
+def get_admin_completion_stats(
+    session: Session = Depends(get_session),
+):
+    return build_completion_stats(session)

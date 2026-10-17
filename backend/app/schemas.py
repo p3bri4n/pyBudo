@@ -76,6 +76,15 @@ class AdminStats(BaseModel):
     katas: KataStats
 
 
+class AdminCompletionStats(BaseModel):
+    total_completions: int
+    completions_last_7_days: int
+    users_with_completions: int
+    distinct_katas_completed: int
+    disciplines_count: int
+    ranks_count: int
+
+
 class DisciplineProgressionPublic(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
@@ -108,6 +117,28 @@ class KataBase(BaseModel):
     statement: Translated
     signature: str
     concepts_used: list[str]
+
+
+class AdminKataPublic(BaseModel):
+    id: str
+    title: dict[str, str]
+    discipline: str
+    rank: str
+
+
+class AdminKataCompletionPublic(BaseModel):
+    kata_id: str
+    code: str
+    user_id: int
+    completed_at: datetime
+    verified: bool
+    kata: AdminKataPublic
+
+
+class AdminUserCompletions(BaseModel):
+    user: UserAdmin
+    stats: AdminCompletionStats
+    completions: list[AdminKataCompletionPublic]
 
 
 class FunctionKataTest(BaseModel):
